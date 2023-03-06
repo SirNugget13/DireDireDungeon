@@ -18,7 +18,7 @@ public class RoomTemplates : MonoBehaviour
 
     private void Start()
     {
-        this.Wait(2f, () =>
+        this.Wait(3f, () =>
         {
             Instantiate(KongImage, roomList[roomList.Count - 1].transform.position + new Vector3(0, 2, 0), Quaternion.identity);
             Instantiate(Stickman, roomList[0].transform.position, Quaternion.identity);
