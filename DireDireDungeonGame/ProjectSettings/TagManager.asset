@@ -6,6 +6,7 @@ TagManager:
   tags:
   - RoomSpawnPoint
   - Rooms
+  - WaveStatus
   layers:
   - Default
   - TransparentFX

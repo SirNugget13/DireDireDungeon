@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &3215451634202685426
+--- !u!1 &8996131592630870352
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,39 +8,39 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4979666395981625883}
-  - component: {fileID: -3608421431138394124}
-  - component: {fileID: 6838309003162733195}
-  - component: {fileID: 5386263523522195533}
+  - component: {fileID: 1539226155743720633}
+  - component: {fileID: 2137932118135787862}
+  - component: {fileID: 1054326038054159401}
+  - component: {fileID: 5205415369626112136}
   m_Layer: 0
-  m_Name: RoomSpawnPoint
+  m_Name: NoRoomSpawn
   m_TagString: RoomSpawnPoint
   m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4979666395981625883
+--- !u!4 &1539226155743720633
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3215451634202685426}
+  m_GameObject: {fileID: 8996131592630870352}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.9279633, y: 7.5975113, z: -0.09891158}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &-3608421431138394124
+--- !u!61 &2137932118135787862
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3215451634202685426}
+  m_GameObject: {fileID: 8996131592630870352}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
@@ -60,14 +60,14 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!50 &6838309003162733195
+--- !u!50 &1054326038054159401
 Rigidbody2D:
   serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3215451634202685426}
+  m_GameObject: {fileID: 8996131592630870352}
   m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
@@ -81,22 +81,15 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &5386263523522195533
+--- !u!114 &5205415369626112136
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3215451634202685426}
+  m_GameObject: {fileID: 8996131592630870352}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 160a114b7feaeb44cb749e3a0c7290c4, type: 3}
+  m_Script: {fileID: 11500000, guid: ed26ce75280adc440babde4774573ba2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  openingDirection: 0
-  spawned: 0
-  ws: {fileID: 0}
-  WaveOne: {fileID: 0}
-  WaveTwo: {fileID: 0}
-  WaveThree: {fileID: 0}
-  RemainingWaves: {fileID: 0}

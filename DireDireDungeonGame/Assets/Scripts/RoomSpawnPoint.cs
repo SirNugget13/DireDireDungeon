@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class RoomSpawnPoint : MonoBehaviour
-{
+{    
     public int openingDirection;
     // 1 = needs a room with a bottom door
     // 2 = needs a room with a top door
@@ -12,12 +12,26 @@ public class RoomSpawnPoint : MonoBehaviour
 
     private RoomTemplates RT;
     private int rand;
-    private bool spawned = false;
+    
+    public bool spawned = false;
+
+    public WaveStatus ws;
+
+    public Transform WaveOne;
+    public Transform WaveTwo;
+    public Transform WaveThree;
+    public Transform RemainingWaves;
 
     private void Start()
     {
+        WaveOne = GameObject.Find("WaveOne").transform;
+        WaveTwo = GameObject.Find("WaveTwo").transform;
+        WaveThree = GameObject.Find("WaveThree").transform;
+        RemainingWaves = GameObject.Find("RemainingWaves").transform;
+
+        ws = GameObject.FindGameObjectWithTag("WaveStatus").GetComponent<WaveStatus>();
         RT = GameObject.FindGameObjectWithTag("Rooms").GetComponent<RoomTemplates>();
-        Invoke("Spawn", 1f);
+        Invoke("Spawn", 0.2f);
     }
 
     private void Spawn()
@@ -27,25 +41,25 @@ public class RoomSpawnPoint : MonoBehaviour
             if (openingDirection == 1)
             {
                 rand = Random.Range(0, RT.bottomRooms.Length);
-                Instantiate(RT.bottomRooms[rand], transform.position, Quaternion.identity);
+                InstantiateToWave(RT.bottomRooms[rand], ws.waveNum);
                 //spawn a room with a bottom door
             }
             else if (openingDirection == 2)
             {
                 rand = Random.Range(0, RT.topRooms.Length);
-                Instantiate(RT.topRooms[rand], transform.position, Quaternion.identity);
+                InstantiateToWave(RT.topRooms[rand], ws.waveNum);
                 //spawn a room with a top door
             }
             else if (openingDirection == 3)
             {
                 rand = Random.Range(0, RT.leftRooms.Length);
-                Instantiate(RT.leftRooms[rand], transform.position, Quaternion.identity);
+                InstantiateToWave(RT.leftRooms[rand], ws.waveNum);
                 //spawn a room with a left door
             }
             else if (openingDirection == 4)
             {
                 rand = Random.Range(0, RT.rightRooms.Length);
-                Instantiate(RT.rightRooms[rand], transform.position, Quaternion.identity);
+                InstantiateToWave(RT.rightRooms[rand], ws.waveNum);
                 //spawn a room with a right door
             }
 
@@ -53,11 +67,38 @@ public class RoomSpawnPoint : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
-        if(collision.CompareTag("RoomSpawnPoint") && collision.GetComponent<RoomSpawnPoint>().spawned == true)
+        if(collision.CompareTag("RoomSpawnPoint"))// && collision.GetComponent<RoomSpawnPoint>().spawned == true
         {
             Destroy(gameObject);
+        }
+    }
+
+
+    void InstantiateToWave(GameObject room, int wave)
+    {
+        GameObject instRoom;
+
+        if(wave == 1)
+        {
+            instRoom = Instantiate(room, transform.position, Quaternion.identity);
+            instRoom.transform.parent = WaveOne.transform;
+        } 
+        else if(wave == 2)
+        {
+            instRoom = Instantiate(room, transform.position, Quaternion.identity);
+            instRoom.transform.parent = WaveTwo.transform;
+        }
+        else if(wave == 3)
+        {
+            instRoom = Instantiate(room, transform.position, Quaternion.identity);
+            instRoom.transform.parent = WaveThree.transform;
+        }
+        else
+        {
+            instRoom = Instantiate(room, transform.position, Quaternion.identity);
+            instRoom.transform.parent = RemainingWaves.transform;
         }
     }
 }
