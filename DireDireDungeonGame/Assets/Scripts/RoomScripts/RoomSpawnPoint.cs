@@ -10,7 +10,7 @@ public class RoomSpawnPoint : MonoBehaviour
     // 3 = needs a room with a left door
     // 4 = needs a room with a right door
 
-    private RoomTemplates RT;
+    private RoomTemplates rt;
     private int rand;
     
     public bool spawned = false;
@@ -30,7 +30,7 @@ public class RoomSpawnPoint : MonoBehaviour
         RemainingWaves = GameObject.Find("RemainingWaves").transform;
 
         ws = GameObject.FindGameObjectWithTag("WaveStatus").GetComponent<WaveStatus>();
-        RT = GameObject.FindGameObjectWithTag("Rooms").GetComponent<RoomTemplates>();
+        rt = GameObject.FindGameObjectWithTag("Rooms").GetComponent<RoomTemplates>();
         Invoke("Spawn", 0.2f);
     }
 
@@ -40,26 +40,26 @@ public class RoomSpawnPoint : MonoBehaviour
         {
             if (openingDirection == 1)
             {
-                rand = Random.Range(0, RT.bottomRooms.Length);
-                InstantiateToWave(RT.bottomRooms[rand], ws.waveNum);
+                rand = Random.Range(0, rt.bottomRooms.Length);
+                InstantiateToWave(rt.bottomRooms[rand], ws.waveNum);
                 //spawn a room with a bottom door
             }
             else if (openingDirection == 2)
             {
-                rand = Random.Range(0, RT.topRooms.Length);
-                InstantiateToWave(RT.topRooms[rand], ws.waveNum);
+                rand = Random.Range(0, rt.topRooms.Length);
+                InstantiateToWave(rt.topRooms[rand], ws.waveNum);
                 //spawn a room with a top door
             }
             else if (openingDirection == 3)
             {
-                rand = Random.Range(0, RT.leftRooms.Length);
-                InstantiateToWave(RT.leftRooms[rand], ws.waveNum);
+                rand = Random.Range(0, rt.leftRooms.Length);
+                InstantiateToWave(rt.leftRooms[rand], ws.waveNum);
                 //spawn a room with a left door
             }
             else if (openingDirection == 4)
             {
-                rand = Random.Range(0, RT.rightRooms.Length);
-                InstantiateToWave(RT.rightRooms[rand], ws.waveNum);
+                rand = Random.Range(0, rt.rightRooms.Length);
+                InstantiateToWave(rt.rightRooms[rand], ws.waveNum);
                 //spawn a room with a right door
             }
 
@@ -71,6 +71,12 @@ public class RoomSpawnPoint : MonoBehaviour
     {
         if(collision.CompareTag("RoomSpawnPoint"))// && collision.GetComponent<RoomSpawnPoint>().spawned == true
         {
+            if(collision.GetComponent<RoomSpawnPoint>().spawned == false && spawned == false)
+            {
+                Instantiate(rt.closedRoom, transform.position, Quaternion.identity);
+            }
+
+            spawned = true;
             Destroy(gameObject);
         }
     }

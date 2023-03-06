@@ -7,6 +7,8 @@ TagManager:
   - RoomSpawnPoint
   - Rooms
   - WaveStatus
+  - ClosedRoom
+  - NoRoomSpawnPoint
   layers:
   - Default
   - TransparentFX
