@@ -24,4 +24,9 @@ public class RoomTemplates : MonoBehaviour
             Instantiate(Stickman, roomList[0].transform.position, Quaternion.identity);
         });
     }
+
+    private void Update()
+    {
+        
+    }
 }
