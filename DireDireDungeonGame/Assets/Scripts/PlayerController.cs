@@ -65,7 +65,6 @@ public class PlayerController : MonoBehaviour
                 dashPosition = dashRaycast.point;
             }
 
-            rb.MovePosition(dashPosition);
             isDashButtonDown = false;
         }
     }

@@ -9,6 +9,7 @@ TagManager:
   - WaveStatus
   - ClosedRoom
   - NoRoomSpawnPoint
+  - Wall
   layers:
   - Default
   - TransparentFX

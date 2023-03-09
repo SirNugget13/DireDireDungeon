@@ -27,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3215451634202685426}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.9279633, y: 7.5975113, z: -0.09891158}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -96,7 +96,3 @@ MonoBehaviour:
   openingDirection: 0
   spawned: 0
   ws: {fileID: 0}
-  WaveOne: {fileID: 0}
-  WaveTwo: {fileID: 0}
-  WaveThree: {fileID: 0}
-  RemainingWaves: {fileID: 0}

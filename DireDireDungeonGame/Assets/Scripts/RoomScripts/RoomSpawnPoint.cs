@@ -17,17 +17,17 @@ public class RoomSpawnPoint : MonoBehaviour
 
     public WaveStatus ws;
 
-    public Transform WaveOne;
+    /*public Transform WaveOne;
     public Transform WaveTwo;
     public Transform WaveThree;
-    public Transform RemainingWaves;
+    public Transform RemainingWaves;*/
 
     private void Start()
     {
-        WaveOne = GameObject.Find("WaveOne").transform;
+        /*WaveOne = GameObject.Find("WaveOne").transform;
         WaveTwo = GameObject.Find("WaveTwo").transform;
         WaveThree = GameObject.Find("WaveThree").transform;
-        RemainingWaves = GameObject.Find("RemainingWaves").transform;
+        RemainingWaves = GameObject.Find("RemainingWaves").transform;*/
 
         ws = GameObject.FindGameObjectWithTag("WaveStatus").GetComponent<WaveStatus>();
         rt = GameObject.FindGameObjectWithTag("Rooms").GetComponent<RoomTemplates>();
@@ -89,22 +89,21 @@ public class RoomSpawnPoint : MonoBehaviour
         if(wave == 1)
         {
             instRoom = Instantiate(room, transform.position, Quaternion.identity);
-            instRoom.transform.parent = WaveOne.transform;
+            //instRoom.transform.parent = WaveOne.transform;
         } 
         else if(wave == 2)
         {
             instRoom = Instantiate(room, transform.position, Quaternion.identity);
-            instRoom.transform.parent = WaveTwo.transform;
         }
         else if(wave == 3)
         {
             instRoom = Instantiate(room, transform.position, Quaternion.identity);
-            instRoom.transform.parent = WaveThree.transform;
+            //instRoom.transform.parent = WaveThree.transform;
         }
         else
         {
             instRoom = Instantiate(room, transform.position, Quaternion.identity);
-            instRoom.transform.parent = RemainingWaves.transform;
+            //instRoom.transform.parent = RemainingWaves.transform;
         }
     }
 }
