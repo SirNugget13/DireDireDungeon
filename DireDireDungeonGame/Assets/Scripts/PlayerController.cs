@@ -4,75 +4,144 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    [SerializeField] private LayerMask LayerMask;
+
+    private enum State
+    {
+        Normal,
+        Rolling,
+    }
+
     public float speed = 1;
     public float speedLimiter;
     public float inputHorizontal;
     public float inputVertical;
+    public float rollSpeed;
 
     public float dashForce = 20;
 
     private Rigidbody2D rb;
+    private SpriteRenderer sr;
 
-    private Vector2 movement;
+    private State state;
+
+    // Vector2 movement;
     private bool isDashButtonDown;
+    //private bool isRollButtonDown;
     private Vector3 moveDir;
+    private Vector3 rollDir;
+    private Color normColor;
     
     // Start is called before the first frame update
     void Start()
     {
         rb = gameObject.GetComponent<Rigidbody2D>();
+        sr = gameObject.GetComponent<SpriteRenderer>();
+        state = State.Normal;
+        normColor = sr.color;
     }
 
     // Update is called once per frame
     void Update()
     {
-       inputHorizontal = Input.GetAxisRaw("Horizontal");
-       inputVertical = Input.GetAxisRaw("Vertical");
-
-        if(Input.GetKeyDown(KeyCode.Space))
+        switch (state)
         {
-            isDashButtonDown = true;
+            case State.Normal:
+
+                sr.color = normColor;
+
+                inputHorizontal = Input.GetAxisRaw("Horizontal");
+                inputVertical = Input.GetAxisRaw("Vertical");
+
+                moveDir = new Vector3(inputHorizontal, inputVertical);
+
+                if (Input.GetKeyDown(KeyCode.LeftShift))
+                {
+                    isDashButtonDown = true;
+                }
+
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    rollDir = moveDir;
+                    rollSpeed = 40f;
+                    state = State.Rolling;
+                }
+
+                break;
+            case State.Rolling:
+                sr.color = Color.yellow;
+
+
+                Debug.Log(rollSpeed);
+
+                float rollSpeedDropMultiplier = 100f;
+                rollSpeed -= rollSpeedDropMultiplier * Time.deltaTime;
+                Debug.Log(rollSpeed);
+
+                float rollSpeedMinimum = 2f;
+
+                if(rollSpeed < rollSpeedMinimum)
+                {
+                    Debug.Log(rollSpeed);
+                    state = State.Normal;
+                }
+
+                break;
         }
 
-        moveDir = new Vector3(inputHorizontal, inputVertical);
+        
     }
 
     private void FixedUpdate()
     {
-        if(inputHorizontal != 0 || inputVertical != 0)
+        switch (state)
         {
-            if (inputHorizontal != 0 && inputVertical != 0)
-            {
-                inputHorizontal *= speedLimiter;
-                inputVertical *= speedLimiter;
-            }
+            case State.Normal:
 
-            rb.velocity = moveDir * speed;
-        }
-        else
-        {
-            rb.velocity = new Vector2(0, 0);
-        }
+                if (inputHorizontal != 0 || inputVertical != 0)
+                {
+                    if (inputHorizontal != 0 && inputVertical != 0)
+                    {
+                        inputHorizontal *= speedLimiter;
+                        inputVertical *= speedLimiter;
+                    }
 
-        if(isDashButtonDown)
-        {
-            Vector3 dashPosition = transform.position + moveDir * dashForce;
+                    rb.velocity = moveDir * speed;
+                }
+                else
+                {
+                    rb.velocity = new Vector2(0, 0);
+                }
 
-            RaycastHit2D dashRaycast = Physics2D.Raycast(transform.position, moveDir, dashForce);
+                if (isDashButtonDown)
+                {
+                    Dash();
+                }
 
-            if(dashRaycast.collider != null)
-            {
-                dashPosition = dashRaycast.point;
-            }
+                break;
+            case State.Rolling:
 
-            isDashButtonDown = false;
+                rb.velocity = rollDir * rollSpeed;
+
+                break;
         }
     }
 
     public void Dash()
     {
-        rb.AddForce(new Vector2(inputHorizontal, inputVertical) * dashForce, ForceMode2D.Impulse);
+        Vector3 dashPosition = transform.position + moveDir * dashForce;
+
+        RaycastHit2D dashRaycast = Physics2D.Raycast(transform.position, moveDir, dashForce, LayerMask);
+
+        if (dashRaycast.collider != null)
+        {
+            dashPosition = dashRaycast.point;
+        }
+
+        rb.MovePosition(dashPosition);
+
         Debug.Log("Dash");
+        isDashButtonDown = false;
     }
 
 }
