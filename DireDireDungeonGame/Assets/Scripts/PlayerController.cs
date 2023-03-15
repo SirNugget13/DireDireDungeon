@@ -12,11 +12,20 @@ public class PlayerController : MonoBehaviour
         Rolling,
     }
 
+    public enum Direction
+    {
+        Up,
+        Down,
+        Left,
+        Right
+    }
+
     public float speed = 1;
     public float speedLimiter;
     public float inputHorizontal;
     public float inputVertical;
-    public float rollSpeed;
+    private float rollSpeed;
+    public float rollForce;
 
     public float dashForce = 20;
 
@@ -24,6 +33,7 @@ public class PlayerController : MonoBehaviour
     private SpriteRenderer sr;
 
     private State state;
+    public Direction direction;
 
     // Vector2 movement;
     private bool isDashButtonDown;
@@ -38,6 +48,7 @@ public class PlayerController : MonoBehaviour
         rb = gameObject.GetComponent<Rigidbody2D>();
         sr = gameObject.GetComponent<SpriteRenderer>();
         state = State.Normal;
+        direction = Direction.Right;
         normColor = sr.color;
     }
 
@@ -63,9 +74,11 @@ public class PlayerController : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
                     rollDir = moveDir;
-                    rollSpeed = 40f;
+                    rollSpeed = rollForce;
                     state = State.Rolling;
                 }
+
+                SetDirection();
 
                 break;
             case State.Rolling:
@@ -121,7 +134,7 @@ public class PlayerController : MonoBehaviour
                 break;
             case State.Rolling:
 
-                rb.velocity = rollDir * rollSpeed;
+                rb.velocity = rollDir.normalized * rollSpeed;
 
                 break;
         }
@@ -144,4 +157,32 @@ public class PlayerController : MonoBehaviour
         isDashButtonDown = false;
     }
 
+    public void SetDirection()
+    {
+        if(inputHorizontal > 0)
+        {
+            direction = Direction.Right;
+            transform.rotation = Quaternion.Euler(0, 0, 0);
+        }
+
+        if (inputHorizontal < 0)
+        {
+            direction = Direction.Left;
+            transform.rotation = Quaternion.Euler(0, 0, 180);
+        }
+
+        if(inputVertical > 0)
+        {
+            direction = Direction.Up;
+            transform.rotation = Quaternion.Euler(0, 0, 90);
+        }
+
+        if (inputVertical < 0)
+        {
+            direction = Direction.Down;
+            transform.rotation = Quaternion.Euler(0, 0, 270);
+        }
+
+        //Debug.Log(direction);
+    }
 }
