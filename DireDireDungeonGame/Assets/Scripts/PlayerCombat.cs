@@ -8,8 +8,18 @@ public class PlayerCombat : MonoBehaviour
     public CinemachineVirtualCamera vcam;
     public GameObject Sword;
     public PlayerController pc;
-    
 
+    public float SwingDelay;
+    private float swingTimer;
+    private bool canSwing = true;
+    private CapsuleCollider2D swordPath;
+
+
+    private void Start()
+    {
+        swordPath = gameObject.GetComponent<CapsuleCollider2D>();
+        swordPath.enabled = false;
+    }
 
     // Update is called once per frame
     void Update()
@@ -18,17 +28,43 @@ public class PlayerCombat : MonoBehaviour
         {
             Attack();
         }
+
+        swingTimer += Time.deltaTime;
+
+        if(swingTimer >= SwingDelay)
+        {
+            canSwing = true;
+        }
     }
 
     void Attack()
     {
-        Sword.transform.SetLocalPositionAndRotation
-                (Vector3.zero, Quaternion.Euler(0, 0, -125));
-        this.Wait(0.2f, () =>
+        if(canSwing)
         {
+            swordPath.enabled = true;
+            
             Sword.transform.SetLocalPositionAndRotation
-                (Vector3.zero, Quaternion.Euler(0, 0, -50));
-        });
+                (Vector3.zero, Quaternion.Euler(0, 0, -125));
+            this.Wait(0.2f, () =>
+            {
+                Sword.transform.SetLocalPositionAndRotation
+                    (Vector3.zero, Quaternion.Euler(0, 0, -50));
+                swordPath.enabled = false;
+            });
+            
+            canSwing = false;
+            swingTimer = 0;
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if(collision.CompareTag("Enemy"))
+        {
+            Rigidbody2D rb = collision.gameObject.GetComponent<Rigidbody2D>();
+            rb.AddForce((collision.transform.position - transform.position).normalized * 5, ForceMode2D.Impulse);
+
+        }
     }
 
 }

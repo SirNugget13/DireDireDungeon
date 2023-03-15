@@ -10,6 +10,7 @@ TagManager:
   - ClosedRoom
   - NoRoomSpawnPoint
   - Wall
+  - Enemy
   layers:
   - Default
   - TransparentFX
