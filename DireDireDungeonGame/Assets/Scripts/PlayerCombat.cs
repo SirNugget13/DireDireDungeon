@@ -63,7 +63,6 @@ public class PlayerCombat : MonoBehaviour
         {
             Rigidbody2D rb = collision.gameObject.GetComponent<Rigidbody2D>();
             rb.AddForce((collision.transform.position - transform.position).normalized * 5, ForceMode2D.Impulse);
-
         }
     }
 
