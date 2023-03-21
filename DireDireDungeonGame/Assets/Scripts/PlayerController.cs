@@ -41,10 +41,12 @@ public class PlayerController : MonoBehaviour
     private Vector3 moveDir;
     private Vector3 rollDir;
     private Color normColor;
+    private BoxCollider2D bc;
     
     // Start is called before the first frame update
     void Start()
     {
+        bc = gameObject.GetComponent<BoxCollider2D>();
         rb = gameObject.GetComponent<Rigidbody2D>();
         sr = gameObject.GetComponent<SpriteRenderer>();
         state = State.Normal;
@@ -58,8 +60,9 @@ public class PlayerController : MonoBehaviour
         switch (state)
         {
             case State.Normal:
-
+                
                 sr.color = normColor;
+                Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Enemy"), false);
 
                 inputHorizontal = Input.GetAxisRaw("Horizontal");
                 inputVertical = Input.GetAxisRaw("Vertical");
@@ -73,9 +76,12 @@ public class PlayerController : MonoBehaviour
 
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
-                    rollDir = moveDir;
-                    rollSpeed = rollForce;
-                    state = State.Rolling;
+                    if (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0)
+                    {
+                        rollDir = moveDir;
+                        rollSpeed = rollForce;
+                        state = State.Rolling;
+                    }
                 }
 
                 SetDirection();
@@ -83,7 +89,7 @@ public class PlayerController : MonoBehaviour
                 break;
             case State.Rolling:
                 sr.color = Color.yellow;
-
+                Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Enemy"));
 
                 Debug.Log(rollSpeed);
 

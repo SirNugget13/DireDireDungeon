@@ -61,8 +61,12 @@ public class PlayerCombat : MonoBehaviour
     {
         if(collision.CompareTag("Enemy"))
         {
+            Debug.Log("Hit");
             Rigidbody2D rb = collision.gameObject.GetComponent<Rigidbody2D>();
-            rb.AddForce((collision.transform.position - transform.position).normalized * 5, ForceMode2D.Impulse);
+            Vector2 oppositeDirection = (collision.transform.position) - transform.position;
+            rb.AddForce(
+                (oppositeDirection.normalized + gameObject.GetComponent<Rigidbody2D>().velocity) * 1200, 
+                ForceMode2D.Impulse);
         }
     }
 
