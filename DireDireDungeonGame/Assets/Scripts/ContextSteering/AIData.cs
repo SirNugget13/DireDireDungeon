@@ -4,15 +4,10 @@ using UnityEngine;
 
 public class AIData : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public List<Transform> targets = null;
+    public Collider2D[] obstacles = null;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public Transform currentTarget;
+
+    public int GetTargetsCount() => targets == null ? 0 : targets.Count;
 }
