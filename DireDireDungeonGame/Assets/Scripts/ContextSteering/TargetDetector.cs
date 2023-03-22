@@ -21,7 +21,7 @@ public class TargetDetector : Detector
         throw new System.NotImplementedException();
     }
 
-    public override void Detect(AIData aiData)
+    /*public override void Detect(AIData aiData)
     {
         Collider2D playerCollider = Physics2D.OverlapCircle(transform.position, targetDetectionRange, playerLayerMask);
 
@@ -31,5 +31,5 @@ public class TargetDetector : Detector
             RaycastHit2D hit =
                 Physics2D.Raycast(transform.position, direction, targetDetectionRange, obstaclesLayerMask);
         }
-    }
+    }*/
 }

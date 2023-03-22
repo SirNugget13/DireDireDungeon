@@ -12,10 +12,16 @@ public class Goblin : MonoBehaviour
 
     public float triggerDistance = 5;
     public float speed = 4;
+    public float slowdown = 0.7f;
+    public GameObject enemyNotice;
 
     private State goblinState;
     private Rigidbody2D rb;
     private GameObject player;
+    
+    private bool unotimes = false;
+    private bool doMove = true;
+    private bool isDead = false;
 
 
     
@@ -25,42 +31,87 @@ public class Goblin : MonoBehaviour
         player = GameObject.Find("Player");
         rb = gameObject.GetComponent<Rigidbody2D>();
         goblinState = State.Idle;
+        enemyNotice.SetActive(false);
     }
 
     // Update is called once per frame
     void Update()
     {
-        //Debug.Log(goblinState);
-        Vector2 Distance = player.transform.position - transform.position;
-        float TotalDistance = Mathf.Abs(Distance.x) + Mathf.Abs(Distance.y);
-
-        if(TotalDistance < triggerDistance)
+        if(!isDead)
         {
-            //Debug.Log("abo");
-            //goblinState = State.Chase;
-        }
-        else
-        {
-            goblinState = State.Idle;
-        }
+            //Debug.Log(goblinState);
+            Vector2 Distance = player.transform.position - transform.position;
+            float TotalDistance = Mathf.Abs(Distance.x) + Mathf.Abs(Distance.y);
 
-        
+            if (TotalDistance < triggerDistance)
+            {
+                goblinState = State.Chase;
+
+                if (!unotimes)
+                {
+                    enemyNotice.SetActive(true);
+
+                    unotimes = true;
+                    doMove = false;
+
+                    this.Wait(0.5f, () =>
+                    {
+                        enemyNotice.SetActive(false);
+                        doMove = true;
+                    });
+                }
+            }
+            else
+            {
+                goblinState = State.Idle;
+                unotimes = false;
+            }
+
+        }
     }
 
     private void FixedUpdate()
     {
-        if(goblinState == State.Chase)
+        if(!isDead)
         {
-            Vector2 playerDistance = player.transform.position - transform.position;
-            //rb.velocity = (playerDistance.normalized) * speed;
-            //rb.AddForce((player.transform.position - transform.position).normalized * speed, ForceMode2D.Impulse);
-        }
-        else
-        {
-            if(goblinState == State.Idle)
+            if (goblinState == State.Chase)
             {
-                rb.velocity *= 1 / speed;
+                if (doMove)
+                {
+                    Vector2 playerDistance = player.transform.position - transform.position;
+                    rb.velocity = (playerDistance.normalized) * speed;
+                    //rb.AddForce((player.transform.position - transform.position).normalized * speed, ForceMode2D.Impulse);
+                }
             }
+            else
+            {
+                if (goblinState == State.Idle)
+                {
+                    rb.velocity *= slowdown;
+                }
+            }
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            doMove = false;
+            isDead = true;
+            rb.velocity = Vector2.zero;
+            goblinState = State.Idle;
+
+            Vector2 oppositeDirection = (transform.position) - collision.transform.position;
+            rb.AddForce(
+                (oppositeDirection.normalized + gameObject.GetComponent<Rigidbody2D>().velocity) * 1200,
+                ForceMode2D.Impulse);
+
+            this.Wait(0.2f, () =>
+            {
+                rb.velocity = Vector2.zero;
+            });
+
         }
     }
 
