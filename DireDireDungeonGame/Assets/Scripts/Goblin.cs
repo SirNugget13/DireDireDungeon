@@ -18,6 +18,8 @@ public class Goblin : MonoBehaviour
     private State goblinState;
     private Rigidbody2D rb;
     private GameObject player;
+
+    private Animator anim;
     
     private bool unotimes = false;
     private bool doMove = true;
@@ -32,6 +34,7 @@ public class Goblin : MonoBehaviour
         rb = gameObject.GetComponent<Rigidbody2D>();
         goblinState = State.Idle;
         enemyNotice.SetActive(false);
+        anim = gameObject.GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -110,6 +113,13 @@ public class Goblin : MonoBehaviour
             this.Wait(0.2f, () =>
             {
                 rb.velocity = Vector2.zero;
+                anim.SetTrigger("DoExplosion");
+
+                this.Wait(1.2f, () =>
+                {
+                    Destroy(gameObject);
+                });
+
             });
 
         }
