@@ -1,37 +1,35 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Cinemachine;
 
-public class PlayerCombat : MonoBehaviour
+public class GoblinCombat : MonoBehaviour
 {
-    //public CinemachineVirtualCamera vcam;
-    public GameObject Sword;
-    public PlayerController pc;
-
+    public GameObject goblinSword;
     public float SwingDelay;
+    public Goblin goblin;
+    
     private float swingTimer;
     private bool canSwing = true;
     private CapsuleCollider2D swordPath;
 
 
-    private void Start()
+    // Start is called before the first frame update
+    void Start()
     {
         swordPath = gameObject.GetComponent<CapsuleCollider2D>();
-        swordPath.enabled = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-       if(Input.GetMouseButtonDown(0))
+        if(goblin.playerDistance < 2)
         {
             Attack();
         }
 
         swingTimer += Time.deltaTime;
 
-        if(swingTimer >= SwingDelay)
+        if (swingTimer >= SwingDelay)
         {
             canSwing = true;
         }
@@ -39,30 +37,21 @@ public class PlayerCombat : MonoBehaviour
 
     void Attack()
     {
-        if(canSwing)
+        if (canSwing)
         {
             swordPath.enabled = true;
-            
-            Sword.transform.SetLocalPositionAndRotation
+
+            goblinSword.transform.SetLocalPositionAndRotation
                 (Vector3.zero, Quaternion.Euler(0, 0, -125));
             this.Wait(0.2f, () =>
             {
-                Sword.transform.SetLocalPositionAndRotation
+                goblinSword.transform.SetLocalPositionAndRotation
                     (Vector3.zero, Quaternion.Euler(0, 0, -50));
                 swordPath.enabled = false;
             });
-            
+
             canSwing = false;
             swingTimer = 0;
         }
     }
-
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        if(collision.CompareTag("Enemy"))
-        {
-            
-        }
-    }
-
 }

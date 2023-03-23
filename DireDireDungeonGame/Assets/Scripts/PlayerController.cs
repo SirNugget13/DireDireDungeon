@@ -146,6 +146,14 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.CompareTag("GoblinSword"))
+        {
+            Debug.Log("Goblin Killed You!");
+        }
+    }
+
     public void Dash()
     {
         Vector3 dashPosition = transform.position + moveDir * dashForce;

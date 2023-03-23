@@ -11,6 +11,8 @@ TagManager:
   - NoRoomSpawnPoint
   - Wall
   - Enemy
+  - PlayerSword
+  - GoblinSword
   layers:
   - Default
   - TransparentFX
