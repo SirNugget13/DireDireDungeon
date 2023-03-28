@@ -29,8 +29,8 @@ public class NewGoblin : MonoBehaviour
     private Animator anim;
     
     private bool unotimes = false;
-    private bool doMove = true;
-    private bool isDead = false;
+    public bool doMove = true;
+    public bool isDead = false;
 
     private float idleMoveTime = 2;
     private float idleMoveCounter;

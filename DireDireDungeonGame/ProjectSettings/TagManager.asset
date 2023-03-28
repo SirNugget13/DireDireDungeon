@@ -13,6 +13,7 @@ TagManager:
   - Enemy
   - PlayerSword
   - GoblinSword
+  - Arrow
   layers:
   - Default
   - TransparentFX

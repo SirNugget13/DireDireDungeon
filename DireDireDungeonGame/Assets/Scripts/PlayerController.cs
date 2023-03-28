@@ -91,17 +91,14 @@ public class PlayerController : MonoBehaviour
                 sr.color = Color.yellow;
                 Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Enemy"));
 
-                Debug.Log(rollSpeed);
-
                 float rollSpeedDropMultiplier = 100f;
                 rollSpeed -= rollSpeedDropMultiplier * Time.deltaTime;
-                Debug.Log(rollSpeed);
+                
 
                 float rollSpeedMinimum = 2f;
 
                 if(rollSpeed < rollSpeedMinimum)
                 {
-                    Debug.Log(rollSpeed);
                     state = State.Normal;
                 }
 
@@ -148,7 +145,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.CompareTag("GoblinSword"))
+        if(collision.CompareTag("GoblinSword") && state == State.Normal)
         {
             Debug.Log("Goblin Killed You!");
         }

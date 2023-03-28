@@ -29,7 +29,7 @@ public class RoomSpawnPoint : MonoBehaviour
         WaveThree = GameObject.Find("WaveThree").transform;
         RemainingWaves = GameObject.Find("RemainingWaves").transform;*/
 
-        ws = GameObject.FindGameObjectWithTag("WaveStatus").GetComponent<WaveStatus>();
+        //ws = GameObject.FindGameObjectWithTag("WaveStatus").GetComponent<WaveStatus>();
         rt = GameObject.FindGameObjectWithTag("Rooms").GetComponent<RoomTemplates>();
         Invoke("Spawn", 0.2f);
     }
@@ -41,25 +41,25 @@ public class RoomSpawnPoint : MonoBehaviour
             if (openingDirection == 1)
             {
                 rand = Random.Range(0, rt.bottomRooms.Length);
-                InstantiateToWave(rt.bottomRooms[rand], ws.waveNum);
+                InstantiateToWave(rt.bottomRooms[rand], 1);
                 //spawn a room with a bottom door
             }
             else if (openingDirection == 2)
             {
                 rand = Random.Range(0, rt.topRooms.Length);
-                InstantiateToWave(rt.topRooms[rand], ws.waveNum);
+                InstantiateToWave(rt.topRooms[rand], 1);
                 //spawn a room with a top door
             }
             else if (openingDirection == 3)
             {
                 rand = Random.Range(0, rt.leftRooms.Length);
-                InstantiateToWave(rt.leftRooms[rand], ws.waveNum);
+                InstantiateToWave(rt.leftRooms[rand], 1);
                 //spawn a room with a left door
             }
             else if (openingDirection == 4)
             {
                 rand = Random.Range(0, rt.rightRooms.Length);
-                InstantiateToWave(rt.rightRooms[rand], ws.waveNum);
+                InstantiateToWave(rt.rightRooms[rand], 1);
                 //spawn a room with a right door
             }
 
@@ -89,21 +89,22 @@ public class RoomSpawnPoint : MonoBehaviour
         if(wave == 1)
         {
             instRoom = Instantiate(room, transform.position, Quaternion.identity);
-            //instRoom.transform.parent = WaveOne.transform;
+            //instRoom.transform.parent = rt.transform;
         } 
         else if(wave == 2)
         {
             instRoom = Instantiate(room, transform.position, Quaternion.identity);
+            //instRoom.transform.parent = rt.transform;
         }
         else if(wave == 3)
         {
             instRoom = Instantiate(room, transform.position, Quaternion.identity);
-            //instRoom.transform.parent = WaveThree.transform;
+            //instRoom.transform.parent = rt.transform;
         }
         else
         {
             instRoom = Instantiate(room, transform.position, Quaternion.identity);
-            //instRoom.transform.parent = RemainingWaves.transform;
+            //instRoom.transform.parent = rt.transform;
         }
     }
 }
