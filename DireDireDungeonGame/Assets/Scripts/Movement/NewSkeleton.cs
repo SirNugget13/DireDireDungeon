@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class NewSkeleton : MonoBehaviour
 {
-   private enum State
+   public enum State
     {
         Idle,
         Shoot,
@@ -22,10 +22,12 @@ public class NewSkeleton : MonoBehaviour
     public float slowdown = 0.7f;
     public GameObject enemyNotice;
     public float playerDistance;
+
+    public NewSkeletonCombat skc;
     
     //public GameObject goblinBody;
 
-    private State skeletonState;
+    public State skeletonState;
     private Rigidbody2D rb;
     private GameObject player;
     private CircleCollider2D cc;
@@ -112,11 +114,26 @@ void Update()
                 isRunning = false;
 
                 DirectionToGo = Vector2.zero;
+
+                if (!unotimes)
+                {
+                    enemyNotice.SetActive(true);
+
+                    unotimes = true;
+                    doMove = false;
+
+                    this.Wait(0.5f, () =>
+                    {
+                        enemyNotice.SetActive(false);
+                        doMove = true;
+                    });
+                }
             }
             else
             {
                 skeletonState = State.Idle;
                 isRunning = false;
+                unotimes = false;
 
                 if (canIdleMove == false)
                 {
@@ -137,7 +154,19 @@ void Update()
             
             if (skeletonState == State.Shoot)
             {
-                
+
+                float a = player.transform.position.x - transform.position.x;
+                float b = player.transform.position.y - transform.position.y;
+                float c = Mathf.Sqrt(Mathf.Pow(a, 2) + Mathf.Pow(b, 2));
+
+                float angle = 5;
+
+                angle *= 180;
+                angle = angle / Mathf.PI;
+
+                Debug.Log(c);
+
+                skc.ShootBow(player.transform.position - transform.position, Vector3.zero);
             }
             else
             {
