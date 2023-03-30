@@ -889,11 +889,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f99f85637d6b1614790eb95a17d473e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ShootRange: 8
-  ShootAndRunRange: 3
-  RunRange: 2
-  speed: 4
-  slowdown: 0.7
+  ShootRange: 12
+  ShootAndRunRange: 6
+  RunRange: 3
+  speed: 5.5
+  slowdown: 0.5
   enemyNotice: {fileID: 586242439}
   playerDistance: 0
   skc: {fileID: 1752990521}
@@ -987,7 +987,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!58 &1479532744
 CircleCollider2D:
   m_ObjectHideFlags: 0

@@ -95,39 +95,23 @@ void Update()
 
             if (TotalDistance < RunRange)
             {
-                skeletonState = State.Run;
-                isRunning = true;
+                enemyNoticeCheck(State.Run);
 
                 //Goes in the opposite direction of the player faster than normal speed
                 DirectionToGo = Distance.normalized * -1f * (speed * 1.3f);
             }
             else if(TotalDistance < ShootAndRunRange)
             {
-                skeletonState = State.ShootAndRun;
-                isRunning = false;
+                enemyNoticeCheck(State.ShootAndRun);
 
                 DirectionToGo = Distance.normalized * -1f * (speed * 1f);
             } 
             else if(TotalDistance < ShootRange)
             {
-                skeletonState = State.Shoot;
-                isRunning = false;
-
                 DirectionToGo = Vector2.zero;
 
-                if (!unotimes)
-                {
-                    enemyNotice.SetActive(true);
-
-                    unotimes = true;
-                    doMove = false;
-
-                    this.Wait(0.5f, () =>
-                    {
-                        enemyNotice.SetActive(false);
-                        doMove = true;
-                    });
-                }
+                enemyNoticeCheck(State.Shoot);
+ 
             }
             else
             {
@@ -151,38 +135,41 @@ void Update()
     {
         if(!isDead)
         {
-            
             if (skeletonState == State.Shoot)
             {
-
-                float a = player.transform.position.x - transform.position.x;
-                float b = player.transform.position.y - transform.position.y;
-                float c = Mathf.Sqrt(Mathf.Pow(a, 2) + Mathf.Pow(b, 2));
-
-                float angle = 5;
-
-                angle *= 180;
-                angle = angle / Mathf.PI;
-
-                Debug.Log(c);
-
-                skc.ShootBow(player.transform.position - transform.position, Vector3.zero);
+                CalculateDirectionAndShoot();
+                skc.shootCoolDown = 1;
+                rb.velocity *= slowdown;
             }
-            else
+            else if(skeletonState == State.ShootAndRun)
             {
-                if (skeletonState == State.Idle)
+                rb.velocity *= slowdown;
+
+                Vector2 playerDistance = player.transform.position - transform.position;
+                rb.velocity = (playerDistance.normalized) * speed * -0.7f;//Skeleton runs away from the player at 70% max speed
+
+                skc.shootCoolDown = 1.3f;//Shoots slower while running away
+                CalculateDirectionAndShoot();
+
+            }
+            else if(skeletonState == State.Run)
+            {
+                Vector2 playerDistance = player.transform.position - transform.position;
+                rb.velocity *= slowdown;
+                rb.velocity = (playerDistance.normalized) * speed * -1f;//runs away from the player at max speed
+            }
+            else if(skeletonState == State.Idle)
+            {
+                if (canIdleMove)
                 {
-                    if (canIdleMove)
-                    {
-                        Vector2 randomVelo = new Vector2(Random.Range(-10, 10), Random.Range(-10, 10));
-                        rb.velocity = randomVelo;
+                    Vector2 randomVelo = new Vector2(Random.Range(-10, 10), Random.Range(-10, 10));
+                    rb.velocity = randomVelo;
 
-                        idleMoveCounter = 0;
-                        canIdleMove = false;
+                    idleMoveCounter = 0;
+                    canIdleMove = false;
 
-                    }
-                    else { rb.velocity *= slowdown; }
                 }
+                else { rb.velocity *= slowdown; }
             }
         }
 
@@ -289,9 +276,51 @@ void Update()
                     direction = "Down";
                 }
             }
-        
+    }
 
-        //Debug.Log(direction);
+    private void CalculateDirectionAndShoot()
+    {
+        float a = player.transform.position.x - transform.position.x;//Get the distance on the x axis from the player
+        float b = player.transform.position.y - transform.position.y;//Get the distance on the y axis from the player
+        float c = Mathf.Sqrt(Mathf.Pow(a, 2) + Mathf.Pow(b, 2));//Get the hypotenuse of the two distances
 
+        float bDIVc = b / c;//dividing the y distance by the hypotenuse
+
+        float angleInRads = Mathf.Asin(bDIVc);//Using arcSin to get the angle to the player in radians
+        float angleInDegrees = Mathf.Rad2Deg * angleInRads;//Converting to degrees
+
+        if (a < 0)//Weird stuff to make it work correctly
+        {
+            angleInDegrees *= -1;
+            angleInDegrees += 180;
+        }
+
+        skc.ShootBow(player.transform.position - transform.position, new Vector3(0, 0, angleInDegrees));//Uses the function in the skeleton combat to fire using the direction
+    }
+
+    private void enemyNoticeCheck(State state)
+    {
+        if (!unotimes)
+        {
+            enemyNotice.SetActive(true);
+
+            unotimes = true;
+            doMove = false;
+
+            this.Wait(0.5f, () =>
+            {
+                enemyNotice.SetActive(false);
+                doMove = true;
+
+                skeletonState = state;
+                isRunning = false;
+
+            });
+        }
+        else
+        {
+            skeletonState = state;
+            isRunning = false;
+        }
     }
 }

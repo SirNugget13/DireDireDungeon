@@ -133,7 +133,7 @@ GameObject:
   - component: {fileID: 1204204033361642396}
   m_Layer: 3
   m_Name: Player
-  m_TagString: GameController
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -344,7 +344,7 @@ MonoBehaviour:
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0
-  m_PointLightOuterRadius: 6.0558534
+  m_PointLightOuterRadius: 8
   m_ShapeLightParametricSides: 5
   m_ShapeLightParametricAngleOffset: 0
   m_ShapeLightParametricRadius: 1
