@@ -15,6 +15,11 @@ TagManager:
   - GoblinSword
   - Arrow
   - Skeleton
+  - Door
+  - Key
+  - Big Coin
+  - Medium Coin
+  - Small Coin
   layers:
   - Default
   - TransparentFX

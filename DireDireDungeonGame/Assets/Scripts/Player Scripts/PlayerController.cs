@@ -20,6 +20,8 @@ public class PlayerController : MonoBehaviour
         Right
     }
 
+    public GameManager gm;
+
     public float speed = 1;
     public float speedLimiter;
     public float inputHorizontal;
@@ -148,6 +150,33 @@ public class PlayerController : MonoBehaviour
         if(collision.CompareTag("GoblinSword") && state == State.Normal)
         {
             Debug.Log("Goblin Killed You!");
+        }
+
+        if (collision.CompareTag("Key"))
+        {
+            gm.keyGotten = true;
+            Destroy(collision.gameObject);
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Big Coin"))
+        {
+            gm.coinCount += 10;
+            Destroy(collision.gameObject);
+        }
+
+        if (collision.gameObject.CompareTag("Medium Coin"))
+        {
+            gm.coinCount += 5;
+            Destroy(collision.gameObject);
+        }
+
+        if (collision.gameObject.CompareTag("Small Coin"))
+        {
+            gm.coinCount += 1;
+            Destroy(collision.gameObject);
         }
     }
 
