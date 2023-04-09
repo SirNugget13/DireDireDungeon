@@ -14,6 +14,7 @@ public class RoomSpawnPoint : MonoBehaviour
     private int rand;
     
     public bool spawned = false;
+    public bool withinRadius = false;
 
     public WaveStatus ws;
 
@@ -36,7 +37,7 @@ public class RoomSpawnPoint : MonoBehaviour
 
     private void Spawn()
     {
-        if(!spawned)
+        if(!spawned && withinRadius)
         {
             if (openingDirection == 1)
             {
@@ -65,6 +66,10 @@ public class RoomSpawnPoint : MonoBehaviour
 
             spawned = true;
         }
+        else
+        {
+            Instantiate(rt.closedRoom, transform.position, Quaternion.identity);
+        }
     }
 
     private void OnTriggerStay2D(Collider2D collision)
@@ -78,6 +83,14 @@ public class RoomSpawnPoint : MonoBehaviour
 
             spawned = true;
             Destroy(gameObject);
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.CompareTag("RoomSpawnZone"))
+        {
+            withinRadius = true;
         }
     }
 

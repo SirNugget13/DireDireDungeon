@@ -20,6 +20,7 @@ TagManager:
   - Big Coin
   - Medium Coin
   - Small Coin
+  - RoomSpawnZone
   layers:
   - Default
   - TransparentFX

@@ -12,6 +12,8 @@ public class NewSkeleton : MonoBehaviour
         Run
     }
 
+    public GameObject parentPrefab;
+
     public float ShootRange;
     public float ShootAndRunRange;
     public float RunRange;
@@ -24,6 +26,8 @@ public class NewSkeleton : MonoBehaviour
     public float playerDistance;
 
     public NewSkeletonCombat skc;
+
+    public GameObject coinSpawner;
     
     //public GameObject goblinBody;
 
@@ -43,6 +47,7 @@ public class NewSkeleton : MonoBehaviour
     private float idleMoveTime = 2;
     private float idleMoveCounter;
     private bool canIdleMove;
+    private float originalSkcCooldown;
 
 
 
@@ -55,6 +60,7 @@ public class NewSkeleton : MonoBehaviour
         skeletonState = State.Idle;
         enemyNotice.SetActive(false);
         anim = gameObject.GetComponent<Animator>();
+        originalSkcCooldown = skc.shootCoolDown;
     }
 
     
@@ -138,7 +144,7 @@ void Update()
             if (skeletonState == State.Shoot)
             {
                 CalculateDirectionAndShoot();
-                skc.shootCoolDown = 1;
+                skc.shootCoolDown = originalSkcCooldown;
                 rb.velocity *= slowdown;
             }
             else if(skeletonState == State.ShootAndRun)
@@ -148,7 +154,7 @@ void Update()
                 Vector2 playerDistance = player.transform.position - transform.position;
                 rb.velocity = (playerDistance.normalized) * speed * -0.7f;//Skeleton runs away from the player at 70% max speed
 
-                skc.shootCoolDown = 1.3f;//Shoots slower while running away
+                skc.shootCoolDown = originalSkcCooldown * 1.3f;//Shoots slower while running away
                 CalculateDirectionAndShoot();
 
             }
@@ -204,8 +210,8 @@ void Update()
 
                 this.Wait(1.2f, () =>
                 {
-                    Destroy(enemyNotice);
-                    Destroy(gameObject);
+                    Instantiate(coinSpawner, transform.position, Quaternion.identity);
+                    Destroy(parentPrefab);
                 });
 
             });

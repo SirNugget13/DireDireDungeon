@@ -28,6 +28,7 @@ public class PlayerController : MonoBehaviour
     public float inputVertical;
     private float rollSpeed;
     public float rollForce;
+    public float rollCooldown;
 
     public float dashForce = 20;
 
@@ -44,6 +45,8 @@ public class PlayerController : MonoBehaviour
     private Vector3 rollDir;
     private Color normColor;
     private BoxCollider2D bc;
+
+
     
     // Start is called before the first frame update
     void Start()
@@ -70,11 +73,6 @@ public class PlayerController : MonoBehaviour
                 inputVertical = Input.GetAxisRaw("Vertical");
 
                 moveDir = new Vector3(inputHorizontal, inputVertical);
-
-                if (Input.GetKeyDown(KeyCode.LeftShift))
-                {
-                    isDashButtonDown = true;
-                }
 
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
@@ -131,11 +129,6 @@ public class PlayerController : MonoBehaviour
                     rb.velocity = new Vector2(0, 0);
                 }
 
-                if (isDashButtonDown)
-                {
-                    Dash();
-                }
-
                 break;
             case State.Rolling:
 
@@ -149,7 +142,7 @@ public class PlayerController : MonoBehaviour
     {
         if(collision.CompareTag("GoblinSword") && state == State.Normal)
         {
-            Debug.Log("Goblin Killed You!");
+            sr.color = Color.red;
         }
 
         if (collision.CompareTag("Key"))
@@ -178,23 +171,6 @@ public class PlayerController : MonoBehaviour
             gm.coinCount += 1;
             Destroy(collision.gameObject);
         }
-    }
-
-    public void Dash()
-    {
-        Vector3 dashPosition = transform.position + moveDir * dashForce;
-
-        RaycastHit2D dashRaycast = Physics2D.Raycast(transform.position, moveDir, dashForce, LayerMask);
-
-        if (dashRaycast.collider != null)
-        {
-            dashPosition = dashRaycast.point;
-        }
-
-        rb.MovePosition(dashPosition);
-
-        Debug.Log("Dash");
-        isDashButtonDown = false;
     }
 
     public void SetDirection()

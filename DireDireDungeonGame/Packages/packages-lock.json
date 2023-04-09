@@ -1,7 +1,7 @@
 {
   "dependencies": {
     "com.friedforfun.contextsteering": {
-      "version": "file:C:/Users/405852/Documents/GitHub/ContextSteering",
+      "version": "file:C:/Users/lucas/Desktop/GitHub/ContextSteering",
       "depth": 0,
       "source": "local",
       "dependencies": {

@@ -11,6 +11,7 @@ public class AddRoomToList : MonoBehaviour
     {
         rt = GameObject.FindGameObjectWithTag("Rooms").GetComponent<RoomTemplates>();
         rt.roomList.Add(gameObject);
+        gameObject.transform.parent = rt.transform;
     }
 
 }

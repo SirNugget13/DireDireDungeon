@@ -10,6 +10,9 @@ public class FollowPlusOffset : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        gameObject.transform.position = thingToFollow.position + offset;   
+        if(thingToFollow != null)
+        {
+            gameObject.transform.position = thingToFollow.position + offset;
+        }
     }
 }

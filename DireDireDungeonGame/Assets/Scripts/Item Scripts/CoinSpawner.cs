@@ -20,6 +20,7 @@ public class CoinSpawner : MonoBehaviour
             Vector2 randomVelo = new Vector2(Random.Range(-5, 5), Random.Range(-5, 5));
 
             coin.GetComponent<Rigidbody2D>().velocity = randomVelo * coinSpread;
+            //coin.transform.parent = gameObject.transform;
         }
 
         Destroy(gameObject);

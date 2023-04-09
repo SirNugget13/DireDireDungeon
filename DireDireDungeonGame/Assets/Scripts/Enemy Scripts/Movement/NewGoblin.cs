@@ -10,12 +10,15 @@ public class NewGoblin : MonoBehaviour
         Chase
     }
 
+    public GameObject parentPrefab;
     public float triggerDistance = 5;
     public float speed = 4;
     public float slowdown = 0.7f;
     public GameObject enemyNotice;
     public float playerDistance;
-    
+
+    public GameObject coinSpawner;
+
     //public GameObject goblinBody;
 
     private State goblinState;
@@ -149,6 +152,8 @@ public class NewGoblin : MonoBehaviour
 
             rb.constraints = RigidbodyConstraints2D.FreezeRotation;
 
+            
+
             this.Wait(0.2f, () =>
             {
                 rb.velocity = Vector2.zero;
@@ -159,8 +164,8 @@ public class NewGoblin : MonoBehaviour
 
                 this.Wait(1.2f, () =>
                 {
-                    Destroy(enemyNotice);
-                    Destroy(gameObject);
+                    Instantiate(coinSpawner, transform.position, Quaternion.identity);
+                    Destroy(parentPrefab);
                 });
 
             });

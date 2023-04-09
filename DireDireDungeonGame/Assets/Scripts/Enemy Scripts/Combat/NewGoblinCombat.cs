@@ -28,6 +28,7 @@ public class NewGoblinCombat : MonoBehaviour
         if (goblin.isDead)
         {
             Destroy(swordPath);
+            goblin.GetComponent<SpriteRenderer>().color = orignalColor;
         }
 
         if (goblin.playerDistance < swingTriggerDistance && canSwing)

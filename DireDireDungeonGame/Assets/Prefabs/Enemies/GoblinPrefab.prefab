@@ -290,12 +290,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3bbd632eb603cd4493331553524b103, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  parentPrefab: {fileID: 3505183743359047959}
   triggerDistance: 10
   speed: 5
   slowdown: 0.7
   enemyNotice: {fileID: 7102114494990200762}
   playerDistance: 0
+  coinSpawner: {fileID: 5435228773259865308, guid: 6e4fa14f58585d846b668d9e499c4fb8,
+    type: 3}
   doMove: 1
+  isDead: 0
 --- !u!1 &3505183745002236065
 GameObject:
   m_ObjectHideFlags: 0

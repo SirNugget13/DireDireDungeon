@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3098246290215749839}
   - component: {fileID: 8770597989669826465}
   - component: {fileID: 8781570613862720822}
+  - component: {fileID: -885863504655825869}
   m_Layer: 0
   m_Name: EnemyNotice
   m_TagString: Untagged
@@ -164,3 +165,17 @@ MonoBehaviour:
   - {x: 0.5, y: -0.5, z: 0}
   - {x: 0.5, y: 0.5, z: 0}
   - {x: -0.5, y: 0.5, z: 0}
+--- !u!114 &-885863504655825869
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5920876207499775630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8159a20b5b8727b4eb42cc3207c8c1e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  thingToFollow: {fileID: 0}
+  offset: {x: 0, y: 1.3, z: 0}
