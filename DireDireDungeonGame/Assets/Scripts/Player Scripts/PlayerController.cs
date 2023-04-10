@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     {
         Normal,
         Rolling,
+        Damaged
     }
 
     public enum Direction
@@ -30,7 +31,8 @@ public class PlayerController : MonoBehaviour
     public float rollForce;
     public float rollCooldown;
 
-    public float dashForce = 20;
+    public bool canRoll = true;
+    private float canRollTimer;
 
     private Rigidbody2D rb;
     private SpriteRenderer sr;
@@ -66,6 +68,18 @@ public class PlayerController : MonoBehaviour
         {
             case State.Normal:
                 
+                if(canRoll == false)
+                {
+                    if(canRollTimer >= rollCooldown)
+                    {
+                        canRoll = true;
+                    } 
+                    else
+                    {
+                        canRollTimer += Time.deltaTime;
+                    }
+                }
+
                 sr.color = normColor;
                 Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Enemy"), false);
 
@@ -88,19 +102,35 @@ public class PlayerController : MonoBehaviour
 
                 break;
             case State.Rolling:
-                sr.color = Color.yellow;
-                Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Enemy"));
-
-                float rollSpeedDropMultiplier = 100f;
-                rollSpeed -= rollSpeedDropMultiplier * Time.deltaTime;
                 
+                if(canRoll)
+                {
+                    sr.color = Color.yellow;
+                    Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Enemy"));
 
-                float rollSpeedMinimum = 2f;
+                    float rollSpeedDropMultiplier = 100f;
+                    rollSpeed -= rollSpeedDropMultiplier * Time.deltaTime;
 
-                if(rollSpeed < rollSpeedMinimum)
+
+                    float rollSpeedMinimum = 2f;
+
+                    if (rollSpeed < rollSpeedMinimum)
+                    {
+                        canRoll = false;
+                        canRollTimer = 0;
+                        state = State.Normal;
+                    }
+                } 
+                else
                 {
                     state = State.Normal;
                 }
+
+                break;
+
+            case State.Damaged:
+
+                sr.color = Color.red;
 
                 break;
         }
@@ -135,6 +165,17 @@ public class PlayerController : MonoBehaviour
                 rb.velocity = rollDir.normalized * rollSpeed;
 
                 break;
+
+            case State.Damaged:
+
+                rb.velocity = Vector2.zero;
+
+                this.Wait(0.2f, () =>
+                {
+                    state = State.Normal;
+                });
+
+                break;
         }
     }
 
@@ -142,6 +183,7 @@ public class PlayerController : MonoBehaviour
     {
         if(collision.CompareTag("GoblinSword") && state == State.Normal)
         {
+            state = State.Damaged;
             sr.color = Color.red;
         }
 

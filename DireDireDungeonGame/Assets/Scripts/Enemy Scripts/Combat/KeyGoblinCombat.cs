@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NewGoblinCombat : MonoBehaviour
+public class KeyGoblinCombat : MonoBehaviour
 {
     public GameObject goblinSword;
     public float SwingDelay;
-    public NewGoblin goblin;
+    public KeyGoblin goblin;
     public float swingTriggerDistance;
     
     private float swingTimer;

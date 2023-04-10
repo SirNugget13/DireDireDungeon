@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NewGoblin : MonoBehaviour
+public class KeyGoblin : MonoBehaviour
 {
     private enum State
     {
@@ -17,7 +17,7 @@ public class NewGoblin : MonoBehaviour
     public GameObject enemyNotice;
     public float playerDistance;
 
-    public GameObject coinSpawner;
+    public GameObject key;
 
     //public GameObject goblinBody;
 
@@ -30,7 +30,7 @@ public class NewGoblin : MonoBehaviour
     public string direction;
 
     private Animator anim;
-    
+
     private bool unotimes = false;
     public bool doMove = true;
     public bool isDead = false;
@@ -56,7 +56,7 @@ public class NewGoblin : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(!isDead)
+        if (!isDead)
         {
             //Debug.Log(goblinState);
             Vector2 Distance = player.transform.position - transform.position;
@@ -86,10 +86,10 @@ public class NewGoblin : MonoBehaviour
                 goblinState = State.Idle;
                 unotimes = false;
 
-                if(canIdleMove == false)
+                if (canIdleMove == false)
                 {
                     idleMoveCounter += Time.deltaTime;
-                    if(idleMoveCounter > idleMoveTime)
+                    if (idleMoveCounter > idleMoveTime)
                     {
                         canIdleMove = true;
                     }
@@ -102,7 +102,7 @@ public class NewGoblin : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if(!isDead)
+        if (!isDead)
         {
             if (goblinState == State.Chase)
             {
@@ -152,7 +152,7 @@ public class NewGoblin : MonoBehaviour
 
             rb.constraints = RigidbodyConstraints2D.FreezeRotation;
 
-            
+
 
             this.Wait(0.2f, () =>
             {
@@ -161,10 +161,10 @@ public class NewGoblin : MonoBehaviour
                 cc.enabled = false;
 
                 anim.SetTrigger("DoExplosion");
+                Instantiate(key, transform.position + new Vector3(0, 0, 3), Quaternion.identity);
 
                 this.Wait(1.2f, () =>
                 {
-                    Instantiate(coinSpawner, transform.position, Quaternion.identity);
                     Destroy(parentPrefab);
                 });
 
@@ -176,8 +176,8 @@ public class NewGoblin : MonoBehaviour
     private void goblinTurn(string direction)
     {
         int count = 0;
-        
-        if(direction == "Right" && !isDead)
+
+        if (direction == "Right" && !isDead)
         {
             gameObject.transform.SetPositionAndRotation(transform.position, Quaternion.Euler(0, 0, 0));
             count++;

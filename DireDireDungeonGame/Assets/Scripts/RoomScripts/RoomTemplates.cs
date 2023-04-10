@@ -13,6 +13,7 @@ public class RoomTemplates : MonoBehaviour
 
     public GameObject KongImage;
     public GameObject Stickman;
+    public GameObject keyGoblin;
 
     public List<GameObject> roomList;
 
@@ -36,6 +37,7 @@ public class RoomTemplates : MonoBehaviour
                 if (timer > 1)
                 {
                     Instantiate(KongImage, roomList[roomList.Count - 1].transform.position + new Vector3(0, 2, 0), Quaternion.identity);
+                    Instantiate(keyGoblin, roomList[roomList.Count - 1].transform.position + new Vector3(0, 2, 0), Quaternion.identity);
                     Instantiate(Stickman, roomList[0].transform.position, Quaternion.identity);
                     checkTimer = false;
                 }
