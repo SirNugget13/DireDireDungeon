@@ -12,6 +12,9 @@ public class RandomEnemySpawn : MonoBehaviour
     {
         int randomID = Random.Range(0, EnemyList.Length);
 
-        Enemy = Instantiate(EnemyList[randomID], transform.position, Quaternion.identity);
+        if(EnemyList[randomID] != null)
+        {
+            Enemy = Instantiate(EnemyList[randomID], transform.position, Quaternion.identity);
+        }
     }
 }

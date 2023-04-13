@@ -184,6 +184,7 @@ public class PlayerController : MonoBehaviour
         if(collision.CompareTag("GoblinSword") && state == State.Normal)
         {
             state = State.Damaged;
+            Debug.Log("Player Hit!");
             sr.color = Color.red;
         }
 
@@ -212,6 +213,13 @@ public class PlayerController : MonoBehaviour
         {
             gm.coinCount += 1;
             Destroy(collision.gameObject);
+        }
+
+        if (collision.gameObject.CompareTag("Arrow"))
+        {
+            state = State.Damaged;
+            Debug.Log("Player Hit!");
+            sr.color = Color.red;
         }
     }
 

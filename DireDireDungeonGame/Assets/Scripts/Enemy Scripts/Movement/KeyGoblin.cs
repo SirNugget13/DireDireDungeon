@@ -18,6 +18,7 @@ public class KeyGoblin : MonoBehaviour
     public float playerDistance;
 
     public GameObject key;
+    public GameObject endroomPortal;
 
     //public GameObject goblinBody;
 
@@ -162,6 +163,7 @@ public class KeyGoblin : MonoBehaviour
 
                 anim.SetTrigger("DoExplosion");
                 Instantiate(key, transform.position + new Vector3(0, 0, 3), Quaternion.identity);
+                //Instantiate(endroomPortal, transform.position + new Vector3(0, 0, 3), Quaternion.identity);
 
                 this.Wait(1.2f, () =>
                 {
