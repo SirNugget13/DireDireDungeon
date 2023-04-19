@@ -48,8 +48,9 @@ public class RoomTemplates : MonoBehaviour
 
                 if (timer > 1)
                 {
-                    firstRoom = portalRoomList[0];
-                    lastRoom = portalRoomList[portalRoomList.Count - 1];
+                    
+                    firstRoom = roomList[0];
+                    lastRoom = roomList[roomList.Count - 1];
                     
                     if (portalRoomList.Count % 2 != 0) { portalRoomList.RemoveAt(portalRoomList.Count - 1); }
                     
