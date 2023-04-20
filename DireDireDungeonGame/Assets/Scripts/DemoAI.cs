@@ -11,7 +11,7 @@ public class DemoAI : MonoBehaviour
     private RoomTemplates rt;
     public Transform curRoom;
     public int lastIndex;
-    public float playerRange;
+    public float playerRange = 10;
 
 
     public enum State
@@ -41,6 +41,12 @@ public class DemoAI : MonoBehaviour
         Vector2 Distance = player.transform.position - transform.position;
         float TotalDistance = Mathf.Abs(Distance.x) + Mathf.Abs(Distance.y);
 
+        if (TotalDistance < playerRange)
+        {
+            state = State.Chase;
+        }
+
+
         if (state == State.Wander)
         {
             target = curRoom.position;
@@ -58,8 +64,11 @@ public class DemoAI : MonoBehaviour
     {
         if(collision.CompareTag("NoRoomSpawnPoint") && state == State.Wander)
         {
-            if(collision.transform.parent.gameObject == curRoom)
+            Debug.Log("Check");
+
+            if(collision.transform.parent.gameObject == curRoom.gameObject)
             {
+                Debug.Log(collision.transform.parent.gameObject);
                 SelectRandomRoom();
             }
         }
@@ -73,19 +82,10 @@ public class DemoAI : MonoBehaviour
 
         if(rand == lastIndex)
         {
-            while(rand == lastIndex)
-            {
-                int i = 0;
-                Debug.Log(i);
-                rand = Random.Range(0, rt.roomList.Count);
-                i++;
-            }
+            while(rand == lastIndex) { rand = Random.Range(0, rt.roomList.Count); }
         }
 
         lastIndex = rand;
-
-        //Debug.Log(rand);
-        //Debug.Log(rt.roomList.Count);
         curRoom = rt.roomList[rand].transform;
     }
 

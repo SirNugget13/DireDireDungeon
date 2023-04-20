@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class RoomTemplates : MonoBehaviour
 {
+    public GameManager gm;
+    
     public GameObject[] bottomRooms;
     public GameObject[] topRooms;
     public GameObject[] leftRooms;
@@ -82,6 +84,9 @@ public class RoomTemplates : MonoBehaviour
                     Instantiate(endroomPortal, lastRoom.transform.position + new Vector3(-5, -5, 0), Quaternion.identity);
                     //Instantiate(Stickman, firstRoom.transform.position, Quaternion.identity);
                     checkTimer = false;
+
+                    gm.GenerateNavMesh();
+
                 }
             }
         }

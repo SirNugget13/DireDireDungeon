@@ -88,7 +88,7 @@ public class PlayerController : MonoBehaviour
 
                 moveDir = new Vector3(inputHorizontal, inputVertical);
 
-                if (Input.GetKeyDown(KeyCode.Space))
+                if (Input.GetButton("Roll"))
                 {
                     if (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0)
                     {
@@ -225,25 +225,25 @@ public class PlayerController : MonoBehaviour
 
     public void SetDirection()
     {
-        if(inputHorizontal > 0)
+        if(inputHorizontal > 0 && Time.timeScale == 1)
         {
             direction = Direction.Right;
             transform.rotation = Quaternion.Euler(0, 0, 0);
         }
 
-        if (inputHorizontal < 0)
+        if (inputHorizontal < 0 && Time.timeScale == 1)
         {
             direction = Direction.Left;
             transform.rotation = Quaternion.Euler(0, 0, 180);
         }
 
-        if(inputVertical > 0)
+        if(inputVertical > 0 && Time.timeScale == 1)
         {
             direction = Direction.Up;
             transform.rotation = Quaternion.Euler(0, 0, 90);
         }
 
-        if (inputVertical < 0)
+        if (inputVertical < 0 && Time.timeScale == 1)
         {
             direction = Direction.Down;
             transform.rotation = Quaternion.Euler(0, 0, 270);
