@@ -13,7 +13,6 @@ public class DemoAI : MonoBehaviour
     public int lastIndex;
     public float playerRange = 10;
 
-
     public enum State
     {
         Wander,
@@ -60,15 +59,20 @@ public class DemoAI : MonoBehaviour
         }
     }
 
+    private void LateUpdate()
+    {
+        transform.rotation = Quaternion.LookRotation(agent.velocity.normalized);
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.CompareTag("NoRoomSpawnPoint") && state == State.Wander)
         {
-            Debug.Log("Check");
+            //Debug.Log("Check");
 
             if(collision.transform.parent.gameObject == curRoom.gameObject)
             {
-                Debug.Log(collision.transform.parent.gameObject);
+                //Debug.Log(collision.transform.parent.gameObject);
                 SelectRandomRoom();
             }
         }

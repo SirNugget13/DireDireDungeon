@@ -5,7 +5,9 @@ using UnityEngine;
 public class RoomTemplates : MonoBehaviour
 {
     public GameManager gm;
-    
+
+    public GameObject BigBad;
+
     public GameObject[] bottomRooms;
     public GameObject[] topRooms;
     public GameObject[] leftRooms;
@@ -33,6 +35,11 @@ public class RoomTemplates : MonoBehaviour
     private bool unoTimes = false;
     private GameObject firstRoom;
     private GameObject lastRoom;
+
+    private void Start()
+    {
+        gm = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
+    }
 
     private void Update()
     {
@@ -83,6 +90,11 @@ public class RoomTemplates : MonoBehaviour
                     Instantiate(keyGoblin, lastRoom.transform.position, Quaternion.identity);
                     Instantiate(endroomPortal, lastRoom.transform.position + new Vector3(-5, -5, 0), Quaternion.identity);
                     //Instantiate(Stickman, firstRoom.transform.position, Quaternion.identity);
+
+                    int middleIndex = roomList.Count / 2;
+
+                    Instantiate(BigBad, roomList[middleIndex].transform.position, Quaternion.identity);
+                    
                     checkTimer = false;
 
                     gm.GenerateNavMesh();
