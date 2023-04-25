@@ -5,6 +5,7 @@ using UnityEngine;
 public class RandomEnemySpawn : MonoBehaviour
 {
     public GameObject[] EnemyList;
+    public EnemyParent enemyParent;
 
     private GameObject Enemy;
 
@@ -12,9 +13,12 @@ public class RandomEnemySpawn : MonoBehaviour
     {
         int randomID = Random.Range(0, EnemyList.Length);
 
-        if(EnemyList[randomID] != null)
+        enemyParent = GameObject.FindWithTag("EnemyParent").GetComponent<EnemyParent>();
+
+        if(EnemyList[randomID] != null && enemyParent.doEnemySpawn)
         {
             Enemy = Instantiate(EnemyList[randomID], transform.position, Quaternion.identity);
+            Enemy.transform.parent = enemyParent.gameObject.transform;
         }
     }
 }

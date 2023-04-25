@@ -13,6 +13,9 @@ public class DemoAI : MonoBehaviour
     public int lastIndex;
     public float playerRange = 10;
 
+    private Rigidbody2D rb;
+    private string direction;
+
     public enum State
     {
         Wander,
@@ -24,6 +27,7 @@ public class DemoAI : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
+        rb = GetComponent<Rigidbody2D>();
         agent = GetComponent<NavMeshAgent>();
         agent.updateRotation = false;
         agent.updateUpAxis = false;
@@ -56,6 +60,13 @@ public class DemoAI : MonoBehaviour
             SetTargetPosition();
             SetAgentPosition();
         }
+
+        directionCheck();
+    }
+
+    private void FixedUpdate()
+    {
+        BigBadTurn(direction);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -95,6 +106,69 @@ public class DemoAI : MonoBehaviour
     void SetAgentPosition()
     {
         agent.SetDestination(new Vector3(target.x, target.y, transform.position.z));
+    }
+
+    private void directionCheck()
+    {
+        if (Mathf.Abs(rb.velocity.x) > 0 || Mathf.Abs(rb.velocity.y) > 0)
+        {
+            if (Mathf.Abs(rb.velocity.x) > Mathf.Abs(rb.velocity.y))
+            {
+                if (rb.velocity.x > 0)
+                {
+                    direction = "Right";
+                }
+
+                if (rb.velocity.x < 0)
+                {
+                    direction = "Left";
+                }
+            }
+            else
+            {
+                if (rb.velocity.y > 0)
+                {
+                    direction = "Up";
+                }
+
+                if (rb.velocity.y < 0)
+                {
+                    direction = "Down";
+                }
+            }
+        }
+    }
+
+    private void BigBadTurn(string direction)
+    {
+        int count = 0;
+
+        if (direction == "Right")
+        {
+            gameObject.transform.SetPositionAndRotation(transform.position, Quaternion.Euler(0, 0, 0));
+            count++;
+        }
+
+        if (direction == "Left")
+        {
+            gameObject.transform.SetPositionAndRotation(transform.position, Quaternion.Euler(0, 0, 180));
+            count++;
+        }
+
+        if (direction == "Up")
+        {
+            gameObject.transform.SetPositionAndRotation(transform.position, Quaternion.Euler(0, 0, 90));
+            count++;
+        }
+
+        if (direction == "Down")
+        {
+            gameObject.transform.SetPositionAndRotation(transform.position, Quaternion.Euler(0, 0, 270));
+            count++;
+        }
+
+        //Debug.Log(count);
+
     }
 
 }

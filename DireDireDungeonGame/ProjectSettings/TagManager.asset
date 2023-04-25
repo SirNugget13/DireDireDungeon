@@ -22,6 +22,7 @@ TagManager:
   - Small Coin
   - RoomSpawnZone
   - GameManager
+  - EnemyParent
   layers:
   - Default
   - TransparentFX

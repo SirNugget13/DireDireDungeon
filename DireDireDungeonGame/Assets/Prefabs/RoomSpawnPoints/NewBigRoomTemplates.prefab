@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3450436209565294836}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -42.51197, y: 35.468155, z: -0.8594114}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -44,15 +44,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acc21a060abbdbc42ae376125f59e4e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gm: {fileID: 0}
+  BigBad: {fileID: 0}
   bottomRooms:
   - {fileID: 295792649331236873, guid: dc9bb900fab83d74a84704ffc0aabc1b, type: 3}
-  - {fileID: 295792649331236873, guid: aee072f39ba41284081a572ea60bb3d6, type: 3}
   - {fileID: 295792649331236873, guid: aee072f39ba41284081a572ea60bb3d6, type: 3}
   - {fileID: 295792649331236873, guid: b26f0c11880115b40aad31c3cf2058d5, type: 3}
   - {fileID: 295792649331236873, guid: b26f0c11880115b40aad31c3cf2058d5, type: 3}
   - {fileID: 295792649331236873, guid: 28dd3505c48f406499017dc71b10edb8, type: 3}
   - {fileID: 295792649331236873, guid: 28dd3505c48f406499017dc71b10edb8, type: 3}
   - {fileID: 295792649331236873, guid: 95b1afdad34dbf14bab35de4d5668582, type: 3}
+  - {fileID: 295792649331236873, guid: aee072f39ba41284081a572ea60bb3d6, type: 3}
+  - {fileID: 295792649331236873, guid: aee072f39ba41284081a572ea60bb3d6, type: 3}
+  - {fileID: 295792649331236873, guid: b26f0c11880115b40aad31c3cf2058d5, type: 3}
+  - {fileID: 295792649331236873, guid: b26f0c11880115b40aad31c3cf2058d5, type: 3}
+  - {fileID: 295792649331236873, guid: 28dd3505c48f406499017dc71b10edb8, type: 3}
+  - {fileID: 295792649331236873, guid: 28dd3505c48f406499017dc71b10edb8, type: 3}
+  - {fileID: 295792649331236873, guid: dc9bb900fab83d74a84704ffc0aabc1b, type: 3}
+  - {fileID: 295792649331236873, guid: 74ae5c09feef4c843b4604436addb5b1, type: 3}
+  - {fileID: 295792649331236873, guid: b26f0c11880115b40aad31c3cf2058d5, type: 3}
+  - {fileID: 295792649331236873, guid: 28dd3505c48f406499017dc71b10edb8, type: 3}
   topRooms:
   - {fileID: 295792649331236873, guid: bae03a3f0e3e3724785152e723ad2af9, type: 3}
   - {fileID: 295792649331236873, guid: 53a0c2d047e016448aee26fab10636ea, type: 3}
