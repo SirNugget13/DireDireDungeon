@@ -32,7 +32,7 @@ public class RoomTemplates : MonoBehaviour
     private int numRooms = 0;
     private float timer;
     private bool checkTimer = true;
-    private bool unoTimes = false;
+    //private bool unoTimes = false;
     private GameObject firstRoom;
     private GameObject lastRoom;
 
@@ -93,7 +93,9 @@ public class RoomTemplates : MonoBehaviour
 
                     int middleIndex = roomList.Count / 2;
 
-                    Instantiate(BigBad, roomList[middleIndex].transform.position, Quaternion.identity);
+                    if(BigBad != null) { Instantiate(BigBad, roomList[middleIndex].transform.position, Quaternion.identity); }
+                    
+                    
                     
                     checkTimer = false;
 

@@ -45,7 +45,6 @@ public class DemoAI : MonoBehaviour
             state = State.Chase;
         }
 
-
         if (state == State.Wander)
         {
             target = curRoom.position;
@@ -57,11 +56,6 @@ public class DemoAI : MonoBehaviour
             SetTargetPosition();
             SetAgentPosition();
         }
-    }
-
-    private void LateUpdate()
-    {
-        transform.rotation = Quaternion.LookRotation(agent.velocity.normalized);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
