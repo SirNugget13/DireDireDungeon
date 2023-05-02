@@ -82,6 +82,7 @@ public class PlayerController : MonoBehaviour
 
                 sr.color = normColor;
                 Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Enemy"), false);
+                Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Arrow"), false);
 
                 inputHorizontal = Input.GetAxisRaw("Horizontal");
                 inputVertical = Input.GetAxisRaw("Vertical");
@@ -107,6 +108,7 @@ public class PlayerController : MonoBehaviour
                 {
                     sr.color = Color.yellow;
                     Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Enemy"));
+                    Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Arrow"));
 
                     float rollSpeedDropMultiplier = 100f;
                     rollSpeed -= rollSpeedDropMultiplier * Time.deltaTime;

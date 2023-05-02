@@ -14,7 +14,8 @@ public class DemoAI : MonoBehaviour
     public float playerRange = 10;
 
     private Rigidbody2D rb;
-    private string direction;
+    public string direction;
+    private float TotalDistance;
 
     public enum State
     {
@@ -42,23 +43,36 @@ public class DemoAI : MonoBehaviour
     void Update()
     {
         Vector2 Distance = player.transform.position - transform.position;
-        float TotalDistance = Mathf.Abs(Distance.x) + Mathf.Abs(Distance.y);
+        TotalDistance = Mathf.Abs(Distance.x) + Mathf.Abs(Distance.y);
 
         if (TotalDistance < playerRange)
         {
-            state = State.Chase;
+            Rigidbody2D playerRB = player.GetComponent<Rigidbody2D>();
+            if (Mathf.Abs(playerRB.velocity.x) > 1 || Mathf.Abs(playerRB.velocity.y) > 1)
+            {
+                state = State.Chase;
+            }
         }
 
         if (state == State.Wander)
         {
+            agent.speed = 4;
+            
             target = curRoom.position;
             agent.SetDestination(new Vector3(target.x, target.y, transform.position.z));
         }
 
         if(state == State.Chase)
         {
+            agent.speed = 6;
+            
             SetTargetPosition();
             SetAgentPosition();
+
+            if(TotalDistance > 10)
+            {
+                state = State.Wander;
+            }
         }
 
         directionCheck();
@@ -71,11 +85,20 @@ public class DemoAI : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.CompareTag("NoRoomSpawnPoint") && state == State.Wander)
+        if (collision.CompareTag("Player"))
         {
-            //Debug.Log("Check");
+            state = State.Chase;
+        }
+    }
 
-            if(collision.transform.parent.gameObject == curRoom.gameObject)
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.CompareTag("NoRoomSpawnPoint") && state == State.Wander)
+        {
+            Vector2 Distance = transform.position - collision.transform.position;
+            float TotalDistance = Mathf.Abs(Distance.x) + Mathf.Abs(Distance.y);
+
+            if (collision.transform.parent.gameObject == curRoom.gameObject && TotalDistance < 1)
             {
                 //Debug.Log(collision.transform.parent.gameObject);
                 SelectRandomRoom();
@@ -108,30 +131,32 @@ public class DemoAI : MonoBehaviour
         agent.SetDestination(new Vector3(target.x, target.y, transform.position.z));
     }
 
+    
+
     private void directionCheck()
     {
-        if (Mathf.Abs(rb.velocity.x) > 0 || Mathf.Abs(rb.velocity.y) > 0)
+        if (Mathf.Abs(agent.velocity.x) > 0 || Mathf.Abs(agent.velocity.y) > 0)
         {
-            if (Mathf.Abs(rb.velocity.x) > Mathf.Abs(rb.velocity.y))
+            if (Mathf.Abs(agent.velocity.x) > Mathf.Abs(agent.velocity.y))
             {
-                if (rb.velocity.x > 0)
+                if (agent.velocity.x > 0)
                 {
                     direction = "Right";
                 }
 
-                if (rb.velocity.x < 0)
+                if (agent.velocity.x < 0)
                 {
                     direction = "Left";
                 }
             }
             else
             {
-                if (rb.velocity.y > 0)
+                if (agent.velocity.y > 0)
                 {
                     direction = "Up";
                 }
 
-                if (rb.velocity.y < 0)
+                if (agent.velocity.y < 0)
                 {
                     direction = "Down";
                 }
