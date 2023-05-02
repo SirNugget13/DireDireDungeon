@@ -16,7 +16,8 @@ public class ArrowStick : MonoBehaviour
     {
         if(collision.gameObject.layer == LayerMask.NameToLayer("Wall"))
         {
-            rb.velocity = Vector2.zero;
+            if (rb != null) { rb.velocity = Vector2.zero; }
+            
             rb.constraints = RigidbodyConstraints2D.FreezeAll;
 
             this.Wait(5f, () =>
