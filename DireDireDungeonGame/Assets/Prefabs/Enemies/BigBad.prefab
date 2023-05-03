@@ -166,7 +166,14 @@ MonoBehaviour:
   curRoom: {fileID: 0}
   lastIndex: 0
   playerRange: 0.5
+  loseThePlayerDistance: 40
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 72
+  chaseSpeed: 6
+  wanderSpeed: 4
   direction: 
+  state: 0
 --- !u!114 &1766079812138254662
 MonoBehaviour:
   m_ObjectHideFlags: 0

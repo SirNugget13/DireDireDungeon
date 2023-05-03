@@ -12,10 +12,18 @@ public class DemoAI : MonoBehaviour
     public Transform curRoom;
     public int lastIndex;
     public float playerRange = 10;
+    public float loseThePlayerDistance = 40;
+
+    public LayerMask layerMask;
+
+    public float chaseSpeed = 6;
+    public float wanderSpeed = 4;
 
     private Rigidbody2D rb;
     public string direction;
     private float TotalDistance;
+
+    private bool unotimes;
 
     public enum State
     {
@@ -23,7 +31,7 @@ public class DemoAI : MonoBehaviour
         Chase
     };
 
-    private State state;
+    public State state;
 
     // Start is called before the first frame update
     private void Start()
@@ -56,7 +64,9 @@ public class DemoAI : MonoBehaviour
 
         if (state == State.Wander)
         {
-            agent.speed = 4;
+            agent.speed = wanderSpeed;
+            
+            if(unotimes == false) { SelectRandomRoom(); unotimes = true; }
             
             target = curRoom.position;
             agent.SetDestination(new Vector3(target.x, target.y, transform.position.z));
@@ -64,12 +74,13 @@ public class DemoAI : MonoBehaviour
 
         if(state == State.Chase)
         {
-            agent.speed = 6;
+            unotimes = false;
             
-            SetTargetPosition();
-            SetAgentPosition();
+            agent.speed = chaseSpeed;
 
-            if(TotalDistance > 10)
+            TargetPlayer();
+
+            if(TotalDistance > loseThePlayerDistance)
             {
                 state = State.Wander;
             }
@@ -85,10 +96,7 @@ public class DemoAI : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
-        {
-            state = State.Chase;
-        }
+        
     }
 
     private void OnTriggerStay2D(Collider2D collision)
@@ -103,6 +111,12 @@ public class DemoAI : MonoBehaviour
                 //Debug.Log(collision.transform.parent.gameObject);
                 SelectRandomRoom();
             }
+        }
+
+        if (collision.CompareTag("Player"))
+        {
+            //Debug.Log("HeyNow");
+            SeenPlayerRaycast();
         }
     }
 
@@ -121,17 +135,30 @@ public class DemoAI : MonoBehaviour
         curRoom = rt.roomList[rand].transform;
     }
 
-    void SetTargetPosition()
+    void TargetPlayer()
     {
         target = player.transform.position;
-    }
-
-    void SetAgentPosition()
-    {
         agent.SetDestination(new Vector3(target.x, target.y, transform.position.z));
     }
 
-    
+    void SeenPlayerRaycast()
+    {
+        RaycastHit2D rayHit = Physics2D.Raycast(transform.position, player.transform.position - transform.position, 40, layerMask);
+        Debug.DrawRay(transform.position, player.transform.position-transform.position);
+
+        if (rayHit.collider != null)
+        {
+            GameObject hitObj = rayHit.collider.gameObject;
+
+            //Debug.Log(hitObj.name);
+
+            if(hitObj.CompareTag("Player") && state == State.Wander)
+            {
+                //Debug.Log("Hit it");
+                state = State.Chase;
+            }
+        }
+    }
 
     private void directionCheck()
     {
