@@ -3,11 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    private GameObject player;
+
     public bool keyGotten;
     public int coinCount;
+    public int potionCount;
+    public float speedTimer;
 
     public GameObject PauseUI;
     public bool IsPaused = false;
@@ -18,16 +23,32 @@ public class GameManager : MonoBehaviour
     public GameObject navMeshObject;
     public NavMeshPlus.Components.NavMeshSurface navSurface;
 
+    public GameObject pauseText;
+    public GameObject inventoryUI;
+
     public TMPro.TextMeshProUGUI resume;
     public TMPro.TextMeshProUGUI quit;
     public TMPro.TextMeshProUGUI inventory;
+    public TMPro.TextMeshProUGUI potionText;
+
+    public Image potions;
+    public Image back;
+
     public Image selector;
+    public Image invSelector;
+
     public int pauseStage = 1;
     public int optionSelected = 1;
 
     public Vector3 offset;
 
     public bool isButtonReset;
+
+    private void Start()
+    {
+        potionCount = PlayerPrefs.GetInt("potionCount", 0);
+        player = GameObject.FindGameObjectWithTag("Player");
+    }
 
     // Update is called once per frame
     void Update()
@@ -39,6 +60,10 @@ public class GameManager : MonoBehaviour
                 Time.timeScale = 1;
                 PauseUI.SetActive(false);
                 IsPaused = false;
+                pauseStage = 1;
+                optionSelected = 1;
+                pauseText.SetActive(true);
+                inventoryUI.SetActive(false);
             }
             else
             {
@@ -73,8 +98,15 @@ public class GameManager : MonoBehaviour
             if (Input.GetButtonDown("Attack"))
                 Select();
 
-            if (pauseStage == 1)
-                MoveSelect();
+            MoveSelect();
+        }
+
+        else
+        {
+            if (speedTimer >= 0)
+                speedTimer -= Time.deltaTime;
+            if (speedTimer < 0)
+                player.GetComponent<PlayerController>().speed = 10;
         }
 
         if (keyGotten)
@@ -83,44 +115,145 @@ public class GameManager : MonoBehaviour
         }
 
         canvasCoinCount.text = " x " + coinCount;
+        potionText.text = "Amount: " + potionCount;
     }
 
     void MoveSelect()
     {
-        if (optionSelected == 1)
+        if (pauseStage == 1)
         {
-            selector.rectTransform.position = resume.rectTransform.position + offset;
+            if (optionSelected == 1)
+            {
+                selector.rectTransform.position = resume.rectTransform.position + offset;
+            }
+
+            if (optionSelected == 2)
+            {
+                selector.rectTransform.position = quit.rectTransform.position + offset;
+            }
+
+            if (optionSelected == 3)
+            {
+                selector.rectTransform.position = inventory.rectTransform.position + offset;
+            }
         }
 
-        if (optionSelected == 2)
+        if (pauseStage == 2)
         {
-            selector.rectTransform.position = quit.rectTransform.position + offset;
-        }
+            if (optionSelected == 1)
+            {
+                invSelector.rectTransform.position = potions.rectTransform.position + offset;
+            }
 
-        if (optionSelected == 3)
-        {
-            selector.rectTransform.position = inventory.rectTransform.position + offset;
+            if (optionSelected == 2)
+            {
+                invSelector.rectTransform.position = back.rectTransform.position + offset;
+            }
         }
     }
 
     void Select()
     {
-        if (pauseStage == 1 && optionSelected == 1)
+        if (pauseStage == 2 && optionSelected == 1 && potionCount > 0)
         {
-            Time.timeScale = 1;
-            PauseUI.SetActive(false);
-            IsPaused = false;
+            Debug.Log("Used Potion");
+            Potion();
         }
+        if (pauseStage == 2 && optionSelected == 2)
+        {
+            pauseStage = 1;
+            pauseText.SetActive(true);
+            inventoryUI.SetActive(false);
+            optionSelected = 1;
+        }
+        if (pauseStage == 1)
+        {
+            if (optionSelected == 1)
+            {
+                Time.timeScale = 1;
+                PauseUI.SetActive(false);
+                IsPaused = false;
+                optionSelected = 1;
+            }
 
-        if (pauseStage == 1 && optionSelected == 2)
-        {
-            Application.Quit();
-        }
+            if (optionSelected == 2)
+            {
+                Application.Quit();
+            }
 
-        if (pauseStage == 1 && optionSelected == 3)
-        {
-            pauseStage = 2;
+            if (optionSelected == 3)
+            {
+                pauseStage = 2;
+                pauseText.SetActive(false);
+                inventoryUI.SetActive(true);
+                optionSelected = 1;
+            }
+
         }
+    }
+
+    void Potion()
+    {
+        int mystery = Random.Range(1, 13);
+        if (mystery == 1)
+        {
+            Debug.Log("Slowness");
+            speedTimer = 6;
+            player.GetComponent<PlayerController>().speed = 5;
+        }
+        if (mystery == 2)
+        {
+            Debug.Log("Invulnerability");
+        }
+        if (mystery == 3)
+        {
+            Debug.Log("Change Color");
+        }
+        if (mystery == 4)
+        {
+            Debug.Log("Speed Boost");
+            speedTimer = 6;
+            player.GetComponent<PlayerController>().speed = 20;
+        }
+        if (mystery == 5)
+        {
+            Debug.Log("Next Floor");
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
+        if (mystery == 6)
+        {
+            Debug.Log("Die");
+        }
+        if (mystery == 7)
+        {
+            Debug.Log("Big Bad Teleport");
+            if (GameObject.Find("BigBad") != null)
+                player.transform.position = GameObject.Find("BigBad").transform.position;
+        }
+        if (mystery == 8)
+        {
+            Debug.Log("Time Slowdown");
+        }
+        if (mystery == 9)
+        {
+            Debug.Log("Nothing");
+        }
+        if (mystery == 10)
+        {
+            Debug.Log("+99 Gold");
+            coinCount += 99;
+        }
+        if (mystery == 11)
+        {
+            Debug.Log("+1 Gold");
+            coinCount++;
+        }
+        if (mystery == 12)
+        {
+            Debug.Log("+2000 Gold");
+            coinCount += 2000;
+        }
+        potionCount--;
     }
 
     public void GenerateNavMesh()
