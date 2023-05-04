@@ -179,7 +179,8 @@ public class GameManager : MonoBehaviour
 
             if (optionSelected == 2)
             {
-                Application.Quit();
+                Time.timeScale = 1;
+                SceneManager.LoadScene(0);
             }
 
             if (optionSelected == 3)
