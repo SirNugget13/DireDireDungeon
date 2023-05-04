@@ -2726,6 +2726,11 @@ PrefabInstance:
       objectReference: {fileID: 221233541}
     - target: {fileID: 4121272762171193529, guid: da810d9bb93419044a6ad205ed090843,
         type: 3}
+      propertyPath: InvText
+      value: 
+      objectReference: {fileID: 720791079}
+    - target: {fileID: 4121272762171193529, guid: da810d9bb93419044a6ad205ed090843,
+        type: 3}
       propertyPath: PauseUI
       value: 
       objectReference: {fileID: 1174599207}
@@ -2744,6 +2749,11 @@ PrefabInstance:
       propertyPath: selector
       value: 
       objectReference: {fileID: 45623745}
+    - target: {fileID: 4121272762171193529, guid: da810d9bb93419044a6ad205ed090843,
+        type: 3}
+      propertyPath: PauseText
+      value: 
+      objectReference: {fileID: 1477004078}
     - target: {fileID: 4121272762171193529, guid: da810d9bb93419044a6ad205ed090843,
         type: 3}
       propertyPath: canvasKey

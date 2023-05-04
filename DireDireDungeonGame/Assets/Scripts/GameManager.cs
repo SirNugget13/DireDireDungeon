@@ -159,13 +159,6 @@ public class GameManager : MonoBehaviour
             Debug.Log("Used Potion");
             Potion();
         }
-        if (pauseStage == 2 && optionSelected == 2)
-        {
-            pauseStage = 1;
-            pauseText.SetActive(true);
-            inventoryUI.SetActive(false);
-            optionSelected = 1;
-        }
         if (pauseStage == 1)
         {
             if (optionSelected == 1)
@@ -188,7 +181,13 @@ public class GameManager : MonoBehaviour
                 inventoryUI.SetActive(true);
                 optionSelected = 1;
             }
-
+        }
+        if (pauseStage == 2 && optionSelected == 2)
+        {
+            pauseStage = 1;
+            pauseText.SetActive(true);
+            inventoryUI.SetActive(false);
+            optionSelected = 1;
         }
     }
 
