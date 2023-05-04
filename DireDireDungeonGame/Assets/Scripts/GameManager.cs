@@ -53,10 +53,12 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButtonDown("Attack") && SceneManager.GetActiveScene().buildIndex == 0)
+        int scene = SceneManager.GetActiveScene().buildIndex;
+
+        if (Input.GetButtonDown("Attack") && scene == 0)
             SceneManager.LoadScene(1);
 
-        if (Input.GetButtonDown("Pause") && SceneManager.GetActiveScene().buildIndex != 0)
+        if (Input.GetButtonDown("Pause") && scene != 0 && scene != 2)
         {
             if (IsPaused)
             {
@@ -108,7 +110,7 @@ public class GameManager : MonoBehaviour
         {
             if (speedTimer >= 0)
                 speedTimer -= Time.deltaTime;
-            if (speedTimer < 0)
+            if (speedTimer < 0 && (player != null && player.GetComponent<PlayerController>().speed != 10))
                 player.GetComponent<PlayerController>().speed = 10;
         }
 
@@ -117,7 +119,7 @@ public class GameManager : MonoBehaviour
             canvasKey.SetActive(true);
         }
 
-        if (SceneManager.GetActiveScene().buildIndex != 0)
+        if (scene != 0 && scene != 2)
         {
             canvasCoinCount.text = " x " + coinCount;
             potionText.text = "Amount: " + potionCount;
