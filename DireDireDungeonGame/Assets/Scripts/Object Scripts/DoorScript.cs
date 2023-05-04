@@ -19,6 +19,8 @@ public class DoorScript : MonoBehaviour
         {
             if(gm.keyGotten)
             {
+                gm.floor++;
+                gm.Save();
                 SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 
                 Debug.Log("Door open!");

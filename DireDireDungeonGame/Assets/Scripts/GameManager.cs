@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
     public int armorUpgrade;
     public int swordUpgrade;
     public int speedUpgrade;
+    public int floor;
     public float speedTimer;
 
     public GameObject PauseUI;
@@ -54,6 +55,7 @@ public class GameManager : MonoBehaviour
     {
         potionCount = PlayerPrefs.GetInt("potionCount", 0);
         player = GameObject.FindGameObjectWithTag("Player");
+        Load();
     }
 
     // Update is called once per frame
@@ -271,6 +273,26 @@ public class GameManager : MonoBehaviour
             coinCount += 2000;
         }
         potionCount--;
+    }
+
+    public void Save()
+    {
+        PlayerPrefs.SetInt("Potions", potionCount);
+        PlayerPrefs.SetInt("Coins", coinCount);
+        PlayerPrefs.SetInt("Armor", armorUpgrade);
+        PlayerPrefs.SetInt("Sword", swordUpgrade);
+        PlayerPrefs.SetInt("Speed", speedUpgrade);
+        PlayerPrefs.SetInt("Floor", floor);
+    }
+
+    public void Load()
+    {
+        potionCount = PlayerPrefs.GetInt("Potions", 0);
+        coinCount = PlayerPrefs.GetInt("Coins", 0);
+        armorUpgrade = PlayerPrefs.GetInt("Armor", 0);
+        swordUpgrade = PlayerPrefs.GetInt("Sword", 0);
+        speedUpgrade = PlayerPrefs.GetInt("Speed", 0);
+        floor = PlayerPrefs.GetInt("Floor", 0);
     }
 
     public void GenerateNavMesh()
