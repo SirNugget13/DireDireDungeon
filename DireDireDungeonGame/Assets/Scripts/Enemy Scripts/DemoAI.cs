@@ -13,11 +13,17 @@ public class DemoAI : MonoBehaviour
     public int lastIndex;
     public float playerRange = 10;
     public float loseThePlayerDistance = 40;
+    public float swingAtThePlayerDistance = 5;
+    public GameObject Sword;
 
     public LayerMask layerMask;
 
     public float chaseSpeed = 6;
     public float wanderSpeed = 4;
+
+    public float swingCoolDown;
+    private float swingTimeCounter;
+    private bool canSwing;
 
     private Rigidbody2D rb;
     public string direction;
@@ -28,7 +34,8 @@ public class DemoAI : MonoBehaviour
     public enum State
     {
         Wander,
-        Chase
+        Chase,
+        Swing
     };
 
     public State state;
@@ -80,12 +87,33 @@ public class DemoAI : MonoBehaviour
 
             TargetPlayer();
 
-            if(TotalDistance > loseThePlayerDistance)
+            if (TotalDistance > loseThePlayerDistance)
             {
                 state = State.Wander;
             }
+            else if(TotalDistance < 5)
+            {
+                Swing();
+            }
+
+
         }
 
+        if(state == State.Swing)
+        {
+
+        }
+
+        if(canSwing == false)
+        {
+            swingTimeCounter += Time.deltaTime;
+
+            if(swingTimeCounter >= swingCoolDown)
+            {
+                canSwing = true;
+            }
+        }
+        
         directionCheck();
     }
 
@@ -221,6 +249,24 @@ public class DemoAI : MonoBehaviour
 
         //Debug.Log(count);
 
+    }
+
+    private void Swing()
+    {
+        Sword.SetActive(true);
+
+        agent.isStopped = true;
+
+        Vector3 rotation = new Vector3(0, 0, -60) + transform.rotation.eulerAngles;
+
+        Sword.LeanRotate(rotation, 0.5f);
+
+        this.Wait(0.5f, () =>
+        {
+            Sword.LeanRotate(rotation * -1, 0.5f);
+            Sword.SetActive(false);
+            agent.isStopped = false;
+        });
     }
 
 }
