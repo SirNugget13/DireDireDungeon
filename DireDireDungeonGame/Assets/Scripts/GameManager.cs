@@ -53,7 +53,10 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButtonDown("Pause"))
+        if (Input.GetButtonDown("Attack") && SceneManager.GetActiveScene().buildIndex == 0)
+            SceneManager.LoadScene(1);
+
+        if (Input.GetButtonDown("Pause") && SceneManager.GetActiveScene().buildIndex != 0)
         {
             if (IsPaused)
             {
@@ -114,8 +117,11 @@ public class GameManager : MonoBehaviour
             canvasKey.SetActive(true);
         }
 
-        canvasCoinCount.text = " x " + coinCount;
-        potionText.text = "Amount: " + potionCount;
+        if (SceneManager.GetActiveScene().buildIndex != 0)
+        {
+            canvasCoinCount.text = " x " + coinCount;
+            potionText.text = "Amount: " + potionCount;
+        }
     }
 
     void MoveSelect()
