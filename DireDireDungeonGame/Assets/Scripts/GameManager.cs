@@ -12,6 +12,9 @@ public class GameManager : MonoBehaviour
     public bool keyGotten;
     public int coinCount;
     public int potionCount;
+    public int armorUpgrade;
+    public int swordUpgrade;
+    public int speedUpgrade;
     public float speedTimer;
 
     public GameObject PauseUI;
@@ -29,6 +32,9 @@ public class GameManager : MonoBehaviour
     public TMPro.TextMeshProUGUI resume;
     public TMPro.TextMeshProUGUI quit;
     public TMPro.TextMeshProUGUI inventory;
+    public TMPro.TextMeshProUGUI armorText;
+    public TMPro.TextMeshProUGUI swordText;
+    public TMPro.TextMeshProUGUI speedText;
     public TMPro.TextMeshProUGUI potionText;
 
     public Image potions;
@@ -123,7 +129,10 @@ public class GameManager : MonoBehaviour
         {
             canvasCoinCount.text = " x " + coinCount;
             potionText.text = "Amount: " + potionCount;
-        }
+            armorText.text = "Armor: " + armorUpgrade;
+            swordText.text = "Sword: " + swordUpgrade;
+            speedText.text = "Speed: " + speedUpgrade;
+}
     }
 
     void MoveSelect()
