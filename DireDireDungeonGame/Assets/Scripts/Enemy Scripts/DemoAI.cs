@@ -21,7 +21,7 @@ public class DemoAI : MonoBehaviour
     public float chaseSpeed = 6;
     public float wanderSpeed = 4;
 
-    public float swingCoolDown;
+    public float swingCoolDown = 2;
     private float swingTimeCounter;
     private bool canSwing;
 
@@ -93,7 +93,7 @@ public class DemoAI : MonoBehaviour
             }
             else if(TotalDistance < 5)
             {
-                Swing();
+                state = State.Swing;
             }
 
 
@@ -101,7 +101,10 @@ public class DemoAI : MonoBehaviour
 
         if(state == State.Swing)
         {
-
+            if(canSwing)
+            {
+                Swing();
+            }
         }
 
         if(canSwing == false)
@@ -111,6 +114,7 @@ public class DemoAI : MonoBehaviour
             if(swingTimeCounter >= swingCoolDown)
             {
                 canSwing = true;
+                swingTimeCounter = 0;
             }
         }
         
@@ -266,6 +270,8 @@ public class DemoAI : MonoBehaviour
             Sword.LeanRotate(rotation * -1, 0.5f);
             Sword.SetActive(false);
             agent.isStopped = false;
+            canSwing = false;
+            state = State.Chase;
         });
     }
 
