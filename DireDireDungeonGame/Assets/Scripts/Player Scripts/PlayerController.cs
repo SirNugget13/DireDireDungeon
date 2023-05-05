@@ -89,7 +89,7 @@ public class PlayerController : MonoBehaviour
 
                 moveDir = new Vector3(inputHorizontal, inputVertical);
 
-                if (Input.GetButton("Roll"))
+                if (Input.GetButtonDown("Roll"))
                 {
                     if (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0)
                     {
