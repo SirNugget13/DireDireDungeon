@@ -6,7 +6,7 @@ using UnityEngine.AI;
 public class DemoAI : MonoBehaviour
 {
     public Vector3 target;
-    private NavMeshAgent agent;
+    public NavMeshAgent agent;
     private GameObject player;
     private RoomTemplates rt;
     public Transform curRoom;
