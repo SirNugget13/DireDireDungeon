@@ -195,6 +195,7 @@ public class GameManager : MonoBehaviour
             if (optionSelected == 2)
             {
                 Time.timeScale = 1;
+                Delete();
                 SceneManager.LoadScene(0);
             }
 
