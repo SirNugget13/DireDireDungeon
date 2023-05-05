@@ -30,6 +30,7 @@ public class GameManager : MonoBehaviour
     public GameObject pauseText;
     public GameObject inventoryUI;
 
+    public TMPro.TextMeshProUGUI highScore;
     public TMPro.TextMeshProUGUI resume;
     public TMPro.TextMeshProUGUI quit;
     public TMPro.TextMeshProUGUI inventory;
@@ -65,6 +66,9 @@ public class GameManager : MonoBehaviour
 
         if (Input.GetButtonDown("Attack") && scene == 0)
             SceneManager.LoadScene(1);
+
+        if (scene == 0)
+            highScore.text = "HighScore: " + PlayerPrefs.GetInt("HighScore", 0);
 
         if (Input.GetButtonDown("Pause") && scene != 0 && scene != 2)
         {
@@ -293,6 +297,18 @@ public class GameManager : MonoBehaviour
         swordUpgrade = PlayerPrefs.GetInt("Sword", 0);
         speedUpgrade = PlayerPrefs.GetInt("Speed", 0);
         floor = PlayerPrefs.GetInt("Floor", 0);
+    }
+
+    public void Delete()
+    {
+        if (floor > PlayerPrefs.GetInt("HighScore", 0))
+            PlayerPrefs.SetInt("HighScore", floor);
+        PlayerPrefs.SetInt("Potions", 0);
+        PlayerPrefs.SetInt("Coins", 0);
+        PlayerPrefs.SetInt("Armor", 0);
+        PlayerPrefs.SetInt("Sword", 0);
+        PlayerPrefs.SetInt("Speed", 0);
+        PlayerPrefs.SetInt("Floor", 0);
     }
 
     public void GenerateNavMesh()
