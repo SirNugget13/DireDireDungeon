@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class MerchantManager : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class MerchantManager : MonoBehaviour
     public TMPro.TextMeshProUGUI secondOptionText;
     public TMPro.TextMeshProUGUI thirdOptionText;
     public TMPro.TextMeshProUGUI fourthOptionText;
+    public TMPro.TextMeshProUGUI fifthOptionText;
     public Image swordIcon;
     public int optionSelected = 1;
 
@@ -37,7 +39,7 @@ public class MerchantManager : MonoBehaviour
             isButtonReset = false;
         }
 
-        if(verticalInput < 0 && optionSelected < 4 && isButtonReset)
+        if(verticalInput < 0 && optionSelected < 5 && isButtonReset)
         {
             optionSelected++;
             isButtonReset = false;
@@ -75,6 +77,11 @@ public class MerchantManager : MonoBehaviour
         {
             swordIcon.rectTransform.position = fourthOptionText.rectTransform.position + offset;
         }
+
+        if (optionSelected == 5)
+        {
+            swordIcon.rectTransform.position = fifthOptionText.rectTransform.position + offset;
+        }
     }
     void Select()
     {
@@ -98,6 +105,11 @@ public class MerchantManager : MonoBehaviour
         {
             Debug.Log("Speed Boots");
             gm.coinCount -= 50;
+        }
+        if (optionSelected == 5)
+        {
+            gm.Save();
+            SceneManager.LoadScene(1);
         }
     }
 }
