@@ -12,6 +12,7 @@ public class PortalScript2 : MonoBehaviour
         if (collision.gameObject.CompareTag("Player") && portal2DoTeleport)
         {
             collision.gameObject.GetComponent<Rigidbody2D>().MovePosition(ppS.portal1.transform.position);
+            collision.gameObject.GetComponent<PlayerController>().Invulerablity(3);
             ppS.portal1.GetComponent<PortalScript1>().portal1DoTeleport = false;
         }
     }

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Rendering.Universal;
 
 public class DemoAI : MonoBehaviour
 {
@@ -15,6 +16,7 @@ public class DemoAI : MonoBehaviour
     public float loseThePlayerDistance = 40;
     public float swingAtThePlayerDistance = 5;
     public GameObject Sword;
+    public GameObject enemyNoticeObject;
 
     public LayerMask layerMask;
 
@@ -29,7 +31,12 @@ public class DemoAI : MonoBehaviour
     public string direction;
     private float TotalDistance;
 
+    public Light2D l2d;
+    public Color wanderVision;
+    public Color chaseVision;
+
     private bool unotimes;
+    private bool isSwinging;
 
     public enum State
     {
@@ -50,6 +57,7 @@ public class DemoAI : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         rt = GameObject.FindGameObjectWithTag("Rooms").GetComponent<RoomTemplates>();
         state = State.Wander;
+        enemyNoticeObject.SetActive(false);
 
         SelectRandomRoom();
     }
@@ -72,7 +80,8 @@ public class DemoAI : MonoBehaviour
         if (state == State.Wander)
         {
             agent.speed = wanderSpeed;
-            
+            l2d.color = wanderVision;
+
             if(unotimes == false) { SelectRandomRoom(); unotimes = true; }
             
             target = curRoom.position;
@@ -83,7 +92,13 @@ public class DemoAI : MonoBehaviour
         {
             unotimes = false;
             
+            if(unotimes == false)
+            {
+                enemyNotice();
+            }
+
             agent.speed = chaseSpeed;
+            l2d.color = chaseVision;
 
             TargetPlayer();
 
@@ -101,7 +116,7 @@ public class DemoAI : MonoBehaviour
 
         if(state == State.Swing)
         {
-            if(canSwing)
+            if(canSwing && isSwinging == false)
             {
                 Swing();
             }
@@ -255,10 +270,21 @@ public class DemoAI : MonoBehaviour
 
     }
 
+    private void enemyNotice()
+    {
+        enemyNoticeObject.SetActive(true);
+
+        this.Wait(0.5f, () =>
+        {
+            enemyNoticeObject.SetActive(false);
+        });
+    }
+
     private void Swing()
     {
         Sword.SetActive(true);
 
+        isSwinging = true;
         agent.isStopped = true;
 
         Vector3 rotation = new Vector3(0, 0, -60) + transform.rotation.eulerAngles;
@@ -272,7 +298,10 @@ public class DemoAI : MonoBehaviour
             agent.isStopped = false;
             canSwing = false;
             state = State.Chase;
+            isSwinging = false;
         });
     }
+
+
 
 }

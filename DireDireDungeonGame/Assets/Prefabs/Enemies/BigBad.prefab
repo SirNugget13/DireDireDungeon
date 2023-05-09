@@ -256,6 +256,7 @@ MonoBehaviour:
   loseThePlayerDistance: 40
   swingAtThePlayerDistance: 5
   Sword: {fileID: 6679193659398672309}
+  enemyNoticeObject: {fileID: 0}
   layerMask:
     serializedVersion: 2
     m_Bits: 72

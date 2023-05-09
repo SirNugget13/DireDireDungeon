@@ -10,7 +10,8 @@ public class PlayerController : MonoBehaviour
     {
         Normal,
         Rolling,
-        Damaged
+        Damaged,
+        Invulerable
     }
 
     public enum Direction
@@ -27,6 +28,7 @@ public class PlayerController : MonoBehaviour
     public float speedLimiter;
     public float inputHorizontal;
     public float inputVertical;
+    public LayerMask InvulLayer;
     private float rollSpeed;
     public float rollForce;
     public float rollCooldown;
@@ -47,8 +49,6 @@ public class PlayerController : MonoBehaviour
     private Vector3 rollDir;
     private Color normColor;
     private BoxCollider2D bc;
-
-
     
     // Start is called before the first frame update
     void Start()
@@ -107,6 +107,7 @@ public class PlayerController : MonoBehaviour
                 if(canRoll)
                 {
                     sr.color = Color.yellow;
+
                     Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Enemy"));
                     Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Arrow"));
 
@@ -133,6 +134,27 @@ public class PlayerController : MonoBehaviour
             case State.Damaged:
 
                 sr.color = Color.red;
+
+                break;
+
+            case State.Invulerable:
+
+                inputHorizontal = Input.GetAxisRaw("Horizontal");
+                inputVertical = Input.GetAxisRaw("Vertical");
+
+                moveDir = new Vector3(inputHorizontal, inputVertical);
+
+                if (Input.GetButtonDown("Roll"))
+                {
+                    if (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0)
+                    {
+                        rollDir = moveDir;
+                        rollSpeed = rollForce;
+                        state = State.Rolling;
+                    }
+                }
+
+                SetDirection();
 
                 break;
         }
@@ -176,6 +198,25 @@ public class PlayerController : MonoBehaviour
                 {
                     state = State.Normal;
                 });
+
+                break;
+
+            case State.Invulerable:
+
+                if (inputHorizontal != 0 || inputVertical != 0)
+                {
+                    if (inputHorizontal != 0 && inputVertical != 0)
+                    {
+                        inputHorizontal *= speedLimiter;
+                        inputVertical *= speedLimiter;
+                    }
+
+                    rb.velocity = moveDir * speed;
+                }
+                else
+                {
+                    rb.velocity = new Vector2(0, 0);
+                }
 
                 break;
         }
@@ -223,6 +264,24 @@ public class PlayerController : MonoBehaviour
             Debug.Log("Player Hit!");
             sr.color = Color.red;
         }
+    }
+
+    public void Invulerablity(float InvulTime)
+    {
+        sr.color = Color.cyan;
+
+        state = State.Invulerable;
+
+        Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Enemy"));
+        Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Arrow"));
+
+        this.Wait(InvulTime, () =>
+        {
+            Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Enemy"), false);
+            Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Arrow"), false);
+            sr.color = normColor;
+            state = State.Normal;
+        });
     }
 
     public void SetDirection()
