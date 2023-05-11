@@ -6,12 +6,13 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField] private LayerMask LayerMask;
 
-    private enum State
+    public enum State
     {
         Normal,
         Rolling,
         Damaged,
-        Invulerable
+        Invulerable,
+        Stopped
     }
 
     public enum Direction
@@ -39,7 +40,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rb;
     private SpriteRenderer sr;
 
-    private State state;
+    public State state;
     public Direction direction;
 
     // Vector2 movement;
@@ -64,161 +65,165 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        switch (state)
+        if (state != State.Stopped)
         {
-            case State.Normal:
-                
-                if(canRoll == false)
-                {
-                    if(canRollTimer >= rollCooldown)
+            switch (state)
+            {
+                case State.Normal:
+
+                    if (canRoll == false)
                     {
-                        canRoll = true;
-                    } 
+                        if (canRollTimer >= rollCooldown)
+                        {
+                            canRoll = true;
+                        }
+                        else
+                        {
+                            canRollTimer += Time.deltaTime;
+                        }
+                    }
+
+                    sr.color = normColor;
+                    Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Enemy"), false);
+                    Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Arrow"), false);
+
+                    inputHorizontal = Input.GetAxisRaw("Horizontal");
+                    inputVertical = Input.GetAxisRaw("Vertical");
+
+                    moveDir = new Vector3(inputHorizontal, inputVertical);
+
+                    if (Input.GetButtonDown("Roll"))
+                    {
+                        if (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0)
+                        {
+                            rollDir = moveDir;
+                            rollSpeed = rollForce;
+                            state = State.Rolling;
+                        }
+                    }
+
+                    SetDirection();
+
+                    break;
+                case State.Rolling:
+
+                    if (canRoll)
+                    {
+                        sr.color = Color.yellow;
+
+                        Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Enemy"));
+                        Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Arrow"));
+
+                        float rollSpeedDropMultiplier = 100f;
+                        rollSpeed -= rollSpeedDropMultiplier * Time.deltaTime;
+
+
+                        float rollSpeedMinimum = 2f;
+
+                        if (rollSpeed < rollSpeedMinimum)
+                        {
+                            canRoll = false;
+                            canRollTimer = 0;
+                            state = State.Normal;
+                        }
+                    }
                     else
                     {
-                        canRollTimer += Time.deltaTime;
-                    }
-                }
-
-                sr.color = normColor;
-                Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Enemy"), false);
-                Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Arrow"), false);
-
-                inputHorizontal = Input.GetAxisRaw("Horizontal");
-                inputVertical = Input.GetAxisRaw("Vertical");
-
-                moveDir = new Vector3(inputHorizontal, inputVertical);
-
-                if (Input.GetButtonDown("Roll"))
-                {
-                    if (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0)
-                    {
-                        rollDir = moveDir;
-                        rollSpeed = rollForce;
-                        state = State.Rolling;
-                    }
-                }
-
-                SetDirection();
-
-                break;
-            case State.Rolling:
-                
-                if(canRoll)
-                {
-                    sr.color = Color.yellow;
-
-                    Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Enemy"));
-                    Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Arrow"));
-
-                    float rollSpeedDropMultiplier = 100f;
-                    rollSpeed -= rollSpeedDropMultiplier * Time.deltaTime;
-
-
-                    float rollSpeedMinimum = 2f;
-
-                    if (rollSpeed < rollSpeedMinimum)
-                    {
-                        canRoll = false;
-                        canRollTimer = 0;
                         state = State.Normal;
                     }
-                } 
-                else
-                {
-                    state = State.Normal;
-                }
 
-                break;
+                    break;
 
-            case State.Damaged:
+                case State.Damaged:
 
-                sr.color = Color.red;
+                    sr.color = Color.red;
 
-                break;
+                    break;
 
-            case State.Invulerable:
+                case State.Invulerable:
 
-                inputHorizontal = Input.GetAxisRaw("Horizontal");
-                inputVertical = Input.GetAxisRaw("Vertical");
+                    inputHorizontal = Input.GetAxisRaw("Horizontal");
+                    inputVertical = Input.GetAxisRaw("Vertical");
 
-                moveDir = new Vector3(inputHorizontal, inputVertical);
+                    moveDir = new Vector3(inputHorizontal, inputVertical);
 
-                if (Input.GetButtonDown("Roll"))
-                {
-                    if (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0)
+                    if (Input.GetButtonDown("Roll"))
                     {
-                        rollDir = moveDir;
-                        rollSpeed = rollForce;
-                        state = State.Rolling;
+                        if (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0)
+                        {
+                            rollDir = moveDir;
+                            rollSpeed = rollForce;
+                            state = State.Rolling;
+                        }
                     }
-                }
 
-                SetDirection();
+                    SetDirection();
 
-                break;
+                    break;
+            }
         }
-
-        
     }
 
     private void FixedUpdate()
     {
-        switch (state)
+        if(state != State.Stopped)
         {
-            case State.Normal:
+            switch (state)
+            {
+                case State.Normal:
 
-                if (inputHorizontal != 0 || inputVertical != 0)
-                {
-                    if (inputHorizontal != 0 && inputVertical != 0)
+                    if (inputHorizontal != 0 || inputVertical != 0)
                     {
-                        inputHorizontal *= speedLimiter;
-                        inputVertical *= speedLimiter;
+                        if (inputHorizontal != 0 && inputVertical != 0)
+                        {
+                            inputHorizontal *= speedLimiter;
+                            inputVertical *= speedLimiter;
+                        }
+
+                        rb.velocity = moveDir * speed;
+                    }
+                    else
+                    {
+                        rb.velocity = new Vector2(0, 0);
                     }
 
-                    rb.velocity = moveDir * speed;
-                }
-                else
-                {
-                    rb.velocity = new Vector2(0, 0);
-                }
+                    break;
+                case State.Rolling:
 
-                break;
-            case State.Rolling:
+                    rb.velocity = rollDir.normalized * rollSpeed;
 
-                rb.velocity = rollDir.normalized * rollSpeed;
+                    break;
 
-                break;
+                case State.Damaged:
 
-            case State.Damaged:
+                    rb.velocity = Vector2.zero;
 
-                rb.velocity = Vector2.zero;
-
-                this.Wait(0.2f, () =>
-                {
-                    state = State.Normal;
-                });
-
-                break;
-
-            case State.Invulerable:
-
-                if (inputHorizontal != 0 || inputVertical != 0)
-                {
-                    if (inputHorizontal != 0 && inputVertical != 0)
+                    this.Wait(0.2f, () =>
                     {
-                        inputHorizontal *= speedLimiter;
-                        inputVertical *= speedLimiter;
+                        state = State.Normal;
+                    });
+
+                    break;
+
+                case State.Invulerable:
+
+                    if (inputHorizontal != 0 || inputVertical != 0)
+                    {
+                        if (inputHorizontal != 0 && inputVertical != 0)
+                        {
+                            inputHorizontal *= speedLimiter;
+                            inputVertical *= speedLimiter;
+                        }
+
+                        rb.velocity = moveDir * speed;
+                    }
+                    else
+                    {
+                        rb.velocity = new Vector2(0, 0);
                     }
 
-                    rb.velocity = moveDir * speed;
-                }
-                else
-                {
-                    rb.velocity = new Vector2(0, 0);
-                }
-
-                break;
+                    break;
+            }
         }
     }
 

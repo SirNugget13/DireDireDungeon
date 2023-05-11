@@ -32,4 +32,14 @@ public class ArrowStick : MonoBehaviour
         }
 
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.CompareTag("PlayerSword"))
+        {
+            rb.velocity *= -1;
+            wholeArrow.transform.Rotate(new Vector3(0, 0, 180));
+            gameObject.layer = 11;
+        }
+    }
 }

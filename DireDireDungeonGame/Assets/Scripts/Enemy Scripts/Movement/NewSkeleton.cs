@@ -188,34 +188,15 @@ void Update()
     {
         if (collision.CompareTag("PlayerSword"))
         {
-            doMove = false;
-            isDead = true;
-            rb.velocity = Vector2.zero;
-            skeletonState = State.Idle;
+            Die(collision);
+        }
+    }
 
-            Vector2 oppositeDirection = (transform.position) - collision.transform.position;
-            rb.AddForce(
-                (oppositeDirection.normalized + gameObject.GetComponent<Rigidbody2D>().velocity) * 1200,
-                ForceMode2D.Impulse);
-
-            rb.constraints = RigidbodyConstraints2D.FreezeRotation;
-
-            this.Wait(0.2f, () =>
-            {
-                rb.velocity = Vector2.zero;
-
-                cc.enabled = false;
-
-                anim.SetTrigger("DoExplosion");
-
-                this.Wait(1.2f, () =>
-                {
-                    Instantiate(coinSpawner, transform.position, Quaternion.identity);
-                    Destroy(parentPrefab);
-                });
-
-            });
-
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Arrow")
+        {
+            Die(collision);
         }
     }
 
@@ -302,6 +283,68 @@ void Update()
         }
 
         skc.ShootBow(player.transform.position - transform.position, new Vector3(0, 0, angleInDegrees));//Uses the function in the skeleton combat to fire using the direction
+    }
+
+    void Die(Collider2D collision)
+    {
+        doMove = false;
+        isDead = true;
+        rb.velocity = Vector2.zero;
+        skeletonState = State.Idle;
+
+        Vector2 oppositeDirection = (transform.position) - collision.transform.position;
+        rb.AddForce(
+            (oppositeDirection.normalized + gameObject.GetComponent<Rigidbody2D>().velocity) * 1200,
+            ForceMode2D.Impulse);
+
+        rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+
+        this.Wait(0.2f, () =>
+        {
+            rb.velocity = Vector2.zero;
+
+            cc.enabled = false;
+
+            anim.SetTrigger("DoExplosion");
+
+            this.Wait(1.2f, () =>
+            {
+                Instantiate(coinSpawner, transform.position, Quaternion.identity);
+                Destroy(parentPrefab);
+            });
+
+        });
+    }
+
+    void Die(Collision2D collision)
+    {
+        doMove = false;
+        isDead = true;
+        rb.velocity = Vector2.zero;
+        skeletonState = State.Idle;
+
+        Vector2 oppositeDirection = (transform.position) - collision.transform.position;
+        rb.AddForce(
+            (oppositeDirection.normalized + gameObject.GetComponent<Rigidbody2D>().velocity) * 1200,
+            ForceMode2D.Impulse);
+
+        rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+
+        this.Wait(0.2f, () =>
+        {
+            rb.velocity = Vector2.zero;
+
+            cc.enabled = false;
+
+            anim.SetTrigger("DoExplosion");
+
+            this.Wait(1.2f, () =>
+            {
+                Instantiate(coinSpawner, transform.position, Quaternion.identity);
+                Destroy(parentPrefab);
+            });
+
+        });
     }
 
     private void enemyNoticeCheck(State state)

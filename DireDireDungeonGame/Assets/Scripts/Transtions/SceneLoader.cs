@@ -14,6 +14,9 @@ public class SceneLoader : MonoBehaviour
 
     private void Start()
     {
+        PlayerController player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+        player.state = PlayerController.State.Stopped;
+        
         fader.gameObject.SetActive(true);
 
         if(GameAudio != null)
@@ -25,7 +28,7 @@ public class SceneLoader : MonoBehaviour
             StartCoroutine(FadeMixerGroup.StartFade(GameAudio, "EffectsVolume", 1.5f, 0.8f));
         }
 
-        this.Wait(0.3f, () =>
+        this.Wait(1f, () =>
         {
             if (ReWoosh != null){ ReWoosh.PlayDelayed(0); }
             
@@ -33,6 +36,7 @@ public class SceneLoader : MonoBehaviour
             LeanTween.scale(fader, Vector3.zero, 1.2f).setEase(LeanTweenType.easeInBack).setOnComplete(() =>
             {
                 fader.gameObject.SetActive(false);
+                player.state = PlayerController.State.Normal;
             });
         });
     }

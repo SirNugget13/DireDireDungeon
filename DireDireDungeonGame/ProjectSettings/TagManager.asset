@@ -23,6 +23,8 @@ TagManager:
   - RoomSpawnZone
   - GameManager
   - EnemyParent
+  - SceneLoader
+  - Portal
   layers:
   - Default
   - TransparentFX
@@ -35,7 +37,7 @@ TagManager:
   - Skeleton
   - Arrow
   - background
-  - 
+  - ReflectedArrow
   - 
   - 
   - 

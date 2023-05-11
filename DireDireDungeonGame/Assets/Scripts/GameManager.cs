@@ -38,6 +38,7 @@ public class GameManager : MonoBehaviour
     public TMPro.TextMeshProUGUI swordText;
     public TMPro.TextMeshProUGUI speedText;
     public TMPro.TextMeshProUGUI potionText;
+    public TMPro.TextMeshProUGUI FloorNumber;
 
     public Image potions;
     public Image back;
@@ -66,6 +67,11 @@ public class GameManager : MonoBehaviour
 
         if (Input.GetButtonDown("Attack") && scene == 0)
             SceneManager.LoadScene(1);
+
+        if(SceneManager.GetActiveScene().buildIndex == 1)
+        {
+            FloorNumber.text = "Floor: " + floor;
+        }
 
         if (scene == 0)
             highScore.text = "HighScore: " + PlayerPrefs.GetInt("HighScore", 0);
@@ -314,7 +320,7 @@ public class GameManager : MonoBehaviour
 
     public void GenerateNavMesh()
     {
-        Debug.Log("yabob");
+        //Debug.Log("yabob");
         navSurface.BuildNavMesh();
     }
 }

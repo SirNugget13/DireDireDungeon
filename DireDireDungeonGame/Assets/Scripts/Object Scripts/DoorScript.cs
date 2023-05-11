@@ -6,11 +6,12 @@ using UnityEngine.SceneManagement;
 public class DoorScript : MonoBehaviour
 {
     private GameManager gm;
+    private SceneLoader sl;
 
     private void Start()
     {
         gm = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
-        
+        sl = GameObject.FindGameObjectWithTag("SceneLoader").GetComponent<SceneLoader>();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -20,12 +21,17 @@ public class DoorScript : MonoBehaviour
             if(gm.keyGotten)
             {
                 gm.floor++;
+                
                 gm.Save();
+                
                 if (gm.floor % 5 == 0)
-                    SceneManager.LoadScene(2);
+                {
+                    sl.LoadScenes(2);
+                }
                 else
-                    SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-
+                {
+                    sl.ReloadScene();
+                }
                 Debug.Log("Door open!");
             }
         }
