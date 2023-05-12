@@ -26,10 +26,20 @@ public class ArrowStick : MonoBehaviour
             });
         }
 
-        if(collision.gameObject.CompareTag("Player"))
+        if (collision.gameObject.CompareTag("Player"))
         {
             Destroy(wholeArrow);
         }
+
+        if (gameObject.CompareTag("ReflectedArrow"))
+        {
+            if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Enemy") || collision.gameObject.CompareTag("Skeleton") || collision.gameObject.CompareTag("BigBad"))
+            {
+                Destroy(wholeArrow);
+            }
+        }
+
+        
 
     }
 
@@ -39,7 +49,8 @@ public class ArrowStick : MonoBehaviour
         {
             rb.velocity *= -1;
             wholeArrow.transform.Rotate(new Vector3(0, 0, 180));
-            gameObject.layer = 11;
+            gameObject.tag = "ReflectedArrow";
+            wholeArrow.tag = "ReflectedArrow";
         }
     }
 }

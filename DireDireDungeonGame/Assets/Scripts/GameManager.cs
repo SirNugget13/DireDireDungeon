@@ -9,6 +9,8 @@ public class GameManager : MonoBehaviour
 {
     private GameObject player;
 
+    public SceneLoader sl;
+
     public bool keyGotten;
     public int coinCount;
     public int potionCount;
@@ -55,6 +57,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        sl = GameObject.FindGameObjectWithTag("SceneLoader").GetComponent<SceneLoader>();
         potionCount = PlayerPrefs.GetInt("potionCount", 0);
         player = GameObject.FindGameObjectWithTag("Player");
         Load();
@@ -66,7 +69,16 @@ public class GameManager : MonoBehaviour
         int scene = SceneManager.GetActiveScene().buildIndex;
 
         if (Input.GetButtonDown("Attack") && scene == 0)
-            SceneManager.LoadScene(1);
+        {
+            sl.LoadScenes(1);
+            //SceneManager.LoadScene(1);
+            floor = 1;
+            coinCount = 0;
+
+            PlayerPrefs.SetInt("Floor", floor);
+            PlayerPrefs.SetInt("Coins", coinCount);
+        }
+            
 
         if(SceneManager.GetActiveScene().buildIndex == 1)
         {

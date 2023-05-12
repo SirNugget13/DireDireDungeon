@@ -194,7 +194,9 @@ void Update()
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "Arrow")
+        Debug.Log(collision.gameObject.tag);
+        
+        if (collision.gameObject.tag == "ReflectedArrow")
         {
             Die(collision);
         }

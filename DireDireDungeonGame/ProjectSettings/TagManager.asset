@@ -25,6 +25,8 @@ TagManager:
   - EnemyParent
   - SceneLoader
   - Portal
+  - ReflectedArrow
+  - BigBad
   layers:
   - Default
   - TransparentFX

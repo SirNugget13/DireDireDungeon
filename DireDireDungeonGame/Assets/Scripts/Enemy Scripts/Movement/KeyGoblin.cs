@@ -141,38 +141,76 @@ public class KeyGoblin : MonoBehaviour
     {
         if (collision.CompareTag("PlayerSword"))
         {
-            doMove = false;
-            isDead = true;
+            Die(collision);
+        }
+    }
+
+    public void Die(Collider2D collision)
+    {
+        doMove = false;
+        isDead = true;
+        rb.velocity = Vector2.zero;
+        goblinState = State.Idle;
+
+        Vector2 oppositeDirection = (transform.position) - collision.transform.position;
+        rb.AddForce(
+            (oppositeDirection.normalized + gameObject.GetComponent<Rigidbody2D>().velocity) * 1200,
+            ForceMode2D.Impulse);
+
+        rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+
+
+
+        this.Wait(0.2f, () =>
+        {
             rb.velocity = Vector2.zero;
-            goblinState = State.Idle;
 
-            Vector2 oppositeDirection = (transform.position) - collision.transform.position;
-            rb.AddForce(
-                (oppositeDirection.normalized + gameObject.GetComponent<Rigidbody2D>().velocity) * 1200,
-                ForceMode2D.Impulse);
+            cc.enabled = false;
 
-            rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+            anim.SetTrigger("DoExplosion");
+            Instantiate(key, transform.position + new Vector3(0, 0, 3), Quaternion.identity);
+            //Instantiate(endroomPortal, transform.position + new Vector3(0, 0, 3), Quaternion.identity);
 
-
-
-            this.Wait(0.2f, () =>
+            this.Wait(1.2f, () =>
             {
-                rb.velocity = Vector2.zero;
-
-                cc.enabled = false;
-
-                anim.SetTrigger("DoExplosion");
-                Instantiate(key, transform.position + new Vector3(0, 0, 3), Quaternion.identity);
-                //Instantiate(endroomPortal, transform.position + new Vector3(0, 0, 3), Quaternion.identity);
-
-                this.Wait(1.2f, () =>
-                {
-                    Destroy(parentPrefab);
-                });
-
+                Destroy(parentPrefab);
             });
 
-        }
+        });
+    }
+
+    public void Die(Collision2D collision)
+    {
+        doMove = false;
+        isDead = true;
+        rb.velocity = Vector2.zero;
+        goblinState = State.Idle;
+
+        Vector2 oppositeDirection = (transform.position) - collision.transform.position;
+        rb.AddForce(
+            (oppositeDirection.normalized + gameObject.GetComponent<Rigidbody2D>().velocity) * 1200,
+            ForceMode2D.Impulse);
+
+        rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+
+
+
+        this.Wait(0.2f, () =>
+        {
+            rb.velocity = Vector2.zero;
+
+            cc.enabled = false;
+
+            anim.SetTrigger("DoExplosion");
+            Instantiate(key, transform.position + new Vector3(0, 0, 3), Quaternion.identity);
+            //Instantiate(endroomPortal, transform.position + new Vector3(0, 0, 3), Quaternion.identity);
+
+            this.Wait(1.2f, () =>
+            {
+                Destroy(parentPrefab);
+            });
+
+        });
     }
 
     private void goblinTurn(string direction)
