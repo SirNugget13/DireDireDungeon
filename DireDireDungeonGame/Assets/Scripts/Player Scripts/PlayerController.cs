@@ -6,6 +6,10 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField] private LayerMask LayerMask;
 
+    public CapsuleCollider2D swordHitbox;
+    public bool hasArmor;
+    public bool hasSpeedBoots;
+
     public enum State
     {
         Normal,

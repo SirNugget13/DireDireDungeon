@@ -14,6 +14,12 @@ public class MerchantManager : MonoBehaviour
     public TMPro.TextMeshProUGUI thirdOptionText;
     public TMPro.TextMeshProUGUI fourthOptionText;
     public TMPro.TextMeshProUGUI fifthOptionText;
+
+    public Image soldOut1;
+    public Image soldOut2;
+    public Image soldOut3;
+    public Image soldOut4;
+
     public Image swordIcon;
     public int optionSelected = 1;
 
@@ -21,10 +27,13 @@ public class MerchantManager : MonoBehaviour
 
     public bool isButtonReset;
 
+    private SceneLoader sl;
+
     // Start is called before the first frame update
     void Start()
     {
-        toptext.text = "ertbh";
+        toptext.text = "Merchant:\nWelcome to the shop! Buy my wares!";
+        sl = GameObject.FindGameObjectWithTag("SceneLoader").GetComponent<SceneLoader>();
     }
 
     // Update is called once per frame
@@ -109,7 +118,7 @@ public class MerchantManager : MonoBehaviour
         if (optionSelected == 5)
         {
             gm.Save();
-            SceneManager.LoadScene(1);
+            sl.LoadScenes(1);
         }
     }
 }

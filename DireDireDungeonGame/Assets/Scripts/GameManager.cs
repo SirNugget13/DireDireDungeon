@@ -45,6 +45,8 @@ public class GameManager : MonoBehaviour
     public Image potions;
     public Image back;
 
+    public Image playerSprite;
+
     public Image selector;
     public Image invSelector;
 
@@ -61,6 +63,7 @@ public class GameManager : MonoBehaviour
         potionCount = PlayerPrefs.GetInt("potionCount", 0);
         player = GameObject.FindGameObjectWithTag("Player");
         Load();
+        playerSprite.sprite = player.GetComponent<SpriteRenderer>().sprite;
     }
 
     // Update is called once per frame
@@ -74,9 +77,11 @@ public class GameManager : MonoBehaviour
             //SceneManager.LoadScene(1);
             floor = 1;
             coinCount = 0;
+            potionCount = 0;
 
             PlayerPrefs.SetInt("Floor", floor);
             PlayerPrefs.SetInt("Coins", coinCount);
+            PlayerPrefs.SetInt("Potions", potionCount);
         }
             
 
@@ -149,9 +154,10 @@ public class GameManager : MonoBehaviour
             canvasKey.SetActive(true);
         }
 
+        if(scene != 0) { canvasCoinCount.text = " x " + coinCount; }
+
         if (scene != 0 && scene != 2)
         {
-            canvasCoinCount.text = " x " + coinCount;
             potionText.text = "Amount: " + potionCount;
             armorText.text = "Armor: " + armorUpgrade;
             swordText.text = "Sword: " + swordUpgrade;
