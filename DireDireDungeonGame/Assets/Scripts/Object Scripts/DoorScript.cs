@@ -18,7 +18,7 @@ public class DoorScript : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.CompareTag("Player"))
+        if (collision.gameObject.CompareTag("Player") && gm.keyGotten == true)
         {
             pc.Invulerablity(6);
             

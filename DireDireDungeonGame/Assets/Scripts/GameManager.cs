@@ -8,6 +8,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     private GameObject player;
+    private PlayerController pc;
 
     public SceneLoader sl;
 
@@ -61,9 +62,16 @@ public class GameManager : MonoBehaviour
     {
         sl = GameObject.FindGameObjectWithTag("SceneLoader").GetComponent<SceneLoader>();
         potionCount = PlayerPrefs.GetInt("potionCount", 0);
-        player = GameObject.FindGameObjectWithTag("Player");
         Load();
-        playerSprite.sprite = player.GetComponent<SpriteRenderer>().sprite;
+
+        UpgradeText();
+
+        if(GameObject.FindGameObjectWithTag("Player") != null)
+        {
+            player = GameObject.FindGameObjectWithTag("Player");
+            pc = player.GetComponent<PlayerController>();
+            playerSprite.sprite = player.GetComponent<SpriteRenderer>().sprite;
+        }
     }
 
     // Update is called once per frame
@@ -78,10 +86,16 @@ public class GameManager : MonoBehaviour
             floor = 1;
             coinCount = 0;
             potionCount = 0;
+            armorUpgrade = 0;
+            speedUpgrade = 0;
+            swordUpgrade = 0;
 
-            PlayerPrefs.SetInt("Floor", floor);
-            PlayerPrefs.SetInt("Coins", coinCount);
             PlayerPrefs.SetInt("Potions", potionCount);
+            PlayerPrefs.SetInt("Coins", coinCount);
+            PlayerPrefs.SetInt("Armor", armorUpgrade);
+            PlayerPrefs.SetInt("Sword", swordUpgrade);
+            PlayerPrefs.SetInt("Speed", speedUpgrade);
+            PlayerPrefs.SetInt("Floor", floor);
         }
             
 
@@ -155,14 +169,6 @@ public class GameManager : MonoBehaviour
         }
 
         if(scene != 0) { canvasCoinCount.text = " x " + coinCount; }
-
-        if (scene != 0 && scene != 2)
-        {
-            potionText.text = "Amount: " + potionCount;
-            armorText.text = "Armor: " + armorUpgrade;
-            swordText.text = "Sword: " + swordUpgrade;
-            speedText.text = "Speed: " + speedUpgrade;
-}
     }
 
     void MoveSelect()
@@ -225,6 +231,7 @@ public class GameManager : MonoBehaviour
 
             if (optionSelected == 3)
             {
+                UpgradeText();
                 pauseStage = 2;
                 pauseText.SetActive(false);
                 inventoryUI.SetActive(true);
@@ -336,6 +343,73 @@ public class GameManager : MonoBehaviour
         PlayerPrefs.SetInt("Floor", 0);
     }
 
+    public void UpgradeApplier()
+    {
+        if(armorUpgrade == 1)
+        {
+            pc.hasArmor = true;
+        }
+
+        if(speedUpgrade == 1)
+        {
+            pc.hasSpeedBoots = true;
+        }
+
+        if(swordUpgrade > 0)
+        {
+            if(swordUpgrade == 1)
+            {
+                pc.swordHitbox.offset = new Vector2(1.35f, 0);
+                pc.swordHitbox.size = new Vector2(1.6f, 2.5f);
+            }
+
+            if (swordUpgrade == 2)
+            {
+                pc.swordHitbox.offset = new Vector2(1.5f, 0);
+                pc.swordHitbox.size = new Vector2(2f, 2.5f);
+            }
+
+            if (swordUpgrade == 3)
+            {
+                pc.swordHitbox.offset = new Vector2(1.75f, 0);
+                pc.swordHitbox.size = new Vector2(2.4f, 2.9f);
+            }
+        }
+    }
+
+    void UpgradeText()
+    {
+        if (armorUpgrade == 1)
+        {
+            armorText.text = "Armor: Equipped";
+        }
+        else { armorText.text = "Armor: Not equipped"; }
+
+        if (speedUpgrade == 1)
+        {
+            speedText.text = "Running Speed: 140%";
+        }
+        else { speedText.text = "100%"; }
+
+        if (swordUpgrade > 0)
+        {
+            if (swordUpgrade == 1)
+            {
+                swordText.text = "Sword Reach: 133%";
+            }
+
+            if (swordUpgrade == 2)
+            {
+                swordText.text = "Sword Reach: 166%";
+            }
+
+            if (swordUpgrade == 3)
+            {
+                swordText.text = "Sword Reach: 200%";
+            }
+        }
+        else { swordText.text = "Sword Reach: 100%"; }
+    }
     public void GenerateNavMesh()
     {
         //Debug.Log("yabob");

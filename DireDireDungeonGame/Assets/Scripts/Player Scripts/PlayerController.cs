@@ -238,6 +238,16 @@ public class PlayerController : MonoBehaviour
             state = State.Damaged;
             Debug.Log("Player Hit!");
             sr.color = Color.red;
+
+            if(hasArmor)
+            {
+                hasArmor = false;
+            }
+            else
+            {
+                Die();
+            }
+
         }
 
         if (collision.CompareTag("Key"))
@@ -273,6 +283,12 @@ public class PlayerController : MonoBehaviour
             Debug.Log("Player Hit!");
             sr.color = Color.red;
         }
+    }
+
+    public void Die()
+    {
+        //Do death animation
+        //Load the gameover screen;
     }
 
     public void Invulerablity(float InvulTime)

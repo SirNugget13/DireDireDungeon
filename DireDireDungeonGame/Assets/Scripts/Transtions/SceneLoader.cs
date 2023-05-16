@@ -12,10 +12,15 @@ public class SceneLoader : MonoBehaviour
     public AudioSource Woosh;
     public AudioSource ReWoosh;
 
+    private PlayerController player;
+
     private void Start()
     {
-        PlayerController player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
-        player.state = PlayerController.State.Stopped;
+        if(GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>() != null)
+        {
+            PlayerController player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+            player.state = PlayerController.State.Stopped;
+        }
         
         fader.gameObject.SetActive(true);
 
