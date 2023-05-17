@@ -97,51 +97,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1766079812138254663, guid: 38e4d5cb471877e4b93d20f012b523b2,
         type: 3}
-      propertyPath: l2d
-      value: 
-      objectReference: {fileID: 3081825486966913073}
-    - target: {fileID: 1766079812138254663, guid: 38e4d5cb471877e4b93d20f012b523b2,
-        type: 3}
-      propertyPath: chaseVision.a
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1766079812138254663, guid: 38e4d5cb471877e4b93d20f012b523b2,
-        type: 3}
-      propertyPath: chaseVision.b
-      value: 0.026367448
-      objectReference: {fileID: 0}
-    - target: {fileID: 1766079812138254663, guid: 38e4d5cb471877e4b93d20f012b523b2,
-        type: 3}
-      propertyPath: chaseVision.g
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1766079812138254663, guid: 38e4d5cb471877e4b93d20f012b523b2,
-        type: 3}
-      propertyPath: chaseVision.r
-      value: 0.9528302
-      objectReference: {fileID: 0}
-    - target: {fileID: 1766079812138254663, guid: 38e4d5cb471877e4b93d20f012b523b2,
-        type: 3}
-      propertyPath: wanderVision.a
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1766079812138254663, guid: 38e4d5cb471877e4b93d20f012b523b2,
-        type: 3}
-      propertyPath: wanderVision.b
-      value: 0.41037738
-      objectReference: {fileID: 0}
-    - target: {fileID: 1766079812138254663, guid: 38e4d5cb471877e4b93d20f012b523b2,
-        type: 3}
-      propertyPath: wanderVision.g
-      value: 0.77807564
-      objectReference: {fileID: 0}
-    - target: {fileID: 1766079812138254663, guid: 38e4d5cb471877e4b93d20f012b523b2,
-        type: 3}
-      propertyPath: wanderVision.r
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1766079812138254663, guid: 38e4d5cb471877e4b93d20f012b523b2,
-        type: 3}
       propertyPath: enemyNoticeObject
       value: 
       objectReference: {fileID: 430846922137622455}
@@ -152,18 +107,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 38e4d5cb471877e4b93d20f012b523b2, type: 3}
---- !u!114 &3081825486966913073 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1123446299571152567, guid: 38e4d5cb471877e4b93d20f012b523b2,
-    type: 3}
-  m_PrefabInstance: {fileID: 2689668803704528518}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 073797afb82c5a1438f328866b10b3f0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &4454622696600199106 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1766079812138254660, guid: 38e4d5cb471877e4b93d20f012b523b2,

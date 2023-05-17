@@ -16,11 +16,11 @@ public class SceneLoader : MonoBehaviour
 
     private void Start()
     {
-        if(GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>() != null)
+        if(SceneManager.GetActiveScene().buildIndex == 1)
         {
             PlayerController player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
             player.state = PlayerController.State.Stopped;
-        }
+        }    
         
         fader.gameObject.SetActive(true);
 
@@ -41,7 +41,7 @@ public class SceneLoader : MonoBehaviour
             LeanTween.scale(fader, Vector3.zero, 1.2f).setEase(LeanTweenType.easeInBack).setOnComplete(() =>
             {
                 fader.gameObject.SetActive(false);
-                player.state = PlayerController.State.Normal;
+                if (SceneManager.GetActiveScene().buildIndex == 1) { player.state = PlayerController.State.Normal; }
             });
         });
     }

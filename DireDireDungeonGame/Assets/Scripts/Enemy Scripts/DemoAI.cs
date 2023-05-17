@@ -18,6 +18,8 @@ public class DemoAI : MonoBehaviour
     public GameObject Sword;
     public GameObject enemyNoticeObject;
 
+    public BigBadCombat bbc;
+
     public LayerMask layerMask;
 
     public float chaseSpeed = 6;
@@ -119,6 +121,7 @@ public class DemoAI : MonoBehaviour
             if(canSwing && isSwinging == false)
             {
                 Swing();
+                bbc.Swing();
             }
         }
 
@@ -299,6 +302,7 @@ public class DemoAI : MonoBehaviour
             canSwing = false;
             state = State.Chase;
             isSwinging = false;
+            bbc.DoneSwinging();
         });
     }
 

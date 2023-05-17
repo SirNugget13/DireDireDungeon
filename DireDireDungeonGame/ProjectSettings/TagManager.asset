@@ -27,6 +27,7 @@ TagManager:
   - Portal
   - ReflectedArrow
   - BigBad
+  - BigBadSwing
   layers:
   - Default
   - TransparentFX

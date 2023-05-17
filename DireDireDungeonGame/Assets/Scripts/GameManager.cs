@@ -196,11 +196,13 @@ public class GameManager : MonoBehaviour
             if (optionSelected == 1)
             {
                 invSelector.rectTransform.position = potions.rectTransform.position + offset;
+                invSelector.rectTransform.sizeDelta = new Vector2(325, 375);
             }
 
             if (optionSelected == 2)
             {
                 invSelector.rectTransform.position = back.rectTransform.position + offset;
+                invSelector.rectTransform.sizeDelta = new Vector2(325, 100);
             }
         }
     }
@@ -226,7 +228,7 @@ public class GameManager : MonoBehaviour
             {
                 Time.timeScale = 1;
                 Delete();
-                SceneManager.LoadScene(0);
+                sl.LoadScenes(0);
             }
 
             if (optionSelected == 3)
@@ -389,7 +391,7 @@ public class GameManager : MonoBehaviour
         {
             speedText.text = "Running Speed: 140%";
         }
-        else { speedText.text = "100%"; }
+        else { speedText.text = "Running Speed: 100%"; }
 
         if (swordUpgrade > 0)
         {

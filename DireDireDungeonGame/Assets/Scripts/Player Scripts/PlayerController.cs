@@ -9,6 +9,9 @@ public class PlayerController : MonoBehaviour
     public CapsuleCollider2D swordHitbox;
     public bool hasArmor;
     public bool hasSpeedBoots;
+    public bool isDead;
+
+    public GameObject armorObject;
 
     public enum State
     {
@@ -64,6 +67,7 @@ public class PlayerController : MonoBehaviour
         state = State.Normal;
         direction = Direction.Right;
         normColor = sr.color;
+        isDead = false;
     }
 
     // Update is called once per frame
@@ -236,7 +240,7 @@ public class PlayerController : MonoBehaviour
         if(collision.CompareTag("GoblinSword") && state == State.Normal)
         {
             state = State.Damaged;
-            Debug.Log("Player Hit!");
+            //Debug.Log("Player Hit!");
             sr.color = Color.red;
 
             if(hasArmor)
@@ -245,7 +249,7 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
-                Die();
+                CheckDie();
             }
 
         }
@@ -282,13 +286,31 @@ public class PlayerController : MonoBehaviour
             state = State.Damaged;
             Debug.Log("Player Hit!");
             sr.color = Color.red;
+            CheckDie();
         }
     }
 
-    public void Die()
+    public void CheckDie()
     {
-        //Do death animation
-        //Load the gameover screen;
+        if(hasArmor)
+        {
+            RemoveArmor();
+        }
+        else
+        {
+            //Debug.Log("DEAD");
+            isDead = true;
+            rb.velocity = Vector2.zero;
+            rb.bodyType = RigidbodyType2D.Kinematic;
+            //play death animation
+            //slow camera zoom out?
+        }
+    }
+
+    void RemoveArmor()
+    {
+        hasArmor = false;
+        //play armor falling off animation
     }
 
     public void Invulerablity(float InvulTime)
