@@ -2610,65 +2610,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1690580703}
   m_CullTransparentMesh: 1
---- !u!1 &1787017081
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1787017083}
-  - component: {fileID: 1787017082}
-  m_Layer: 0
-  m_Name: MerchantManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1787017082
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1787017081}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b5b024efe9c18645909a2b92499ee71, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gm: {fileID: 2060047922}
-  merchantText: {fileID: 1434701153}
-  firstOptionText: {fileID: 1080056267}
-  secondOptionText: {fileID: 1690580705}
-  thirdOptionText: {fileID: 169661061}
-  fourthOptionText: {fileID: 1251028317}
-  fifthOptionText: {fileID: 842236890}
-  soldOut1: {fileID: 1617429610}
-  soldOut2: {fileID: 2074708334}
-  soldOut3: {fileID: 1140763038}
-  soldOut4: {fileID: 814269562}
-  swordIcon: {fileID: 770898729}
-  optionSelected: 1
-  offset: {x: -135, y: 0, z: 0}
-  isButtonReset: 0
---- !u!4 &1787017083
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1787017081}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.17504978, y: -1, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1838105512
 GameObject:
   m_ObjectHideFlags: 0
@@ -3022,3 +2963,152 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2074708332}
   m_CullTransparentMesh: 1
+--- !u!1001 &4383690222538197663
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4383690224241065444, guid: 07aac4b1c50777f4c9862b4ea581ba28,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4383690224241065444, guid: 07aac4b1c50777f4c9862b4ea581ba28,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.17504978
+      objectReference: {fileID: 0}
+    - target: {fileID: 4383690224241065444, guid: 07aac4b1c50777f4c9862b4ea581ba28,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4383690224241065444, guid: 07aac4b1c50777f4c9862b4ea581ba28,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4383690224241065444, guid: 07aac4b1c50777f4c9862b4ea581ba28,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4383690224241065444, guid: 07aac4b1c50777f4c9862b4ea581ba28,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4383690224241065444, guid: 07aac4b1c50777f4c9862b4ea581ba28,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4383690224241065444, guid: 07aac4b1c50777f4c9862b4ea581ba28,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4383690224241065444, guid: 07aac4b1c50777f4c9862b4ea581ba28,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4383690224241065444, guid: 07aac4b1c50777f4c9862b4ea581ba28,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4383690224241065444, guid: 07aac4b1c50777f4c9862b4ea581ba28,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4383690224241065445, guid: 07aac4b1c50777f4c9862b4ea581ba28,
+        type: 3}
+      propertyPath: gm
+      value: 
+      objectReference: {fileID: 2060047922}
+    - target: {fileID: 4383690224241065445, guid: 07aac4b1c50777f4c9862b4ea581ba28,
+        type: 3}
+      propertyPath: soldOut1
+      value: 
+      objectReference: {fileID: 1617429610}
+    - target: {fileID: 4383690224241065445, guid: 07aac4b1c50777f4c9862b4ea581ba28,
+        type: 3}
+      propertyPath: soldOut2
+      value: 
+      objectReference: {fileID: 2074708334}
+    - target: {fileID: 4383690224241065445, guid: 07aac4b1c50777f4c9862b4ea581ba28,
+        type: 3}
+      propertyPath: soldOut3
+      value: 
+      objectReference: {fileID: 1140763038}
+    - target: {fileID: 4383690224241065445, guid: 07aac4b1c50777f4c9862b4ea581ba28,
+        type: 3}
+      propertyPath: soldOut4
+      value: 
+      objectReference: {fileID: 814269562}
+    - target: {fileID: 4383690224241065445, guid: 07aac4b1c50777f4c9862b4ea581ba28,
+        type: 3}
+      propertyPath: armorCost
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 4383690224241065445, guid: 07aac4b1c50777f4c9862b4ea581ba28,
+        type: 3}
+      propertyPath: speedCost
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 4383690224241065445, guid: 07aac4b1c50777f4c9862b4ea581ba28,
+        type: 3}
+      propertyPath: swordCost
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 4383690224241065445, guid: 07aac4b1c50777f4c9862b4ea581ba28,
+        type: 3}
+      propertyPath: swordIcon
+      value: 
+      objectReference: {fileID: 770898729}
+    - target: {fileID: 4383690224241065445, guid: 07aac4b1c50777f4c9862b4ea581ba28,
+        type: 3}
+      propertyPath: potionCost
+      value: 125
+      objectReference: {fileID: 0}
+    - target: {fileID: 4383690224241065445, guid: 07aac4b1c50777f4c9862b4ea581ba28,
+        type: 3}
+      propertyPath: merchantText
+      value: 
+      objectReference: {fileID: 1434701153}
+    - target: {fileID: 4383690224241065445, guid: 07aac4b1c50777f4c9862b4ea581ba28,
+        type: 3}
+      propertyPath: fifthOptionText
+      value: 
+      objectReference: {fileID: 842236890}
+    - target: {fileID: 4383690224241065445, guid: 07aac4b1c50777f4c9862b4ea581ba28,
+        type: 3}
+      propertyPath: firstOptionText
+      value: 
+      objectReference: {fileID: 1080056267}
+    - target: {fileID: 4383690224241065445, guid: 07aac4b1c50777f4c9862b4ea581ba28,
+        type: 3}
+      propertyPath: thirdOptionText
+      value: 
+      objectReference: {fileID: 169661061}
+    - target: {fileID: 4383690224241065445, guid: 07aac4b1c50777f4c9862b4ea581ba28,
+        type: 3}
+      propertyPath: fourthOptionText
+      value: 
+      objectReference: {fileID: 1251028317}
+    - target: {fileID: 4383690224241065445, guid: 07aac4b1c50777f4c9862b4ea581ba28,
+        type: 3}
+      propertyPath: secondOptionText
+      value: 
+      objectReference: {fileID: 1690580705}
+    - target: {fileID: 4383690224241065446, guid: 07aac4b1c50777f4c9862b4ea581ba28,
+        type: 3}
+      propertyPath: m_Name
+      value: MerchantManager
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 07aac4b1c50777f4c9862b4ea581ba28, type: 3}

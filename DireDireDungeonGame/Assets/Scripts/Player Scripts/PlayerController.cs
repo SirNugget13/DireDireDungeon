@@ -33,7 +33,7 @@ public class PlayerController : MonoBehaviour
 
     public GameManager gm;
 
-    public float speed = 1;
+    public float speed = 10;
     public float speedLimiter;
     public float inputHorizontal;
     public float inputVertical;
@@ -320,7 +320,8 @@ public class PlayerController : MonoBehaviour
     {
         if(hasSpeedBoots)
         {
-            speed *= 1.4f;
+            Debug.Log("Yup");
+            speed = 14;
         }
     }
 
@@ -330,13 +331,15 @@ public class PlayerController : MonoBehaviour
 
         state = State.Invulerable;
 
-        Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Enemy"));
+        Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("GoblinCombat"));
         Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Arrow"));
+        Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("BigBadSword"));
 
         this.Wait(InvulTime, () =>
         {
-            Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Enemy"), false);
+            Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("GoblinCombat"), false);
             Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Arrow"), false);
+            Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("BigBadSword"), false);
             sr.color = normColor;
             state = State.Normal;
         });

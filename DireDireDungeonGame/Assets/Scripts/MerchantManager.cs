@@ -20,6 +20,11 @@ public class MerchantManager : MonoBehaviour
     public Image soldOut3;
     public Image soldOut4;
 
+    public int swordCost;
+    public int armorCost;
+    public int potionCost;
+    public int speedCost;
+
     public Image swordIcon;
     public int optionSelected = 1;
 
@@ -39,6 +44,12 @@ public class MerchantManager : MonoBehaviour
         soldOut2.gameObject.SetActive(false);
         soldOut3.gameObject.SetActive(false);
         soldOut4.gameObject.SetActive(false);
+
+        firstOptionText.text = "Sword Upgrade: " + swordCost + "g";
+        secondOptionText.text = "Armor Upgrade: " + armorCost + "g";
+        thirdOptionText.text = "Mystery Potion: " + potionCost + "g";
+        fourthOptionText.text = "Speed Boots: " + speedCost + "g";
+
     }
 
     // Update is called once per frame
@@ -111,32 +122,32 @@ public class MerchantManager : MonoBehaviour
     }
     void Select()
     {
-        if (optionSelected == 1 && gm.coinCount >= 40 && gm.swordUpgrade < 3)
+        if (optionSelected == 1 && gm.coinCount >= swordCost && gm.swordUpgrade < 3)
         {
             Debug.Log("Sword Upgrade");
-            gm.coinCount -= 40;
+            gm.coinCount -= swordCost;
             gm.swordUpgrade++;
            // gm.Save();
 
         }
-        if (optionSelected == 2 && gm.coinCount >= 30 && gm.armorUpgrade == 0)
+        if (optionSelected == 2 && gm.coinCount >= armorCost && gm.armorUpgrade == 0)
         {
             Debug.Log("Armor Upgrade");
-            gm.coinCount -= 30;
+            gm.coinCount -= armorCost;
             gm.armorUpgrade++;
             //gm.Save();
         }
-        if (optionSelected == 3 && gm.coinCount >= 100)
+        if (optionSelected == 3 && gm.coinCount >= potionCost)
         {
             Debug.Log("Mystery Potion");
             gm.potionCount++;
-            gm.coinCount -= 100;
+            gm.coinCount -= potionCost;
             //gm.Save();
         }
-        if (optionSelected == 4 && gm.coinCount >= 50 && gm.speedUpgrade == 0)
+        if (optionSelected == 4 && gm.coinCount >= speedCost && gm.speedUpgrade == 0)
         {
             Debug.Log("Speed Boots");
-            gm.coinCount -= 50;
+            gm.coinCount -= speedCost;
             gm.speedUpgrade++;
             //gm.Save();
         }

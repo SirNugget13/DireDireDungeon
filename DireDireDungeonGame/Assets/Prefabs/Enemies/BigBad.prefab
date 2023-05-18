@@ -704,7 +704,7 @@ GameObject:
   - component: {fileID: 8730643946327697855}
   m_Layer: 13
   m_Name: Big Bad Combat
-  m_TagString: Untagged
+  m_TagString: BigBadSwing
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

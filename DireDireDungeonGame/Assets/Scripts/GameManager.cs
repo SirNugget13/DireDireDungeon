@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.AI;
 
 public class GameManager : MonoBehaviour
 {
@@ -66,6 +67,8 @@ public class GameManager : MonoBehaviour
 
     public bool isButtonReset;
 
+    private float setSpeed = 10;
+
     private void Start()
     {
         if (SceneManager.GetActiveScene().buildIndex == 1) { rt = GameObject.FindGameObjectWithTag("Rooms").GetComponent<RoomTemplates>(); }
@@ -75,12 +78,13 @@ public class GameManager : MonoBehaviour
         Load();
 
         UpgradeText();
-
+       
         if(GameObject.FindGameObjectWithTag("Player") != null)
         {
             player = GameObject.FindGameObjectWithTag("Player");
             pc = player.GetComponent<PlayerController>();
             playerSprite.sprite = player.GetComponent<SpriteRenderer>().sprite;
+            UpgradeApplier();
         }
     }
 
@@ -175,8 +179,8 @@ public class GameManager : MonoBehaviour
         {
             if (speedTimer >= 0)
                 speedTimer -= Time.deltaTime;
-            if (speedTimer < 0 && (player != null && player.GetComponent<PlayerController>().speed != 10))
-                player.GetComponent<PlayerController>().speed = 10;
+            if (speedTimer < 0 && (player != null && player.GetComponent<PlayerController>().speed != setSpeed))
+                player.GetComponent<PlayerController>().speed = setSpeed;
         }
 
         if (keyGotten)
@@ -304,6 +308,7 @@ public class GameManager : MonoBehaviour
         if (mystery == 7)
         {
             BigBadTeleport();
+            pc.Invulerablity(3);
             //player.transform.position = GameObject.Find("BigBad").transform.position;
         }
         if (mystery == 8)
@@ -342,8 +347,14 @@ public class GameManager : MonoBehaviour
 
             GameObject selectedRoom = rt.roomList[Random.Range(0, rt.roomList.Count)];
 
-            player.gameObject.transform.position = bigBadTeleportOffset * -1;
-            bigbad.gameObject.transform.position = bigBadTeleportOffset;
+            player.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+            bigbad.GetComponent<NavMeshAgent>().velocity = Vector2.zero;
+
+            player.GetComponent<PlayerController>().Invulerablity(3);
+
+            player.transform.position = selectedRoom.transform.position + bigBadTeleportOffset * -1;
+            bigbad.GetComponent<NavMeshAgent>().Warp(selectedRoom.transform.position + bigBadTeleportOffset);
+
             bigbad.GetComponent<DemoAI>().direction = "Left";
         }
     }
@@ -384,17 +395,22 @@ public class GameManager : MonoBehaviour
     {
         if(armorUpgrade == 1)
         {
+            Debug.Log(armorUpgrade);
             pc.hasArmor = true;
         }
             
         if(speedUpgrade == 1)
         {
+            Debug.Log(speedUpgrade);
             pc.hasSpeedBoots = true;
+            setSpeed = 14;
         }
 
         if(swordUpgrade > 0)
         {
-            if(swordUpgrade == 1)
+            Debug.Log(swordUpgrade);
+
+            if (swordUpgrade == 1)
             {
                 pc.swordHitbox.offset = new Vector2(1.35f, 0);
                 pc.swordHitbox.size = new Vector2(1.6f, 2.5f);

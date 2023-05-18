@@ -259,7 +259,7 @@ MonoBehaviour:
   LayerMask:
     serializedVersion: 2
     m_Bits: 64
-  swordHitbox: {fileID: 0}
+  swordHitbox: {fileID: 6478792302477711962}
   hasArmor: 0
   hasSpeedBoots: 0
   isDead: 0
