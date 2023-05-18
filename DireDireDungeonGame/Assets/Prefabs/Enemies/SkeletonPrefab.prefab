@@ -250,7 +250,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   arrow: {fileID: 5912723583784822, guid: 4d9b56687e4aae6448c93869772862d1, type: 3}
   arrowOffset: {x: 0, y: 0, z: 0}
-  arrowSpeed: 10
+  arrowSpeed: 7.5
   shootCoolDown: 3
 --- !u!1001 &4308186265273432847
 PrefabInstance:

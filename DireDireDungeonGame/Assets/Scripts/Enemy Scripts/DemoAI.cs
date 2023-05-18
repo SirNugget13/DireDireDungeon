@@ -16,7 +16,7 @@ public class DemoAI : MonoBehaviour
     public float loseThePlayerDistance = 40;
     public float swingAtThePlayerDistance = 5;
     public GameObject Sword;
-    public GameObject enemyNoticeObject;
+    //public GameObject enemyNoticeObject;
 
     public BigBadCombat bbc;
 
@@ -59,7 +59,6 @@ public class DemoAI : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         rt = GameObject.FindGameObjectWithTag("Rooms").GetComponent<RoomTemplates>();
         state = State.Wander;
-        enemyNoticeObject.SetActive(false);
 
         SelectRandomRoom();
     }
@@ -93,11 +92,6 @@ public class DemoAI : MonoBehaviour
         if(state == State.Chase)
         {
             unotimes = false;
-            
-            if(unotimes == false)
-            {
-                enemyNotice();
-            }
 
             agent.speed = chaseSpeed;
             l2d.color = chaseVision;
@@ -271,16 +265,6 @@ public class DemoAI : MonoBehaviour
 
         //Debug.Log(count);
 
-    }
-
-    private void enemyNotice()
-    {
-        enemyNoticeObject.SetActive(true);
-
-        this.Wait(0.5f, () =>
-        {
-            enemyNoticeObject.SetActive(false);
-        });
     }
 
     private void Swing()

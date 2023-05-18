@@ -7,6 +7,8 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    public bool testfunction = false;
+    
     private GameObject player;
     private PlayerController pc;
 
@@ -19,7 +21,13 @@ public class GameManager : MonoBehaviour
     public int swordUpgrade;
     public int speedUpgrade;
     public int floor;
-    public float speedTimer;
+
+    public float speedEffectLength;
+    public Vector3 bigBadTeleportOffset;
+
+    private float speedTimer;
+
+    public RoomTemplates rt;
 
     public GameObject PauseUI;
     public bool IsPaused = false;
@@ -60,6 +68,8 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        if (SceneManager.GetActiveScene().buildIndex == 1) { rt = GameObject.FindGameObjectWithTag("Rooms").GetComponent<RoomTemplates>(); }
+
         sl = GameObject.FindGameObjectWithTag("SceneLoader").GetComponent<SceneLoader>();
         potionCount = PlayerPrefs.GetInt("potionCount", 0);
         Load();
@@ -77,6 +87,12 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(testfunction)
+        {
+            BigBadTeleport();
+            testfunction = false;
+        }
+        
         int scene = SceneManager.GetActiveScene().buildIndex;
 
         if (Input.GetButtonDown("Attack") && scene == 0)
@@ -255,21 +271,23 @@ public class GameManager : MonoBehaviour
         if (mystery == 1)
         {
             Debug.Log("Slowness");
-            speedTimer = 6;
+            speedTimer = speedEffectLength;
             player.GetComponent<PlayerController>().speed = 5;
         }
         if (mystery == 2)
         {
             Debug.Log("Invulnerability");
+            pc.Invulerablity(120);
         }
         if (mystery == 3)
         {
             Debug.Log("Change Color");
+            pc.GetComponent<SpriteRenderer>().color = Random.ColorHSV(0, 1, 0, 1, 0, 1, 1, 1);
         }
         if (mystery == 4)
         {
             Debug.Log("Speed Boost");
-            speedTimer = 6;
+            speedTimer = speedEffectLength;
             player.GetComponent<PlayerController>().speed = 20;
         }
         if (mystery == 5)
@@ -280,12 +298,13 @@ public class GameManager : MonoBehaviour
         if (mystery == 6)
         {
             Debug.Log("Die");
+            pc.hasArmor = false;
+            pc.CheckDie();
         }
         if (mystery == 7)
         {
-            Debug.Log("Big Bad Teleport");
-            if (GameObject.Find("BigBad") != null)
-                player.transform.position = GameObject.Find("BigBad").transform.position;
+            BigBadTeleport();
+            //player.transform.position = GameObject.Find("BigBad").transform.position;
         }
         if (mystery == 8)
         {
@@ -311,6 +330,22 @@ public class GameManager : MonoBehaviour
             coinCount += 2000;
         }
         potionCount--;
+    }
+
+    public void BigBadTeleport()
+    {
+        Debug.Log("Big Bad Teleport");
+
+        if (GameObject.Find("BigBad") != null)
+        {
+            GameObject bigbad = GameObject.Find("BigBad");
+
+            GameObject selectedRoom = rt.roomList[Random.Range(0, rt.roomList.Count)];
+
+            player.gameObject.transform.position = bigBadTeleportOffset * -1;
+            bigbad.gameObject.transform.position = bigBadTeleportOffset;
+            bigbad.GetComponent<DemoAI>().direction = "Left";
+        }
     }
 
     public void Save()
@@ -351,7 +386,7 @@ public class GameManager : MonoBehaviour
         {
             pc.hasArmor = true;
         }
-
+            
         if(speedUpgrade == 1)
         {
             pc.hasSpeedBoots = true;
@@ -381,36 +416,41 @@ public class GameManager : MonoBehaviour
 
     void UpgradeText()
     {
-        if (armorUpgrade == 1)
+        if (SceneManager.GetActiveScene().buildIndex == 1)
         {
-            armorText.text = "Armor: Equipped";
-        }
-        else { armorText.text = "Armor: Not equipped"; }
-
-        if (speedUpgrade == 1)
-        {
-            speedText.text = "Running Speed: 140%";
-        }
-        else { speedText.text = "Running Speed: 100%"; }
-
-        if (swordUpgrade > 0)
-        {
-            if (swordUpgrade == 1)
+            potionText.text = "Potions: " + potionCount;
+            
+            if (armorUpgrade == 1)
             {
-                swordText.text = "Sword Reach: 133%";
+                armorText.text = "Armor: Equipped";
             }
+            else { armorText.text = "Armor: Not equipped"; }
 
-            if (swordUpgrade == 2)
+            if (speedUpgrade == 1)
             {
-                swordText.text = "Sword Reach: 166%";
+                speedText.text = "Running Speed: 140%";
             }
+            else { speedText.text = "Running Speed: 100%"; }
 
-            if (swordUpgrade == 3)
+            if (swordUpgrade > 0)
             {
-                swordText.text = "Sword Reach: 200%";
+                if (swordUpgrade == 1)
+                {
+                    swordText.text = "Sword Reach: 133%";
+                }
+
+                if (swordUpgrade == 2)
+                {
+                    swordText.text = "Sword Reach: 166%";
+                }
+
+                if (swordUpgrade == 3)
+                {
+                    swordText.text = "Sword Reach: 200%";
+                }
             }
+            else { swordText.text = "Sword Reach: 100%"; }
         }
-        else { swordText.text = "Sword Reach: 100%"; }
     }
     public void GenerateNavMesh()
     {

@@ -12,7 +12,7 @@ public class SceneLoader : MonoBehaviour
     public AudioSource Woosh;
     public AudioSource ReWoosh;
 
-    private PlayerController player;
+    public PlayerController player;
 
     private void Start()
     {
@@ -41,7 +41,7 @@ public class SceneLoader : MonoBehaviour
             LeanTween.scale(fader, Vector3.zero, 1.2f).setEase(LeanTweenType.easeInBack).setOnComplete(() =>
             {
                 fader.gameObject.SetActive(false);
-                if (SceneManager.GetActiveScene().buildIndex == 1) { player.state = PlayerController.State.Normal; }
+                if (SceneManager.GetActiveScene().buildIndex == 1) { } //player.state = PlayerController.State.Normal; }
             });
         });
     }

@@ -14,7 +14,6 @@ public class PlayerCombat : MonoBehaviour
     private bool canSwing = true;
     private CapsuleCollider2D swordPath;
 
-
     private void Start()
     {
         swordPath = gameObject.GetComponent<CapsuleCollider2D>();
@@ -24,16 +23,19 @@ public class PlayerCombat : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       if(Input.GetButtonDown("Attack") && !GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>().IsPaused)
+       if(pc.state != PlayerController.State.Dead)
         {
-            Attack();
-        }
+            if (Input.GetButtonDown("Attack") && !GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>().IsPaused && pc.state != PlayerController.State.Dead)
+            {
+                Attack();
+            }
 
-        swingTimer += Time.deltaTime;
+            swingTimer += Time.deltaTime;
 
-        if(swingTimer >= SwingDelay)
-        {
-            canSwing = true;
+            if (swingTimer >= SwingDelay)
+            {
+                canSwing = true;
+            }
         }
     }
 

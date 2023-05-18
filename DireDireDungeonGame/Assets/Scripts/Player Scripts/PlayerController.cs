@@ -19,7 +19,8 @@ public class PlayerController : MonoBehaviour
         Rolling,
         Damaged,
         Invulerable,
-        Stopped
+        Stopped,
+        Dead
     }
 
     public enum Direction
@@ -68,12 +69,13 @@ public class PlayerController : MonoBehaviour
         direction = Direction.Right;
         normColor = sr.color;
         isDead = false;
+        ApplyUpgrades();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (state != State.Stopped)
+        if (state != State.Stopped && state != State.Dead)
         {
             switch (state)
             {
@@ -174,7 +176,7 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if(state != State.Stopped)
+        if(state != State.Stopped && state != State.Dead)
         {
             switch (state)
             {
@@ -237,7 +239,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.CompareTag("GoblinSword") && state == State.Normal)
+        if((collision.CompareTag("GoblinSword") || collision.CompareTag("BigBadSwing")) && state == State.Normal)
         {
             state = State.Damaged;
             //Debug.Log("Player Hit!");
@@ -298,7 +300,8 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            //Debug.Log("DEAD");
+            //Debug.Break();
+            state = State.Dead;
             isDead = true;
             rb.velocity = Vector2.zero;
             rb.bodyType = RigidbodyType2D.Kinematic;
@@ -311,6 +314,14 @@ public class PlayerController : MonoBehaviour
     {
         hasArmor = false;
         //play armor falling off animation
+    }
+
+    public void ApplyUpgrades()
+    {
+        if(hasSpeedBoots)
+        {
+            speed *= 1.4f;
+        }
     }
 
     public void Invulerablity(float InvulTime)

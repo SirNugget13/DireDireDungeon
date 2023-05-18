@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 658598750}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Sword
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -42,7 +42,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1326724538}
   - component: {fileID: 1326724537}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: SwordObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -262,6 +262,8 @@ MonoBehaviour:
   swordHitbox: {fileID: 0}
   hasArmor: 0
   hasSpeedBoots: 0
+  isDead: 0
+  armorObject: {fileID: 0}
   gm: {fileID: 0}
   speed: 10
   speedLimiter: 0.7
@@ -365,7 +367,7 @@ GameObject:
   - component: {fileID: 7556230417076987545}
   - component: {fileID: 4540624317527223276}
   - component: {fileID: 6478792302477711962}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: PlayerCombat
   m_TagString: PlayerSword
   m_Icon: {fileID: 0}

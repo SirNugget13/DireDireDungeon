@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2542425755916381140}
   - component: {fileID: 5576999659868082520}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Blade
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -256,7 +256,6 @@ MonoBehaviour:
   loseThePlayerDistance: 40
   swingAtThePlayerDistance: 5
   Sword: {fileID: 6679193659398672309}
-  enemyNoticeObject: {fileID: 0}
   bbc: {fileID: 579373525581192916}
   layerMask:
     serializedVersion: 2
@@ -358,7 +357,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2716637429521520930}
   - component: {fileID: 7937397820153610727}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Hilt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -553,7 +552,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5767540759963399557}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Sword
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -703,7 +702,7 @@ GameObject:
   - component: {fileID: 1725934064333357350}
   - component: {fileID: 579373525581192916}
   - component: {fileID: 8730643946327697855}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Big Bad Combat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -748,7 +747,7 @@ CapsuleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 1.25, y: 0}
