@@ -8,6 +8,12 @@ public class MerchantManager : MonoBehaviour
 {
     public GameManager gm;
 
+    public Image icon1;
+    public Image icon2;
+    public Image icon3;
+    public Image icon4;
+    public Image icon5;
+
     public TMPro.TextMeshProUGUI merchantText;
     public TMPro.TextMeshProUGUI firstOptionText;
     public TMPro.TextMeshProUGUI secondOptionText;
@@ -87,35 +93,35 @@ public class MerchantManager : MonoBehaviour
     {
         if(optionSelected == 1)
         {
-            swordIcon.rectTransform.position = firstOptionText.rectTransform.position + offset;
+            swordIcon.rectTransform.position = icon1.rectTransform.position;
 
             merchantText.text = "Merchant:\nThis'll increase the length of ya sword!";
         }
 
         if(optionSelected == 2)
         {
-            swordIcon.rectTransform.position = secondOptionText.rectTransform.position + offset;
+            swordIcon.rectTransform.position = icon2.rectTransform.position;
 
             merchantText.text = "Merchant:\nYou'll be able to take an extra hit with this high quality armor!";
         }
 
         if(optionSelected == 3)
         {
-            swordIcon.rectTransform.position = thirdOptionText.rectTransform.position + offset;
+            swordIcon.rectTransform.position = icon3.rectTransform.position;
 
             merchantText.text = "Merchant:\nI found a bucket of this stuff on the 82nd floor, not sure what it does.";
         }
 
         if (optionSelected == 4)
         {
-            swordIcon.rectTransform.position = fourthOptionText.rectTransform.position + offset;
+            swordIcon.rectTransform.position = icon4.rectTransform.position;
 
             merchantText.text = "Merchant:\nThese magic timbs will increase your running speed.";
         }
 
         if (optionSelected == 5)
         {
-            swordIcon.rectTransform.position = fifthOptionText.rectTransform.position + offset;
+            swordIcon.rectTransform.position = icon5.rectTransform.position;
 
             merchantText.text = "Merchant:\nGood luck! You'll need it.";
         }
