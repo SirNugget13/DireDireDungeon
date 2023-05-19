@@ -10,6 +10,8 @@ public class NewSkeletonCombat : MonoBehaviour
     public float shootCoolDown;
     private float shootTimeCounter;
     private bool canShoot;
+    public AudioSource Shoot;
+
 
     private void Update()
     {
@@ -28,6 +30,7 @@ public class NewSkeletonCombat : MonoBehaviour
     {
         if(canShoot)
         {
+            Shoot.Play();
             GameObject ArrowShot;
             ArrowShot = Instantiate
                 (arrow, gameObject.transform.position + arrowOffset, Quaternion.Euler(arrowRotation));

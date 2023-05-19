@@ -19,11 +19,20 @@ public class NewSkeleton : MonoBehaviour
     public float RunRange;
 
     private bool isRunning;
+    private int stepCounter;
+    public float stepTiming;
+    private float stepTimer;
 
     public float speed = 4;
     public float slowdown = 0.7f;
     public GameObject enemyNotice;
     public float playerDistance;
+    public AudioSource Dead;
+    public AudioSource Hit;
+    public AudioSource Walk;
+    public AudioSource Seesyou;
+    public AudioSource shoot;
+
 
     public NewSkeletonCombat skc;
 
@@ -160,6 +169,12 @@ void Update()
             }
             else if(skeletonState == State.Run)
             {
+                if (stepTimer >= stepTiming)
+                {
+                    Walking();
+                }
+                else { stepTimer += Time.deltaTime; }
+
                 Vector2 playerDistance = player.transform.position - transform.position;
                 rb.velocity *= slowdown;
                 rb.velocity = (playerDistance.normalized) * speed * -1f;//runs away from the player at max speed
@@ -188,6 +203,7 @@ void Update()
     {
         if (collision.CompareTag("PlayerSword"))
         {
+            Hit.Play();
             Die(collision);
         }
     }
@@ -198,6 +214,7 @@ void Update()
         
         if (collision.gameObject.tag == "ReflectedArrow")
         {
+            Hit.Play();
             Die(collision);
         }
     }
@@ -289,6 +306,8 @@ void Update()
 
     void Die(Collider2D collision)
     {
+        Dead.Play();
+
         doMove = false;
         isDead = true;
         rb.velocity = Vector2.zero;
@@ -320,6 +339,8 @@ void Update()
 
     void Die(Collision2D collision)
     {
+        Dead.Play();
+
         doMove = false;
         isDead = true;
         rb.velocity = Vector2.zero;
@@ -353,7 +374,9 @@ void Update()
     {
         if (!unotimes)
         {
+            Seesyou.Play();
             enemyNotice.SetActive(true);
+            
 
             unotimes = true;
             doMove = false;
@@ -372,6 +395,21 @@ void Update()
         {
             skeletonState = state;
             isRunning = false;
+        }
+    }
+
+    private void Walking()
+    {
+
+        stepCounter++;
+        stepTimer = 0;
+        if (stepCounter % 2 == 0)
+        {
+            Walk.PlayOneShot(Walk.clip);
+        }
+        else
+        {
+            Walk.PlayOneShot(Walk.clip);
         }
     }
 }

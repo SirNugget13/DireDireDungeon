@@ -32,6 +32,8 @@ public class DemoAI : MonoBehaviour
     private Rigidbody2D rb;
     public string direction;
     private float TotalDistance;
+    public AudioSource Seesyou;
+
 
     public Light2D l2d;
     public Color wanderVision;
@@ -181,6 +183,7 @@ public class DemoAI : MonoBehaviour
 
     void TargetPlayer()
     {
+        
         target = player.transform.position;
         agent.SetDestination(new Vector3(target.x, target.y, transform.position.z));
     }
@@ -198,6 +201,7 @@ public class DemoAI : MonoBehaviour
 
             if(hitObj.CompareTag("Player") && state == State.Wander)
             {
+                Seesyou.Play();
                 //Debug.Log("Hit it");
                 state = State.Chase;
             }
