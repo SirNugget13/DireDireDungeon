@@ -6,8 +6,13 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField] private LayerMask LayerMask;
 
+    public bool canDie = true;
+
     public AudioSource PlayerAudio;
-    
+
+    public Color orignalPlayerColor;
+    public Color ArmorColor;
+
     public AudioClip Coins;
     public AudioClip DodgeRoll;
     public AudioClip PlayerHit;
@@ -93,6 +98,15 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(hasArmor)
+        {
+            normColor = ArmorColor;
+        }
+        else
+        {
+            normColor = orignalPlayerColor;
+        }
+        
         if (state != State.Stopped && state != State.Dead)
         {
             switch (state)
@@ -353,7 +367,7 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if (collision.gameObject.CompareTag("Arrow"))
+        if (collision.gameObject.CompareTag("Arrow") && state == State.Normal)
         {
             state = State.Damaged;
             Debug.Log("Player Hit!");
@@ -374,13 +388,16 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            //Debug.Break();
-            state = State.Dead;
-            isDead = true;
-            rb.velocity = Vector2.zero;
-            rb.bodyType = RigidbodyType2D.Kinematic;
-            //play death animation
-            //slow camera zoom out?
+            if(canDie)
+            {
+                //Debug.Break();
+                state = State.Dead;
+                isDead = true;
+                rb.velocity = Vector2.zero;
+                rb.bodyType = RigidbodyType2D.Kinematic;
+                //play death animation
+                //slow camera zoom out?
+            }
         }
     }
 

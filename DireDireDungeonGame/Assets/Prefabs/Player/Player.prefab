@@ -260,7 +260,10 @@ MonoBehaviour:
   LayerMask:
     serializedVersion: 2
     m_Bits: 64
+  canDie: 1
   PlayerAudio: {fileID: 8467695885983676022}
+  orignalPlayerColor: {r: 0.93333334, g: 0.47843137, b: 0.17254902, a: 1}
+  ArmorColor: {r: 0.45197964, g: 0.21003917, b: 0.754717, a: 1}
   Coins: {fileID: 8300000, guid: 27cde3bbfe2b76e4a800fb6157b2764e, type: 3}
   DodgeRoll: {fileID: 8300000, guid: f24df1d37ee33ab4ea4426fcccd6068f, type: 3}
   PlayerHit: {fileID: 8300000, guid: 30ddd94dbadce61498dbf6839149b22e, type: 3}
