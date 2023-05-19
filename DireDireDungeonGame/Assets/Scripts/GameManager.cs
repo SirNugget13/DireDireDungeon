@@ -9,7 +9,8 @@ using UnityEngine.AI;
 public class GameManager : MonoBehaviour
 {
     public bool testfunction = false;
-    
+    public GameObject sword;
+
     private GameObject player;
     private PlayerController pc;
     private MusicManager mm;
@@ -423,18 +424,21 @@ public class GameManager : MonoBehaviour
             {
                 pc.swordHitbox.offset = new Vector2(1.35f, 0);
                 pc.swordHitbox.size = new Vector2(1.6f, 2.5f);
+                sword.GetComponent<SpriteRenderer>().color = Color.white;
             }
 
             if (swordUpgrade == 2)
             {
                 pc.swordHitbox.offset = new Vector2(1.5f, 0);
                 pc.swordHitbox.size = new Vector2(2f, 2.5f);
+                sword.GetComponent<SpriteRenderer>().color = Color.blue;
             }
 
             if (swordUpgrade == 3)
             {
                 pc.swordHitbox.offset = new Vector2(1.75f, 0);
                 pc.swordHitbox.size = new Vector2(2.4f, 2.9f);
+                sword.GetComponent<SpriteRenderer>().color = Color.black;
             }
         }
     }
