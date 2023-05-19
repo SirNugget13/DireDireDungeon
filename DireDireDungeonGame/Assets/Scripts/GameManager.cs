@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     
     private GameObject player;
     private PlayerController pc;
+    private MusicManager mm;
 
     public SceneLoader sl;
 
