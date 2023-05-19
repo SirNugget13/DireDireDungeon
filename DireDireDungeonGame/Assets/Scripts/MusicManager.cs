@@ -61,6 +61,11 @@ public class MusicManager : MonoBehaviour
 
     }
 
+    public void TurnOffEffects()
+    {
+        StartCoroutine(FadeMixerGroup.StartFade(GameAudio, "EffectsVolume", 1f, 0f));
+    }
+
     public void PlayTrack(AudioSource track)
     {
         track.Play();

@@ -28,6 +28,7 @@ public class PlayerCombat : MonoBehaviour
             if (Input.GetButtonDown("Attack") && !GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>().IsPaused && pc.state != PlayerController.State.Dead)
             {
                 Attack();
+               
             }
 
             swingTimer += Time.deltaTime;
@@ -43,6 +44,7 @@ public class PlayerCombat : MonoBehaviour
     {
         if(canSwing)
         {
+            pc.PlayerAudio.PlayOneShot(pc.SwordSwing);
             swordPath.enabled = true;
             
             Sword.transform.SetLocalPositionAndRotation

@@ -6,6 +6,16 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField] private LayerMask LayerMask;
 
+    public AudioSource PlayerAudio;
+    
+    public AudioClip Coins;
+    public AudioClip DodgeRoll;
+    public AudioClip PlayerHit;
+    public AudioClip RightStep;
+    public AudioClip LeftStep;
+    public AudioClip SwordSwing;
+    public AudioClip PotionDrink;
+
     public CapsuleCollider2D swordHitbox;
     public bool hasArmor;
     public bool hasSpeedBoots;
@@ -60,6 +70,12 @@ public class PlayerController : MonoBehaviour
     private Vector3 rollDir;
     private Color normColor;
     private BoxCollider2D bc;
+
+    private bool coinSoundPlaying = false;
+
+    private int stepCounter;
+    public float stepTiming;
+    private float stepTimer;
     
     // Start is called before the first frame update
     void Start()
@@ -111,6 +127,7 @@ public class PlayerController : MonoBehaviour
                             rollDir = moveDir;
                             rollSpeed = rollForce;
                             state = State.Rolling;
+                            PlayerAudio.PlayOneShot(DodgeRoll);
                         }
                     }
 
@@ -192,6 +209,12 @@ public class PlayerController : MonoBehaviour
                             inputVertical *= speedLimiter;
                         }
 
+                        if (stepTimer >= stepTiming)
+                        {
+                            Walking();
+                        }
+                        else { stepTimer += Time.deltaTime; }
+
                         rb.velocity = moveDir * speed;
                     }
                     else
@@ -239,6 +262,20 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void Walking()
+    {
+        stepCounter++;
+        stepTimer = 0;
+        if(stepCounter % 2 == 0)
+        {
+            PlayerAudio.PlayOneShot(RightStep);
+        }
+        else
+        {
+            PlayerAudio.PlayOneShot(LeftStep);
+        }
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if((collision.CompareTag("GoblinSword") || collision.CompareTag("BigBadSwing")) && state == State.Normal)
@@ -247,14 +284,7 @@ public class PlayerController : MonoBehaviour
             //Debug.Log("Player Hit!");
             sr.color = Color.red;
 
-            if(hasArmor)
-            {
-                hasArmor = false;
-            }
-            else
-            {
-                CheckDie();
-            }
+            CheckDie();
 
         }
 
@@ -271,18 +301,56 @@ public class PlayerController : MonoBehaviour
         {
             gm.coinCount += 10;
             Destroy(collision.gameObject);
+            
+            if(coinSoundPlaying)
+            {
+                this.Wait(0.6f, () =>
+                {
+                    coinSoundPlaying = false;
+                });
+            }
+
+            if(coinSoundPlaying == false)
+            {
+                PlayerAudio.PlayOneShot(Coins);
+            }
+
         }
 
         if (collision.gameObject.CompareTag("Medium Coin"))
         {
             gm.coinCount += 5;
             Destroy(collision.gameObject);
+            if (coinSoundPlaying)
+            {
+                this.Wait(0.6f, () =>
+                {
+                    coinSoundPlaying = false;
+                });
+            }
+
+            if (coinSoundPlaying == false)
+            {
+                PlayerAudio.PlayOneShot(Coins);
+            }
         }
 
         if (collision.gameObject.CompareTag("Small Coin"))
         {
             gm.coinCount += 1;
             Destroy(collision.gameObject);
+            if (coinSoundPlaying)
+            {
+                this.Wait(0.6f, () =>
+                {
+                    coinSoundPlaying = false;
+                });
+            }
+
+            if (coinSoundPlaying == false)
+            {
+                PlayerAudio.PlayOneShot(Coins);
+            }
         }
 
         if (collision.gameObject.CompareTag("Arrow"))
@@ -290,15 +358,19 @@ public class PlayerController : MonoBehaviour
             state = State.Damaged;
             Debug.Log("Player Hit!");
             sr.color = Color.red;
+
             CheckDie();
         }
     }
 
     public void CheckDie()
     {
+        PlayerAudio.PlayOneShot(PlayerHit);
+
         if(hasArmor)
         {
             RemoveArmor();
+            Invulerablity(2.5f);
         }
         else
         {
