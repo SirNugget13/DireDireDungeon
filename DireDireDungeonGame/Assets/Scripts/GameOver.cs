@@ -36,6 +36,7 @@ public class GameOver : MonoBehaviour
             
             if(unotimes == false)
             {
+                mm.TurnOffEffects();
                 mm.SwitchTrack(mm.death);
                 unotimes = true;
             }

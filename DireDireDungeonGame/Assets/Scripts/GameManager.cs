@@ -72,6 +72,8 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        Time.timeScale = 1;
+        
         if (SceneManager.GetActiveScene().buildIndex == 1) { rt = GameObject.FindGameObjectWithTag("Rooms").GetComponent<RoomTemplates>(); }
 
         sl = GameObject.FindGameObjectWithTag("SceneLoader").GetComponent<SceneLoader>();
@@ -235,6 +237,7 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log("Used Potion");
             Potion();
+            UpgradeText();
         }
         if (pauseStage == 1)
         {
@@ -274,7 +277,10 @@ public class GameManager : MonoBehaviour
     void Potion()
     {
         int mystery = Random.Range(1, 13);
-        if (mystery == 1)
+
+        pc.PlayerAudio.PlayOneShot(pc.PotionDrink);
+
+        if(mystery == 1)
         {
             Debug.Log("Slowness");
             speedTimer = speedEffectLength;
@@ -316,6 +322,7 @@ public class GameManager : MonoBehaviour
         if (mystery == 8)
         {
             Debug.Log("Time Slowdown");
+            Time.timeScale = 0.6f;
         }
         if (mystery == 9)
         {
