@@ -57,6 +57,8 @@ public class KeyGoblinCombat : MonoBehaviour
 
         this.Wait(0.3f, () =>
         {
+            goblin.GoblinSwing.PlayOneShot(goblin.GoblinSwing.clip);
+
             goblinSword.transform.SetLocalPositionAndRotation
                 (Vector3.zero, Quaternion.Euler(0, 0, -125));
 

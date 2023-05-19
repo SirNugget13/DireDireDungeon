@@ -12,7 +12,7 @@ public class GoblinCombat : MonoBehaviour
     private float swingTimer;
     private bool canSwing = true;
     private CapsuleCollider2D swordPath;
-    public AudioSource GoblinSwing;
+    
 
 
 
@@ -42,7 +42,7 @@ public class GoblinCombat : MonoBehaviour
     {
         if (canSwing)
         {
-            GoblinSwing.Play();
+            
             swordPath.enabled = true;
 
             goblinSword.transform.SetLocalPositionAndRotation

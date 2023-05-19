@@ -21,6 +21,9 @@ public class NewGoblin : MonoBehaviour
 
     public AudioSource GOBLINWALK;
     public AudioSource GoblinSwing;
+    public AudioSource Detection;
+    public AudioSource Hit;
+    public AudioSource Dead;
 
     //public GameObject goblinBody;
 
@@ -75,6 +78,7 @@ public class NewGoblin : MonoBehaviour
                 if (!unotimes)
                 {
                     enemyNotice.SetActive(true);
+                    Detection.Play();
 
                     unotimes = true;
                     doMove = false;
@@ -152,6 +156,7 @@ public class NewGoblin : MonoBehaviour
     {
         if (collision.CompareTag("PlayerSword"))
         {
+            Hit.Play();
             Die(collision);
         }
     }
@@ -179,6 +184,8 @@ public class NewGoblin : MonoBehaviour
             cc.enabled = false;
 
             anim.SetTrigger("DoExplosion");
+
+            Dead.Play();
 
             this.Wait(1.2f, () =>
             {
@@ -225,10 +232,14 @@ public class NewGoblin : MonoBehaviour
 
             cc.enabled = false;
 
+           
             anim.SetTrigger("DoExplosion");
+
+            Dead.Play();
 
             this.Wait(1.2f, () =>
             {
+                Dead.Play();
                 Instantiate(coinSpawner, transform.position, Quaternion.identity);
                 Destroy(parentPrefab);
             });

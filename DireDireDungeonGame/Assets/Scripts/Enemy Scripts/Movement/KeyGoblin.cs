@@ -22,6 +22,10 @@ public class KeyGoblin : MonoBehaviour
 
      public AudioSource GOBLINWALK;
     public AudioSource GoblinSwing;
+    public AudioSource Detection;
+    public AudioSource Hit;
+    public AudioSource Dead;
+
 
     //public GameObject goblinBody;
 
@@ -78,6 +82,7 @@ public class KeyGoblin : MonoBehaviour
                 if (!unotimes)
                 {
                     enemyNotice.SetActive(true);
+                    Detection.Play();
 
                     unotimes = true;
                     doMove = false;
@@ -154,6 +159,7 @@ public class KeyGoblin : MonoBehaviour
     {
         if (collision.CompareTag("PlayerSword"))
         {
+            Hit.Play();
             Die(collision);
         }
     }
@@ -174,6 +180,8 @@ public class KeyGoblin : MonoBehaviour
 
     public void Die(Collider2D collision)
     {
+        Dead.Play();
+
         doMove = false;
         isDead = true;
         rb.velocity = Vector2.zero;
@@ -195,11 +203,13 @@ public class KeyGoblin : MonoBehaviour
             cc.enabled = false;
 
             anim.SetTrigger("DoExplosion");
+
             Instantiate(key, transform.position + new Vector3(0, 0, 3), Quaternion.identity);
             //Instantiate(endroomPortal, transform.position + new Vector3(0, 0, 3), Quaternion.identity);
 
             this.Wait(1.2f, () =>
             {
+                
                 Destroy(parentPrefab);
             });
 
@@ -208,6 +218,8 @@ public class KeyGoblin : MonoBehaviour
 
     public void Die(Collision2D collision)
     {
+        Dead.Play();
+
         doMove = false;
         isDead = true;
         rb.velocity = Vector2.zero;
@@ -228,6 +240,8 @@ public class KeyGoblin : MonoBehaviour
 
             cc.enabled = false;
 
+
+           
             anim.SetTrigger("DoExplosion");
             Instantiate(key, transform.position + new Vector3(0, 0, 3), Quaternion.identity);
             //Instantiate(endroomPortal, transform.position + new Vector3(0, 0, 3), Quaternion.identity);
