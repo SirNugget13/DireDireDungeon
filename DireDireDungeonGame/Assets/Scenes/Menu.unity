@@ -540,7 +540,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2404e1d75419d34c9ee927249736b43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Amplification: 0.25
+  Amplification: 5
   time: 1
 --- !u!1001 &774116446
 PrefabInstance:
