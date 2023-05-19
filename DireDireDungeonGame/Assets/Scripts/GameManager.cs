@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     
     private GameObject player;
     private PlayerController pc;
+    private MusicManager mm;
 
     public SceneLoader sl;
 
@@ -74,6 +75,7 @@ public class GameManager : MonoBehaviour
         if (SceneManager.GetActiveScene().buildIndex == 1) { rt = GameObject.FindGameObjectWithTag("Rooms").GetComponent<RoomTemplates>(); }
 
         sl = GameObject.FindGameObjectWithTag("SceneLoader").GetComponent<SceneLoader>();
+        mm = GameObject.FindGameObjectWithTag("MusicManager").GetComponent<MusicManager>();
         potionCount = PlayerPrefs.GetInt("potionCount", 0);
         Load();
 

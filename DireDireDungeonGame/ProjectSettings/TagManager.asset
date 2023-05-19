@@ -28,6 +28,7 @@ TagManager:
   - ReflectedArrow
   - BigBad
   - BigBadSwing
+  - MusicManager
   layers:
   - Default
   - TransparentFX

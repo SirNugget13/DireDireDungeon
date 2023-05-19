@@ -11,6 +11,8 @@ public class PlayerController : MonoBehaviour
     public bool hasSpeedBoots;
     public bool isDead;
 
+    public AudioSource yo;
+
     public GameObject armorObject;
 
     public enum State
