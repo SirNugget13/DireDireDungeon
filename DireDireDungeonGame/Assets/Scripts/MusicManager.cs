@@ -47,16 +47,16 @@ public class MusicManager : MonoBehaviour
 
     public void SwitchTrack(AudioSource trackToPlay)
     {
+        
         StartCoroutine(FadeMixerGroup.StartFade(GameAudio, "MusicVolume", 1.5f, 0));
 
-        this.Wait(0.2f, () =>
+        this.Wait(1.5f, () =>
         {
             trackPlaying.Stop();
-            trackToPlay.Play();
-            trackPlaying = trackToPlay;
+            PlayTrack(trackToPlay);
 
-            StartCoroutine(FadeMixerGroup.StartFade(GameAudio, "MusicVolume", 0.01f, 0));
-            StartCoroutine(FadeMixerGroup.StartFade(GameAudio, "MusicVolume", 1.5f, 0.8f));
+            //StartCoroutine(FadeMixerGroup.StartFade(GameAudio, "MusicVolume", 0.01f, 0));
+            StartCoroutine(FadeMixerGroup.StartFade(GameAudio, "MusicVolume", 3f, 0.8f));
         });
 
     }

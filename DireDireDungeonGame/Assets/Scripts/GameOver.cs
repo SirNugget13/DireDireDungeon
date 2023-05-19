@@ -15,11 +15,14 @@ public class GameOver : MonoBehaviour
 
     private bool waitToRegister;
     private bool GOver = false;
+    private MusicManager mm;
+    private bool unotimes = false;
 
     private void Start()
     {
         clickText.SetActive(false);
         GameOverGroup.alpha = 0;
+        mm = GameObject.FindGameObjectWithTag("MusicManager").GetComponent<MusicManager>();
     }
 
     // Update is called once per frame
@@ -30,6 +33,13 @@ public class GameOver : MonoBehaviour
             pc.state = PlayerController.State.Stopped;
             GOver = true;
             GameOverGroup.gameObject.SetActive(true);
+            
+            if(unotimes == false)
+            {
+                mm.SwitchTrack(mm.death);
+                unotimes = true;
+            }
+            
         }
 
         if(waitToRegister)

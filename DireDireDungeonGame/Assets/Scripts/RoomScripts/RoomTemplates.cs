@@ -95,8 +95,6 @@ public class RoomTemplates : MonoBehaviour
 
                     if(BigBad != null) { Instantiate(BigBad, roomList[middleIndex].transform.position, Quaternion.identity); }
                     
-                    
-                    
                     checkTimer = false;
 
                     gm.GenerateNavMesh();
