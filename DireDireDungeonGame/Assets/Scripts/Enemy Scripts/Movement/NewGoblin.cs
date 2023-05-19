@@ -19,6 +19,9 @@ public class NewGoblin : MonoBehaviour
 
     public GameObject coinSpawner;
 
+    public AudioSource GOBLINWALK;
+    public AudioSource GoblinSwing;
+
     //public GameObject goblinBody;
 
     private State goblinState;
@@ -39,7 +42,9 @@ public class NewGoblin : MonoBehaviour
     private float idleMoveCounter;
     private bool canIdleMove;
 
-
+    private int stepCounter;
+    public float stepTiming = 1;
+    private float stepTimer = 1;
 
 
     // Start is called before the first frame update
@@ -108,6 +113,12 @@ public class NewGoblin : MonoBehaviour
             {
                 if (doMove)
                 {
+                    if (stepTimer >= stepTiming)
+                    {
+                        Walking();
+                    }
+                    else { stepTimer += Time.deltaTime; }
+
                     Vector2 playerDistance = player.transform.position - transform.position;
                     rb.velocity = (playerDistance.normalized) * speed;
                     //rb.AddForce((player.transform.position - transform.position).normalized * speed, ForceMode2D.Impulse);
@@ -117,6 +128,7 @@ public class NewGoblin : MonoBehaviour
             {
                 if (goblinState == State.Idle)
                 {
+                    GOBLINWALK.Stop();
                     if (canIdleMove)
                     {
                         Vector2 randomVelo = new Vector2(Random.Range(-10, 10), Random.Range(-10, 10));
@@ -175,6 +187,20 @@ public class NewGoblin : MonoBehaviour
             });
 
         });
+    }
+
+    private void Walking()
+    {
+        stepCounter++;
+        stepTimer = 0;
+        if (stepCounter % 2 == 0)
+        {
+            GOBLINWALK.Play();
+        }
+        else
+        {
+            GOBLINWALK.Play();
+        }
     }
 
     public void Die(Collision2D collision)

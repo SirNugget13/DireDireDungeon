@@ -15,7 +15,8 @@ public class Goblin : MonoBehaviour
     public float slowdown = 0.7f;
     public GameObject enemyNotice;
     public float playerDistance;
-    
+
+
     //public GameObject goblinBody;
 
     private State goblinState;
@@ -70,6 +71,7 @@ public class Goblin : MonoBehaviour
                     {
                         enemyNotice.SetActive(false);
                         doMove = true;
+                        
                     });
                 }
             }

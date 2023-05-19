@@ -7,10 +7,13 @@ public class GoblinCombat : MonoBehaviour
     public GameObject goblinSword;
     public float SwingDelay;
     public Goblin goblin;
-    
+
+
     private float swingTimer;
     private bool canSwing = true;
     private CapsuleCollider2D swordPath;
+    public AudioSource GoblinSwing;
+
 
 
     // Start is called before the first frame update
@@ -39,6 +42,7 @@ public class GoblinCombat : MonoBehaviour
     {
         if (canSwing)
         {
+            GoblinSwing.Play();
             swordPath.enabled = true;
 
             goblinSword.transform.SetLocalPositionAndRotation
@@ -48,6 +52,8 @@ public class GoblinCombat : MonoBehaviour
                 goblinSword.transform.SetLocalPositionAndRotation
                     (Vector3.zero, Quaternion.Euler(0, 0, -50));
                 swordPath.enabled = false;
+                
+
             });
 
             canSwing = false;
